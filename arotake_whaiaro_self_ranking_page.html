@@ -1,0 +1,1795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AROTAKE WHAIARO - Self Review</title>
+  <style>
+    :root {
+      --maroon: #9d003f;
+      --maroon-dark: #650028;
+      --cream: #fff8f2;
+      --blue: #e7f5fc;
+      --peach: #fde9dc;
+      --green: #e3f7dc;
+      --pink: #f3d4ec;
+      --ink: #151515;
+      --muted: #666;
+      --shadow: 0 10px 30px rgba(0,0,0,0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: linear-gradient(135deg, #fff, var(--cream));
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--maroon);
+      color: white;
+      padding: 22px 18px;
+      border-bottom: 7px solid var(--maroon-dark);
+    }
+
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 4rem);
+      letter-spacing: 0.06em;
+      line-height: 0.95;
+    }
+
+    .subtitle {
+      margin: 8px 0 0;
+      font-size: 1rem;
+      opacity: 0.95;
+      font-style: italic;
+    }
+
+    .intro,
+    .control-card,
+    .score-card,
+    .section,
+    .summary-panel {
+      background: white;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .intro {
+      margin: 18px auto;
+      padding: 16px;
+      border-left: 10px solid var(--maroon);
+    }
+
+    .intro p {
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin: 18px auto;
+    }
+
+    .control-card {
+      padding: 14px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+      width: 100%;
+      font: inherit;
+      border-radius: 12px;
+      border: 2px solid #ccc;
+      padding: 10px 12px;
+      background: white;
+    }
+
+    select {
+      min-height: 48px;
+      max-width: 100%;
+    }
+
+    .statement-select {
+      display: none;
+    }
+
+    .statement-picker {
+      position: relative;
+      width: 100%;
+    }
+
+    .statement-picker-button {
+      width: 100%;
+      text-align: left;
+      background: white;
+      color: var(--ink);
+      border: 2px solid #ccc;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      font-weight: normal;
+      min-height: 48px;
+    }
+
+    .statement-picker-button::after {
+      content: "▼";
+      flex: 0 0 auto;
+      font-size: 0.8rem;
+      color: var(--maroon);
+    }
+
+    .statement-picker.is-open .statement-picker-button::after {
+      content: "▲";
+    }
+
+    .statement-options {
+      display: none;
+      margin-top: 8px;
+      border: 2px solid #ccc;
+      border-radius: 14px;
+      background: white;
+      max-height: min(360px, 55vh);
+      overflow-y: auto;
+      padding: 8px;
+      position: relative;
+      z-index: 5;
+    }
+
+    .statement-picker.is-open .statement-options {
+      display: grid;
+      gap: 8px;
+    }
+
+    .statement-option {
+      width: 100%;
+      text-align: left;
+      background: #fafafa;
+      color: var(--ink);
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 10px;
+      font-weight: normal;
+      min-height: 0;
+      line-height: 1.35;
+    }
+
+    .statement-option:hover,
+    .statement-option:focus {
+      background: var(--cream);
+      outline: 2px solid var(--maroon);
+      outline-offset: 1px;
+    }
+
+    .statement-option.is-selected {
+      border-color: var(--maroon);
+      background: #fff3f7;
+      font-weight: bold;
+    }
+
+    textarea {
+      min-height: 74px;
+      resize: vertical;
+    }
+
+    button {
+      cursor: pointer;
+      border: 0;
+      background: var(--maroon);
+      color: white;
+      font-weight: bold;
+      min-height: 46px;
+    }
+
+    button:hover {
+      filter: brightness(1.08);
+    }
+
+    .button-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 10px;
+      align-items: end;
+    }
+
+    .scoreboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin: 18px auto;
+    }
+
+    .score-card {
+      padding: 14px;
+      border-top: 8px solid var(--maroon);
+    }
+
+    .score-card h3 {
+      margin: 0 0 6px;
+      font-size: 0.95rem;
+    }
+
+    .score-card .score {
+      font-size: 2.1rem;
+      font-weight: 900;
+      color: var(--maroon);
+    }
+
+    .score-card .level {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .section {
+      margin: 24px auto;
+      overflow: hidden;
+      border: 2px solid rgba(0,0,0,0.08);
+    }
+
+    .section-title {
+      background: var(--maroon);
+      color: white;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 1.35rem;
+      letter-spacing: 0.03em;
+    }
+
+    .count-pill {
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 0.85rem;
+    }
+
+    .item {
+      padding: 16px;
+      border-top: 2px solid rgba(0,0,0,0.08);
+    }
+
+    .manaakitanga {
+      background: var(--blue);
+    }
+
+    .kotahitanga {
+      background: var(--peach);
+    }
+
+    .aarahitanga {
+      background: var(--green);
+    }
+
+    .puumautanga {
+      background: var(--pink);
+    }
+
+    .nga-taipitopito {
+      background: #f8f8f8;
+    }
+
+    .item-grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 420px) 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .item-title {
+      font-weight: 800;
+      margin: 0 0 10px;
+    }
+
+    .hint {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.35;
+    }
+
+    .selected-output {
+      border: 2px solid rgba(0,0,0,0.18);
+      background: rgba(255,255,255,0.72);
+      border-radius: 16px;
+      padding: 14px;
+      min-height: 86px;
+      line-height: 1.4;
+    }
+
+    .selected-output p {
+      margin: 8px 0 0;
+      white-space: pre-wrap;
+    }
+
+    .level-badge {
+      display: inline-block;
+      background: var(--maroon);
+      color: white;
+      border-radius: 999px;
+      padding: 5px 10px;
+      margin-bottom: 8px;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    .evidence {
+      margin-top: 12px;
+    }
+
+    .evidence summary {
+      cursor: pointer;
+      font-weight: bold;
+      color: var(--maroon-dark);
+    }
+
+    .summary-panel {
+      margin: 24px auto 40px;
+      padding: 18px;
+      border-top: 10px solid var(--maroon);
+    }
+
+    .summary-panel h2 {
+      margin-top: 0;
+    }
+
+    .summary-grid,
+    .feedback-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 12px;
+    }
+
+    .summary-box,
+    .feedback-card {
+      border: 2px solid #ddd;
+      border-radius: 16px;
+      padding: 12px;
+      background: #fafafa;
+      min-height: 100px;
+    }
+
+    .summary-box h3,
+    .feedback-card h3 {
+      margin: 0 0 8px;
+      color: var(--maroon-dark);
+    }
+
+    .summary-box p,
+    .feedback-card p {
+      margin: 8px 0;
+      line-height: 1.4;
+    }
+
+    .feedback-card ul {
+      margin: 8px 0 0 20px;
+      padding: 0;
+    }
+
+    .feedback-card li {
+      margin-bottom: 6px;
+      line-height: 1.35;
+    }
+
+    .final-score-card {
+      display: grid;
+      grid-template-columns: minmax(160px, 220px) 1fr;
+      gap: 14px;
+      align-items: center;
+      border: 2px solid #ddd;
+      border-radius: 18px;
+      padding: 16px;
+      background: #fafafa;
+      margin-bottom: 14px;
+    }
+
+    .final-score-number {
+      font-size: 3rem;
+      line-height: 1;
+      font-weight: 900;
+      color: var(--maroon);
+    }
+
+    .final-score-label {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-top: 6px;
+    }
+
+    .footer-note {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+
+    .print-only {
+      display: none;
+    }
+
+    @media (max-width: 760px) {
+      .item-grid,
+      .final-score-card {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        padding: 18px 12px;
+      }
+
+      .intro,
+      .controls,
+      .scoreboard,
+      .section,
+      .summary-panel {
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+    }
+
+    @media print {
+      @page {
+        size: A4;
+        margin: 10mm 11mm 12mm 11mm;
+      }
+
+      * {
+        box-shadow: none !important;
+      }
+
+      body {
+        background: white;
+        color: #111;
+        font-size: 9pt;
+        line-height: 1.18;
+      }
+
+      .print-only {
+        display: block;
+      }
+
+      .wrap {
+        max-width: none;
+        margin: 0;
+      }
+
+      main.wrap {
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        background: white;
+        color: #111;
+        border: 0;
+        border-bottom: 2px solid #111;
+        padding: 0 0 5px 0;
+        margin: 0 0 6px 0;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+
+      header .wrap::after {
+        content: "Professional self-review document";
+        display: block;
+        margin-top: 4px;
+        font-size: 9pt;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #555;
+      }
+
+      h1 {
+        font-size: 18pt;
+        letter-spacing: 0.03em;
+        line-height: 1.05;
+      }
+
+      .subtitle {
+        color: #333;
+        font-size: 9pt;
+        margin-top: 2px;
+      }
+
+      .intro,
+      .hint,
+      button,
+      label,
+      select,
+      .statement-picker,
+      .scoreboard,
+      .footer-note,
+      .count-pill,
+      #sectionSummary,
+      .item:not(.is-complete),
+      .section:not(.has-complete) {
+        display: none !important;
+      }
+
+      #reviewDetails {
+        order: 1;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 0;
+        margin: 0 0 6px 0;
+        border: 1px solid #999;
+        border-bottom: 0;
+      }
+
+      .control-card {
+        padding: 4px 6px;
+        border: 0;
+        border-right: 1px solid #999;
+        border-bottom: 1px solid #999;
+        border-radius: 0;
+        background: white;
+      }
+
+      .control-card:nth-child(3) {
+        border-right: 0;
+      }
+
+      .control-card:nth-child(4) {
+        display: none;
+      }
+
+      .control-card::before {
+        display: block;
+        font-size: 7.5pt;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #555;
+        margin-bottom: 2px;
+      }
+
+      .control-card:nth-child(1)::before { content: "Kaiako"; }
+      .control-card:nth-child(2)::before { content: "Date"; }
+      .control-card:nth-child(3)::before { content: "Class / Context"; }
+
+      input,
+      textarea {
+        border: 0;
+        border-radius: 0;
+        padding: 0;
+        background: white;
+        min-height: 0;
+        color: #111;
+      }
+
+      input::placeholder,
+      textarea::placeholder {
+        color: transparent;
+      }
+
+      #finalReview {
+        order: 2;
+        border: 2px solid #111;
+        border-radius: 0;
+        padding: 6px 8px;
+        margin: 0 0 6px 0;
+        background: white;
+        break-inside: avoid;
+      }
+
+      .section {
+        order: 3;
+        margin: 0 0 5px 0;
+        border: 1px solid #999;
+        border-radius: 0;
+        background: white;
+        break-inside: avoid;
+      }
+
+      #finalReview h2 {
+        font-size: 11pt;
+        margin: 0 0 4px 0;
+        letter-spacing: 0;
+        color: #111;
+      }
+
+      .section-title {
+        background: #f0f0f0;
+        color: #111;
+        padding: 4px 6px;
+        border-bottom: 1px solid #999;
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 8px;
+      }
+
+      .area-rank {
+        font-size: 8.5pt;
+        font-weight: bold;
+        color: #111;
+        text-align: right;
+      }
+
+      .section-title h2 {
+        font-size: 10pt;
+        margin: 0;
+        letter-spacing: 0.03em;
+      }
+
+      .item {
+        background: white !important;
+        padding: 4px 6px;
+        border-top: 1px solid #ddd;
+        break-inside: avoid;
+      }
+
+      .item:first-of-type {
+        border-top: 0;
+      }
+
+      .item-grid {
+        display: block;
+      }
+
+      .item-title {
+        margin: 0 0 1px 0;
+        font-size: 9pt;
+        font-weight: bold;
+      }
+
+      .selected-output {
+        border: 0;
+        background: white;
+        border-radius: 0;
+        padding: 0;
+        min-height: 0;
+        line-height: 1.25;
+      }
+
+      .selected-output p {
+        margin: 1px 0 0 0;
+        white-space: normal;
+      }
+
+      .level-badge {
+        display: block;
+        background: white;
+        color: #111;
+        border-radius: 0;
+        padding: 0;
+        margin: 0 0 1px 0;
+        font-size: 8.5pt;
+        font-weight: bold;
+      }
+
+      details {
+        margin-top: 2px;
+        break-inside: avoid;
+      }
+
+      details summary {
+        font-size: 8.5pt;
+        color: #444;
+        font-weight: bold;
+      }
+
+      textarea {
+        display: block;
+        width: 100%;
+        font-size: 8.5pt;
+        min-height: 16px;
+        margin-top: 1px;
+        border-top: 1px solid #ddd;
+        padding-top: 2px;
+        resize: none;
+      }
+
+      details.evidence:not(.has-notes) {
+        display: none;
+      }
+
+      .feedback-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4px 10px;
+      }
+
+      .feedback-card,
+      .final-score-card {
+        border: 0;
+        border-top: 1px solid #ccc;
+        border-radius: 0;
+        background: white;
+        padding: 3px 0;
+        min-height: 0;
+      }
+
+      .feedback-card h3,
+      .final-score-card h3 {
+        font-size: 9pt;
+        margin: 0 0 2px 0;
+        color: #111;
+      }
+
+      .feedback-card p,
+      .feedback-card li {
+        margin: 2px 0;
+        font-size: 8.2pt;
+      }
+
+      .final-score-card {
+        display: grid;
+        grid-template-columns: 70px 1fr;
+        gap: 8px;
+        align-items: start;
+        margin: 0 0 5px 0;
+        border-top: 0;
+        padding-top: 0;
+      }
+
+      .final-score-number {
+        font-size: 22pt;
+        color: #111;
+      }
+
+      .final-score-label {
+        font-size: 8pt;
+        margin-top: 0;
+        color: #555;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      .feedback-card ul {
+        margin: 2px 0 0 16px;
+      }
+
+      a,
+      a:visited {
+        color: #111;
+        text-decoration: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>AROTAKE WHAIARO</h1>
+      <p class="subtitle">Pukekohe High School Effective Teacher Profile</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="intro">
+      <p><strong>‘Teaching Excellence’.</strong> The aim the Effective Teacher Profile is to strengthen effective pedagogy within the school. It recognises that we are agents of change and that effective teachers at Pukekohe High School actively reject deficit theorising as they strive to achieving teaching excellence.</p>
+    </section>
+
+    <section class="controls" id="reviewDetails" aria-label="Teacher details">
+      <div class="control-card">
+        <label for="teacherName">Kaiako</label>
+        <input id="teacherName" type="text" placeholder="Name">
+      </div>
+      <div class="control-card">
+        <label for="dateInput">Date</label>
+        <input id="dateInput" type="date">
+      </div>
+      <div class="control-card">
+        <label for="classInput">Class / Context</label>
+        <input id="classInput" type="text" placeholder="Class / Context">
+      </div>
+      <div class="control-card button-row">
+        <button id="printBtn" type="button">Print / Save PDF</button>
+        <button id="clearSavedBtn" type="button">Clear Saved</button>
+      </div>
+    </section>
+
+    <section class="scoreboard" aria-label="Scores">
+      <div class="score-card">
+        <h3>Overall</h3>
+        <div class="score" id="overallScore">-</div>
+        <div class="level" id="overallLevel">Select statements</div>
+      </div>
+      <div class="score-card">
+        <h3>NGAA TAIPITOPITO</h3>
+        <div class="score" id="score-nga-taipitopito">-</div>
+        <div class="level" id="level-nga-taipitopito">-</div>
+      </div>
+      <div class="score-card">
+        <h3>MANAAKITANGA</h3>
+        <div class="score" id="score-manaakitanga">-</div>
+        <div class="level" id="level-manaakitanga">-</div>
+      </div>
+      <div class="score-card">
+        <h3>KOTAHITANGA</h3>
+        <div class="score" id="score-kotahitanga">-</div>
+        <div class="level" id="level-kotahitanga">-</div>
+      </div>
+      <div class="score-card">
+        <h3>AARAHITANGA</h3>
+        <div class="score" id="score-aarahitanga">-</div>
+        <div class="level" id="level-aarahitanga">-</div>
+      </div>
+      <div class="score-card">
+        <h3>PUUMAUTANGA</h3>
+        <div class="score" id="score-puumautanga">-</div>
+        <div class="level" id="level-puumautanga">-</div>
+      </div>
+    </section>
+
+    <section class="section" data-area="nga-taipitopito">
+      <div class="section-title">
+        <h2>NGAA TAIPITOPITO</h2>
+        <span class="count-pill">1 area</span>
+      </div>
+      <article class="item nga-taipitopito" data-area="nga-taipitopito" data-title="NGAA TAIPITOPITO">
+        <div class="item-grid">
+          <div>
+            <p class="item-title">NGAA TAIPITOPITO</p>
+            <label for="select-nga-taipitopito-0">Statement</label>
+            <select id="select-nga-taipitopito-0" class="statement-select" data-area="nga-taipitopito">
+              <option value="">Select statement</option>
+              <option value="1">I have potential and am willing to grow in all areas of my practice.</option>
+              <option value="2">I am open to learning Te Reo Maaori. I use learning activities which are mostly teacher directed. I have built relationships with aakonga.</option>
+              <option value="3">I am using Te Reo Maaori in the classroom. I use a range of learning activities which students engage with. I have built learning focussed relationships with aakonga.</option>
+              <option value="4">I am being intentional in regularly using and learning instructional and / or subject based Te Reo Maaori. I use a range of highly effective learning activities that meet the needs of all my aakonga. I have built learning focussed relationships that recognise the diverse needs of aakonga.</option>
+              <option value="5">I authentically and consistently use Te Reo Maaori. I use strategies such co-construction and power-sharing, along with student voice to shape learning experiences. I have built authentic learning focussed relationships that reflect the diverse needs of aakonga.</option>
+            </select>
+            <p class="hint">Choose the statement that best matches the evidence. The rank is assigned automatically.</p>
+            <details class="evidence">
+              <summary>Evidence / notes</summary>
+              <textarea id="notes-nga-taipitopito-0" data-notes="notes-nga-taipitopito-0" placeholder="Evidence / notes"></textarea>
+            </details>
+          </div>
+          <div class="selected-output" aria-live="polite">
+            <span class="level-badge">Select statement</span>
+            <p>Select the statement that best matches your practice. The rank will be assigned automatically.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="section" data-area="manaakitanga">
+      <div class="section-title">
+        <h2>MANAAKITANGA</h2>
+        <span class="count-pill">3 areas</span>
+      </div>
+      <article class="item manaakitanga" data-area="manaakitanga" data-title="Te Reo Maaori">
+        <div class="item-grid">
+          <div>
+            <p class="item-title">Te Reo Maaori</p>
+            <label for="select-manaakitanga-0">Statement</label>
+            <select id="select-manaakitanga-0" class="statement-select" data-area="manaakitanga">
+              <option value="">Select statement</option>
+              <option value="1">Te Reo Maaori not evident during observation</option>
+              <option value="2">Some attempts at using Te Reo Maaori</option>
+              <option value="3">Some Te Reo Maaori words or phrases used in lessons with correct pronunciation.</option>
+              <option value="4">Regular use of Te Reo Maaori throughout lesson. Explains words and phrases.</option>
+              <option value="5">Consistent and authentic use see and heard every lesson. Students are supported to use Te Reo Maaori in lessons.</option>
+            </select>
+            <p class="hint">Choose the statement that best matches the evidence. The rank is assigned automatically.</p>
+            <details class="evidence">
+              <summary>Evidence / notes</summary>
+              <textarea id="notes-manaakitanga-0" data-notes="notes-manaakitanga-0" placeholder="Evidence / notes"></textarea>
+            </details>
+          </div>
+          <div class="selected-output" aria-live="polite">
+            <span class="level-badge">Select statement</span>
+            <p>Select the statement that best matches your practice. The rank will be assigned automatically.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="item manaakitanga" data-area="manaakitanga" data-title="Culture, language and identity">
+        <div class="item-grid">
+          <div>
+            <p class="item-title">Culture, language and identity</p>
+            <label for="select-manaakitanga-1">Statement</label>
+            <select id="select-manaakitanga-1" class="statement-select" data-area="manaakitanga">
+              <option value="">Select statement</option>
+              <option value="1">Kaiako and/or aakonga may feel unsafe in the environment.</option>
+              <option value="2">Little evidence or only surface-level acknowledgement of culture.</option>
+              <option value="3">Some evidence of aakonga culture and work is on the walls or incorporated in learning resources.</option>
+              <option value="4">Safe and supportive learning environment where aakonga can see their culture reflected. Knowing your aakonga as culturally located individuals.</option>
+              <option value="5">Kaiako establishes a caring, uplifting, secure, inclusive, environment that supports the culture, language and identity of aakonga.</option>
+            </select>
+            <p class="hint">Choose the statement that best matches the evidence. The rank is assigned automatically.</p>
+            <details class="evidence">
+              <summary>Evidence / notes</summary>
+              <textarea id="notes-manaakitanga-1" data-notes="notes-manaakitanga-1" placeholder="Evidence / notes"></textarea>
+            </details>
+          </div>
+          <div class="selected-output" aria-live="polite">
+            <span class="level-badge">Select statement</span>
+            <p>Select the statement that best matches your practice. The rank will be assigned automatically.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="item manaakitanga" data-area="manaakitanga" data-title="Routines">
+        <div class="item-grid">
+          <div>
+            <p class="item-title">Routines</p>
+            <label for="select-manaakitanga-2">Statement</label>
+            <select id="select-manaakitanga-2" class="statement-select" data-area="manaakitanga">
+              <option value="">Select statement</option>
+              <option value="1">Routines not observed</option>
+              <option value="2">Routines are inconsistent</option>
+              <option value="3">Routines to support learning are consistent.</option>
+              <option value="4">Routines to support learning are effective.</option>
+              <option value="5">Routines for learning are restorative and embedded, promoting cognitive engagement.</option>
+            </select>
+            <p class="hint">Choose the statement that best matches the evidence. The rank is assigned automatically.</p>
+            <details class="evidence">
+              <summary>Evidence / notes</summary>
+              <textarea id="notes-manaakitanga-2" data-notes="notes-manaakitanga-2" placeholder="Evidence / notes"></textarea>
+            </details>
+          </div>
+          <div class="selected-output" aria-live="polite">
+            <span class="level-badge">Select statement</span>
+            <p>Select the statement that best matches your practice. The rank will be assigned automatically.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="section" data-area="kotahitanga">
+      <div class="section-title">
+        <h2>KOTAHITANGA</h2>
+        <span class="count-pill">4 areas</span>
+      </div>
+      <article class="item kotahitanga" data-area="kotahitanga" data-title="Learning intentions and / or success criteria">
+        <div class="item-grid">
+          <div>
+            <p class="item-title">Learning intentions and / or success criteria</p>
+            <label for="select-kotahitanga-0">Statement</label>
+            <select id="select-kotahitanga-0" class="statement-select" data-area="kotahitanga">
+              <option value="">Select statement</option>
+              <option value="1">Learning intentions and /or success criteria not observed</option>
+              <option value="2">Learning intention and success criteria are present but not referred to.</option>
+              <option value="3">Relevant learning intentions are presented and discussed. Learning activities align to Learning intentions.</option>
+              <option value="4">Learning intentions and success criteria are relevant, explained and referred to through the lesson. Aakonga can articulate why they are learning content.</option>
+              <option value="5">Kaiako actively use clear learning intentions and co-construct relevant success criteria. Aakonga can articulate why they are learning content and how it links to the real world.</option>
+            </select>
+            <p class="hint">Choose the statement that best matches the evidence. The rank is assigned automatically.</p>
+            <details class="evidence">
+              <summary>Evidence / notes</summary>
+              <textarea id="notes-kotahitanga-0" data-notes="notes-kotahitanga-0" placeholder="Evidence / notes"></textarea>
+            </details>
+          </div>
+          <div class="selected-output" aria-live="polite">
+            <span class="level-badge">Select statement</span>
+            <p>Select the statement that best matches your practice. The rank will be assigned automatically.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="item kotahitanga" data-area="kotahitanga" data-title="Learning conversations / Tuakana-Teina">
+        <div class="item-grid">
+          <div>
+            <p class="item-title">Learning conversations / Tuakana-Teina</p>
+            <label for="select-kotahitanga-1">Statement</label>
+            <select id="select-kotahitanga-1" class="statement-select" data-area="kotahitanga">
+              <option value="">Select statement</option>
+              <option value="1">Few interactions between aakonga related to learning</option>
+              <option value="2">Limited opportunities for students to work together and help each other.</option>
+              <option value="3">Learning conversations are evident, including aakonga asking questions. Kaiako facilitates Tuakana-Teina interactions.</option>
+              <option value="4">Co-operative learning strategies used, and learning conversation take place between aakonga. Emerging tuakana-teina learning is evident.</option>
+              <option value="5">Cooperative learning strategies and Tuakana-Teina interactions are led by learners. Learning focussed classroom.</option>
+            </select>
+            <p class="hint">Choose the statement that best matches the evidence. The rank is assigned automatically.</p>
+            <details class="evidence">
+              <summary>Evidence / notes</summary>
+              <textarea id="notes-kotahitanga-1" data-notes="notes-kotahitanga-1" placeholder="Evidence / notes"></textarea>
+            </details>
+          </div>
+          <div class="selected-output" aria-live="polite">
+            <span class="level-badge">Select statement</span>
+            <p>Select the statement that best matches your practice. The rank will be assigned automatically.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="item kotahitanga" data-area="kotahitanga" data-title="Interactions / relationships">
+        <div class="item-grid">
+          <div>
+            <p class="item-title">Interactions / relationships</p>
+            <label for="select-kotahitanga-2">Statement</label>
+            <select id="select-kotahitanga-2" class="statement-select" data-area="kotahitanga">
+              <option value="">Select statement</option>
+              <option value="1">Kaiako only addresses the class as a whole, does not interact with individual aakonga. May not know student names.</option>
+              <option value="2">A few positive interactions with aakonga.</option>
+              <option value="3">Has multiple positive interactions and relationships are evident.</option>
+              <option value="4">Interactions demonstrate strong relationships. Engages positively with aakonga, including aakonga Maaori .</option>
+              <option value="5">Effective learning interactions and use of aakonga voice. Interactions demonstrate high trust relationships – the mana of aakonga is always maintained.</option>
+            </select>
+            <p class="hint">Choose the statement that best matches the evidence. The rank is assigned automatically.</p>
+            <details class="evidence">
+              <summary>Evidence / notes</summary>
+              <textarea id="notes-kotahitanga-2" data-notes="notes-kotahitanga-2" placeholder="Evidence / notes"></textarea>
+            </details>
+          </div>
+          <div class="selected-output" aria-live="polite">
+            <span class="level-badge">Select statement</span>
+            <p>Select the statement that best matches your practice. The rank will be assigned automatically.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="item kotahitanga" data-area="kotahitanga" data-title="Maatauranga Maaori">
+        <div class="item-grid">
+          <div>
+            <p class="item-title">Maatauranga Maaori</p>
+            <label for="select-kotahitanga-3">Statement</label>
+            <select id="select-kotahitanga-3" class="statement-select" data-area="kotahitanga">
+              <option value="">Select statement</option>
+              <option value="1">Maatauranga Maaori Is not yet observed</option>
+              <option value="2">Maatauranga Maaori content is present. Some surface level Maaori concepts are used.</option>
+              <option value="3">Maatauranga Maaori content is included in curriculum context. Some discussions (teaching and learning outcomes) are seen through a Maaori lens.</option>
+              <option value="4">Maatauranga Maaori is included and applied in curriculum context. Connections are made between curriculum context and maatauranga Maaori for understanding.</option>
+              <option value="5">Maatauranga Maaori is authentically integrated in curriculum context.</option>
+            </select>
+            <p class="hint">Choose the statement that best matches the evidence. The rank is assigned automatically.</p>
+            <details class="evidence">
+              <summary>Evidence / notes</summary>
+              <textarea id="notes-kotahitanga-3" data-notes="notes-kotahitanga-3" placeholder="Evidence / notes"></textarea>
+            </details>
+          </div>
+          <div class="selected-output" aria-live="polite">
+            <span class="level-badge">Select statement</span>
+            <p>Select the statement that best matches your practice. The rank will be assigned automatically.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="section" data-area="aarahitanga">
+      <div class="section-title">
+        <h2>AARAHITANGA</h2>
+        <span class="count-pill">2 areas</span>
+      </div>
+      <article class="item aarahitanga" data-area="aarahitanga" data-title="Student agency / engagement">
+        <div class="item-grid">
+          <div>
+            <p class="item-title">Student agency / engagement</p>
+            <label for="select-aarahitanga-0">Statement</label>
+            <select id="select-aarahitanga-0" class="statement-select" data-area="aarahitanga">
+              <option value="">Select statement</option>
+              <option value="1">Kaiako directed learning only. Students are off task.</option>
+              <option value="2">Teacher-led learning. Mixture of engagement. Some moments of student agency</option>
+              <option value="3">Kaiako supports learning. Most aakonga are engaged.</option>
+              <option value="4">Kaiako facilitates student-led learning. Students are actively engaged and demonstrate independence in their learning</option>
+              <option value="5">Kaiako has effectively fostered learner agency. Aakonga are actively engaged and have agency in their learning.</option>
+            </select>
+            <p class="hint">Choose the statement that best matches the evidence. The rank is assigned automatically.</p>
+            <details class="evidence">
+              <summary>Evidence / notes</summary>
+              <textarea id="notes-aarahitanga-0" data-notes="notes-aarahitanga-0" placeholder="Evidence / notes"></textarea>
+            </details>
+          </div>
+          <div class="selected-output" aria-live="polite">
+            <span class="level-badge">Select statement</span>
+            <p>Select the statement that best matches your practice. The rank will be assigned automatically.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="item aarahitanga" data-area="aarahitanga" data-title="Learning experiences">
+        <div class="item-grid">
+          <div>
+            <p class="item-title">Learning experiences</p>
+            <label for="select-aarahitanga-1">Statement</label>
+            <select id="select-aarahitanga-1" class="statement-select" data-area="aarahitanga">
+              <option value="">Select statement</option>
+              <option value="1">Lesson structure limits aakonga learning opportunities and outcomes.</option>
+              <option value="2">Structured lesson and whole class learning activities happening.</option>
+              <option value="3">Aakonga have some choice in learning experiences. Allow for varied participation for some aakonga. Some flexible grouping, sharing and contextual discussion.</option>
+              <option value="4">Kaiako design learning experiences that allow for varied participation and expression</option>
+              <option value="5">Kaiako design learning experiences that allow for varied participation and expression to ensure that all students can access and contribute to their learning.</option>
+            </select>
+            <p class="hint">Choose the statement that best matches the evidence. The rank is assigned automatically.</p>
+            <details class="evidence">
+              <summary>Evidence / notes</summary>
+              <textarea id="notes-aarahitanga-1" data-notes="notes-aarahitanga-1" placeholder="Evidence / notes"></textarea>
+            </details>
+          </div>
+          <div class="selected-output" aria-live="polite">
+            <span class="level-badge">Select statement</span>
+            <p>Select the statement that best matches your practice. The rank will be assigned automatically.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="section" data-area="puumautanga">
+      <div class="section-title">
+        <h2>PUUMAUTANGA</h2>
+        <span class="count-pill">2 areas</span>
+      </div>
+      <article class="item puumautanga" data-area="puumautanga" data-title="Feedback / feedforward">
+        <div class="item-grid">
+          <div>
+            <p class="item-title">Feedback / feedforward</p>
+            <label for="select-puumautanga-0">Statement</label>
+            <select id="select-puumautanga-0" class="statement-select" data-area="puumautanga">
+              <option value="">Select statement</option>
+              <option value="1">No Feedback Evident. No evidence of feedback given</option>
+              <option value="2">Vague feedback / feedforward related only to behaviour. Some students received task related feedback</option>
+              <option value="3">Inconsistent academic feedback and feedforward. Most aakonga receive task related feedback</option>
+              <option value="4">Specific academic feedback and feedforward. Specific praise used. All aakonga expect and have the ability to receive and act upon feedback/feedforward in a constructive way</option>
+              <option value="5">Multiple methods of academic feedback and feedforward provided regularly. Authentic praise. All aakonga independently seek feedback//feedforward and self-reflect</option>
+            </select>
+            <p class="hint">Choose the statement that best matches the evidence. The rank is assigned automatically.</p>
+            <details class="evidence">
+              <summary>Evidence / notes</summary>
+              <textarea id="notes-puumautanga-0" data-notes="notes-puumautanga-0" placeholder="Evidence / notes"></textarea>
+            </details>
+          </div>
+          <div class="selected-output" aria-live="polite">
+            <span class="level-badge">Select statement</span>
+            <p>Select the statement that best matches your practice. The rank will be assigned automatically.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="item puumautanga" data-area="puumautanga" data-title="Learning challenges">
+        <div class="item-grid">
+          <div>
+            <p class="item-title">Learning challenges</p>
+            <label for="select-puumautanga-1">Statement</label>
+            <select id="select-puumautanga-1" class="statement-select" data-area="puumautanga">
+              <option value="">Select statement</option>
+              <option value="1">Students disengage when learning tasks are perceived as challenging</option>
+              <option value="2">Students are encouraged to persevere with challenging tasks.</option>
+              <option value="3">Aakonga are encouraged to navigate learning challenges together</option>
+              <option value="4">ManaAko routines and relationships support and encourage aakonga to navigate learning challenges together</option>
+              <option value="5">Consistent ManaAko learning routines and relationships support students to navigate challenges together. Students are confident to take risks and seek support with next learning steps.</option>
+            </select>
+            <p class="hint">Choose the statement that best matches the evidence. The rank is assigned automatically.</p>
+            <details class="evidence">
+              <summary>Evidence / notes</summary>
+              <textarea id="notes-puumautanga-1" data-notes="notes-puumautanga-1" placeholder="Evidence / notes"></textarea>
+            </details>
+          </div>
+          <div class="selected-output" aria-live="polite">
+            <span class="level-badge">Select statement</span>
+            <p>Select the statement that best matches your practice. The rank will be assigned automatically.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="summary-panel" id="sectionSummary">
+      <h2>Summary</h2>
+      <div class="summary-grid">
+        <div class="summary-box" id="summary-nga-taipitopito">
+          <h3>NGAA TAIPITOPITO</h3>
+          <p>Select statements to build summary.</p>
+        </div>
+        <div class="summary-box" id="summary-manaakitanga">
+          <h3>MANAAKITANGA</h3>
+          <p>Select statements to build summary.</p>
+        </div>
+        <div class="summary-box" id="summary-kotahitanga">
+          <h3>KOTAHITANGA</h3>
+          <p>Select statements to build summary.</p>
+        </div>
+        <div class="summary-box" id="summary-aarahitanga">
+          <h3>AARAHITANGA</h3>
+          <p>Select statements to build summary.</p>
+        </div>
+        <div class="summary-box" id="summary-puumautanga">
+          <h3>PUUMAUTANGA</h3>
+          <p>Select statements to build summary.</p>
+        </div>
+      </div>
+      <p class="footer-note">Selections and evidence notes are saved on this device only.</p>
+    </section>
+
+    <section class="summary-panel" id="finalReview" aria-label="Overall average and next steps">
+      <h2>Overall average and next steps</h2>
+      <div class="final-score-card">
+        <div>
+          <div class="final-score-number" id="finalAverageScore">-</div>
+          <div class="final-score-label">Average score</div>
+        </div>
+        <div>
+          <h3 id="finalAverageLevel">Select statements</h3>
+          <p id="overallFeedback">Select statements above to generate an overall average and useful feedback for next steps.</p>
+        </div>
+      </div>
+      <div class="feedback-grid">
+        <div class="feedback-card">
+          <h3>Priority next steps</h3>
+          <ul id="priorityNextSteps">
+            <li>Select statements above to generate priority next steps.</li>
+          </ul>
+        </div>
+        <div class="feedback-card">
+          <h3>Areas to build from</h3>
+          <ul id="strengthsToBuildFrom">
+            <li>Select statements above to identify areas to build from.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var rankLabels = {
+        "1": "HE KAAKANO - The Seed",
+        "2": "KIA TUPU - To Grow",
+        "3": "KIA HUA - To Prosper",
+        "4": "KIA PUAWAI - To Flourish",
+        "5": "TUU RANGATIRA - To Stand as a Leader"
+      };
+
+      var areaNames = {
+        "nga-taipitopito": "NGAA TAIPITOPITO",
+        "manaakitanga": "MANAAKITANGA",
+        "kotahitanga": "KOTAHITANGA",
+        "aarahitanga": "AARAHITANGA",
+        "puumautanga": "PUUMAUTANGA"
+      };
+
+      var areas = ["nga-taipitopito", "manaakitanga", "kotahitanga", "aarahitanga", "puumautanga"];
+      var storageKey = "arotake-whaiaro-self-ranking-v4";
+      var oldStorageKeys = [
+        "arotake-whaiaro-self-ranking-v3",
+        "arotake-whaiaro-self-ranking-v2",
+        "arotake-whaiaro-self-ranking-v1"
+      ];
+
+      function byId(id) {
+        return document.getElementById(id);
+      }
+
+      function getRankLabel(value) {
+        return rankLabels[String(value)] || "-";
+      }
+
+      function clearElement(element) {
+        while (element && element.firstChild) {
+          element.removeChild(element.firstChild);
+        }
+      }
+
+      function addTextElement(parent, tagName, className, text) {
+        var element = document.createElement(tagName);
+        if (className) {
+          element.className = className;
+        }
+        element.textContent = text;
+        parent.appendChild(element);
+        return element;
+      }
+
+      function addListItem(list, text) {
+        addTextElement(list, "li", "", text);
+      }
+
+      function average(values) {
+        if (!values.length) {
+          return 0;
+        }
+
+        var total = 0;
+        values.forEach(function (value) {
+          total += Number(value);
+        });
+
+        return total / values.length;
+      }
+
+      function setText(id, text) {
+        var element = byId(id);
+        if (element) {
+          element.textContent = text;
+        }
+      }
+
+      function shortStatementLabel(text) {
+        if (!text) {
+          return "Select statement";
+        }
+
+        return text.length > 90 ? text.slice(0, 87) + "..." : text;
+      }
+
+      function closeOtherPickers(activePicker) {
+        document.querySelectorAll(".statement-picker.is-open").forEach(function (picker) {
+          if (picker !== activePicker) {
+            picker.classList.remove("is-open");
+          }
+        });
+      }
+
+      function updatePickerLabel(select) {
+        var picker = select.nextElementSibling;
+        if (!picker || !picker.classList.contains("statement-picker")) {
+          return;
+        }
+
+        var button = picker.querySelector(".statement-picker-button");
+        var options = picker.querySelectorAll(".statement-option");
+        var selectedText = getSelectedStatement(select);
+
+        if (button) {
+          button.textContent = selectedText ? shortStatementLabel(selectedText) : "Select statement";
+        }
+
+        options.forEach(function (optionButton) {
+          optionButton.classList.toggle("is-selected", optionButton.getAttribute("data-value") === select.value);
+        });
+      }
+
+      function buildStatementPicker(select) {
+        if (select.nextElementSibling && select.nextElementSibling.classList.contains("statement-picker")) {
+          return;
+        }
+
+        var picker = document.createElement("div");
+        picker.className = "statement-picker";
+
+        var button = document.createElement("button");
+        button.type = "button";
+        button.className = "statement-picker-button";
+        button.setAttribute("aria-expanded", "false");
+        button.textContent = "Select statement";
+        picker.appendChild(button);
+
+        var optionsWrap = document.createElement("div");
+        optionsWrap.className = "statement-options";
+        picker.appendChild(optionsWrap);
+
+        Array.prototype.slice.call(select.options).forEach(function (option) {
+          if (!option.value) {
+            return;
+          }
+
+          var optionButton = document.createElement("button");
+          optionButton.type = "button";
+          optionButton.className = "statement-option";
+          optionButton.setAttribute("data-value", option.value);
+          optionButton.textContent = option.textContent;
+          optionButton.addEventListener("click", function () {
+            select.value = option.value;
+            updateItem(select);
+            updatePickerLabel(select);
+            updateScoresAndSummary();
+            saveState();
+            picker.classList.remove("is-open");
+            button.setAttribute("aria-expanded", "false");
+          });
+          optionsWrap.appendChild(optionButton);
+        });
+
+        button.addEventListener("click", function () {
+          var willOpen = !picker.classList.contains("is-open");
+          closeOtherPickers(picker);
+          picker.classList.toggle("is-open", willOpen);
+          button.setAttribute("aria-expanded", willOpen ? "true" : "false");
+        });
+
+        select.insertAdjacentElement("afterend", picker);
+        updatePickerLabel(select);
+      }
+
+      function getSelectedStatement(select) {
+        if (!select || !select.value) {
+          return "";
+        }
+
+        return select.options[select.selectedIndex].textContent;
+      }
+
+      function updateItem(select) {
+        var item = select.closest(".item");
+        if (!item) {
+          return;
+        }
+
+        var output = item.querySelector(".selected-output");
+        if (!output) {
+          return;
+        }
+
+        clearElement(output);
+
+        if (!select.value) {
+          item.classList.remove("is-complete");
+          addTextElement(output, "span", "level-badge", "Select statement");
+          addTextElement(output, "p", "", "Select the statement that best matches your practice. The rank will be assigned automatically.");
+          return;
+        }
+
+        item.classList.add("is-complete");
+        addTextElement(output, "span", "level-badge", "Assigned rank: " + getRankLabel(select.value));
+        addTextElement(output, "p", "", getSelectedStatement(select));
+      }
+
+      function getOverallFeedback(overall) {
+        if (!overall) {
+          return "Select statements above to generate an overall average and useful feedback for next steps.";
+        }
+
+        if (overall < 2) {
+          return "Your next step is to build reliable foundations. Choose one or two visible routines or teaching actions that can be repeated every lesson so practice becomes more consistent.";
+        }
+
+        if (overall < 3) {
+          return "You are moving from early practice into more consistent practice. Focus on making the effective things you already do more deliberate, visible, and regular across lessons.";
+        }
+
+        if (overall < 4) {
+          return "Your practice is developing well. The next step is to strengthen consistency and gather evidence that aakonga can explain, use, or lead parts of the learning.";
+        }
+
+        if (overall < 4.5) {
+          return "Your profile shows strong practice. The next step is to make learner voice, co-construction, feedback, and culturally responsive practice more embedded and student-led.";
+        }
+
+        return "Your profile shows highly developed practice. The next step is to sustain the evidence, share effective approaches with others, and look for ways aakonga can lead more of the learning.";
+      }
+
+      function getAreaNextStep(area, averageScore) {
+        var advice = {
+          "nga-taipitopito": [
+            "Start with one small, repeatable change: use one Te Reo Maaori phrase and one relationship-building action deliberately each lesson.",
+            "Make Te Reo Maaori, relationship-building, and varied learning activities more intentional and visible in planning.",
+            "Strengthen student voice by using co-construction or power-sharing in one part of the lesson sequence.",
+            "Build from current strengths by making Te Reo Maaori and student voice more consistent across different classes and contexts.",
+            "Share examples of authentic Te Reo Maaori use, student voice, and relationship-focused practice with colleagues."
+          ],
+          "manaakitanga": [
+            "Focus on safety, consistency, and belonging: establish clear routines and make positive culture visible in the room.",
+            "Choose one routine and one cultural acknowledgement to use consistently until they become normal classroom practice.",
+            "Develop a safe, supportive environment where aakonga can see their culture reflected in resources, walls, and interactions.",
+            "Move from supportive to embedded by making routines restorative and giving aakonga opportunities to use Te Reo Maaori too.",
+            "Sustain the caring, uplifting, inclusive environment and collect evidence of aakonga culture, language, and identity being supported."
+          ],
+          "kotahitanga": [
+            "Start by making the learning intention and success criteria visible, then refer back to them during the lesson.",
+            "Increase learning conversations by planning short moments where aakonga ask questions or help each other.",
+            "Strengthen links between learning intentions, success criteria, aakonga voice, and classroom interactions.",
+            "Shift more ownership to learners through co-constructed success criteria and learner-led Tuakana-Teina interactions.",
+            "Sustain high-trust relationships and look for evidence that aakonga can explain the learning and its real-world connection."
+          ],
+          "aarahitanga": [
+            "Build engagement by adding one clear point where aakonga make a choice or take responsibility for part of the task.",
+            "Move beyond teacher-led learning by planning short student-agency moments within a structured lesson.",
+            "Increase independence by giving aakonga choice in process, grouping, pace, or how they show their learning.",
+            "Design learning experiences where varied participation and expression are normal parts of the lesson.",
+            "Sustain learner agency and collect evidence that aakonga are actively engaged and making decisions about their learning."
+          ],
+          "puumautanga": [
+            "Start with specific task-related feedback for a small group of aakonga every lesson.",
+            "Move feedback beyond behaviour by naming what was done well and one clear next learning step.",
+            "Make academic feedback and feedforward more consistent so most aakonga know what to improve next.",
+            "Build routines where aakonga receive, act on, and discuss feedback/feedforward together.",
+            "Sustain multiple feedback methods and create opportunities for aakonga to seek feedback and self-reflect independently."
+          ]
+        };
+
+        if (!averageScore) {
+          return areaNames[area] + ": complete this section to generate a next step.";
+        }
+
+        var index = Math.max(1, Math.min(5, Math.round(averageScore))) - 1;
+        return areaNames[area] + ": " + advice[area][index];
+      }
+
+      function updateFinalFeedback(areaAverages, overall) {
+        setText("finalAverageScore", overall ? overall.toFixed(1) : "-");
+        setText("finalAverageLevel", overall ? getRankLabel(Math.round(overall)) : "Select statements");
+        setText("overallFeedback", getOverallFeedback(overall));
+
+        var priorityList = byId("priorityNextSteps");
+        var strengthsList = byId("strengthsToBuildFrom");
+
+        clearElement(priorityList);
+        clearElement(strengthsList);
+
+        var completedAreas = areas.filter(function (area) {
+          return areaAverages[area] > 0;
+        });
+
+        if (!completedAreas.length) {
+          addListItem(priorityList, "Select statements above to generate priority next steps.");
+          addListItem(strengthsList, "Select statements above to identify areas to build from.");
+          return;
+        }
+
+        var rankedLowToHigh = completedAreas.slice().sort(function (a, b) {
+          return areaAverages[a] - areaAverages[b];
+        });
+
+        rankedLowToHigh.slice(0, 3).forEach(function (area) {
+          addListItem(priorityList, getAreaNextStep(area, areaAverages[area]));
+        });
+
+        rankedLowToHigh.slice().reverse().slice(0, 2).forEach(function (area) {
+          addListItem(strengthsList, areaNames[area] + ": average " + areaAverages[area].toFixed(1) + " - " + getRankLabel(Math.round(areaAverages[area])) + ". Use this as evidence of current strengths and as a model for another area.");
+        });
+      }
+
+      function updateScoresAndSummary() {
+        var allValues = [];
+        var areaAverages = {};
+
+        areas.forEach(function (area) {
+          var areaValues = [];
+          var section = document.querySelector(".section[data-area='" + area + "']");
+          var summaryBox = byId("summary-" + area);
+
+          if (summaryBox) {
+            clearElement(summaryBox);
+            addTextElement(summaryBox, "h3", "", areaNames[area]);
+          }
+
+          document.querySelectorAll(".item[data-area='" + area + "']").forEach(function (item) {
+            var select = item.querySelector("select.statement-select");
+            var title = item.getAttribute("data-title") || "Statement";
+
+            if (select && select.value) {
+              areaValues.push(Number(select.value));
+              allValues.push(Number(select.value));
+
+              if (summaryBox) {
+                addTextElement(summaryBox, "p", "", title + ": " + getRankLabel(select.value));
+              }
+            }
+          });
+
+          if (summaryBox && !areaValues.length) {
+            addTextElement(summaryBox, "p", "", "Select statements to build summary.");
+          }
+
+          if (section) {
+            if (areaValues.length) {
+              section.classList.add("has-complete");
+            } else {
+              section.classList.remove("has-complete");
+            }
+          }
+
+          var areaAverage = average(areaValues);
+          areaAverages[area] = areaAverage;
+
+          if (section) {
+            var titleBar = section.querySelector(".section-title");
+            var areaRank = section.querySelector(".area-rank");
+            if (titleBar && !areaRank) {
+              areaRank = document.createElement("span");
+              areaRank.className = "print-only area-rank";
+              titleBar.appendChild(areaRank);
+            }
+            if (areaRank) {
+              areaRank.textContent = areaAverage ? "Area average: " + areaAverage.toFixed(1) + " - " + getRankLabel(Math.round(areaAverage)) : "";
+            }
+          }
+
+          setText("score-" + area, areaAverage ? areaAverage.toFixed(1) : "-");
+          setText("level-" + area, areaAverage ? getRankLabel(Math.round(areaAverage)) : "-");
+        });
+
+        var overall = average(allValues);
+        setText("overallScore", overall ? overall.toFixed(1) : "-");
+        setText("overallLevel", overall ? getRankLabel(Math.round(overall)) : "Select statements");
+
+        updateFinalFeedback(areaAverages, overall);
+      }
+
+      function safeGetItem(key) {
+        try {
+          return localStorage.getItem(key);
+        } catch (error) {
+          return null;
+        }
+      }
+
+      function safeSetItem(key, value) {
+        try {
+          localStorage.setItem(key, value);
+        } catch (error) {
+        }
+      }
+
+      function safeRemoveItem(key) {
+        try {
+          localStorage.removeItem(key);
+        } catch (error) {
+        }
+      }
+
+      function collectState() {
+        var data = {
+          teacherName: byId("teacherName").value,
+          dateInput: byId("dateInput").value,
+          classInput: byId("classInput").value,
+          selections: {},
+          notes: {}
+        };
+
+        document.querySelectorAll("select.statement-select").forEach(function (select) {
+          data.selections[select.id] = select.value;
+        });
+
+        document.querySelectorAll("textarea[data-notes]").forEach(function (textarea) {
+          data.notes[textarea.id] = textarea.value;
+        });
+
+        return data;
+      }
+
+      function saveState() {
+        safeSetItem(storageKey, JSON.stringify(collectState()));
+      }
+
+      function readSavedState() {
+        var savedText = safeGetItem(storageKey);
+        var index = 0;
+
+        while (!savedText && index < oldStorageKeys.length) {
+          savedText = safeGetItem(oldStorageKeys[index]);
+          index += 1;
+        }
+
+        if (!savedText) {
+          return null;
+        }
+
+        try {
+          return JSON.parse(savedText);
+        } catch (error) {
+          return null;
+        }
+      }
+
+      function loadState() {
+        var today = new Date().toISOString().slice(0, 10);
+        byId("dateInput").value = today;
+
+        var saved = readSavedState();
+        if (!saved) {
+          return;
+        }
+
+        byId("teacherName").value = saved.teacherName || "";
+        byId("dateInput").value = saved.dateInput || today;
+        byId("classInput").value = saved.classInput || "";
+
+        Object.keys(saved.selections || {}).forEach(function (id) {
+          var element = byId(id);
+          if (element) {
+            element.value = saved.selections[id];
+          }
+        });
+
+        Object.keys(saved.notes || {}).forEach(function (id) {
+          var element = byId(id);
+          if (element) {
+            element.value = saved.notes[id];
+          }
+        });
+      }
+
+      function preparePrintReview() {
+        document.querySelectorAll("details.evidence").forEach(function (details) {
+          var textarea = details.querySelector("textarea");
+          if (textarea && textarea.value.trim()) {
+            details.classList.add("has-notes");
+          } else {
+            details.classList.remove("has-notes");
+          }
+          if (!details.open) {
+            details.setAttribute("data-was-closed", "true");
+            details.open = true;
+          } else {
+            details.removeAttribute("data-was-closed");
+          }
+        });
+      }
+
+      function restoreAfterPrint() {
+        document.querySelectorAll("details.evidence[data-was-closed='true']").forEach(function (details) {
+          details.open = false;
+          details.removeAttribute("data-was-closed");
+        });
+      }
+
+      function clearSaved() {
+        var ok = confirm("Clear saved selections and evidence notes on this device?");
+        if (!ok) {
+          return;
+        }
+
+        safeRemoveItem(storageKey);
+        oldStorageKeys.forEach(safeRemoveItem);
+
+        byId("teacherName").value = "";
+        byId("classInput").value = "";
+        byId("dateInput").value = new Date().toISOString().slice(0, 10);
+
+        document.querySelectorAll("select.statement-select").forEach(function (select) {
+          select.value = "";
+          updateItem(select);
+        });
+
+        document.querySelectorAll("textarea[data-notes]").forEach(function (textarea) {
+          textarea.value = "";
+        });
+
+        updateScoresAndSummary();
+      }
+
+      function initialise() {
+        document.querySelectorAll("select.statement-select").forEach(function (select) {
+          buildStatementPicker(select);
+          select.addEventListener("change", function () {
+            updateItem(select);
+            updatePickerLabel(select);
+            updateScoresAndSummary();
+            saveState();
+          });
+        });
+
+        document.addEventListener("click", function (event) {
+          if (!event.target.closest(".statement-picker")) {
+            closeOtherPickers(null);
+          }
+        });
+
+        document.querySelectorAll("input, textarea").forEach(function (field) {
+          field.addEventListener("input", saveState);
+        });
+
+        byId("printBtn").addEventListener("click", function () {
+          preparePrintReview();
+          window.print();
+        });
+
+        byId("clearSavedBtn").addEventListener("click", clearSaved);
+
+        window.addEventListener("beforeprint", preparePrintReview);
+        window.addEventListener("afterprint", restoreAfterPrint);
+
+        loadState();
+
+        document.querySelectorAll("select.statement-select").forEach(function (select) {
+          updateItem(select);
+          updatePickerLabel(select);
+        });
+
+        updateScoresAndSummary();
+      }
+
+      initialise();
+    }());
+  </script>
+</body>
+</html>
