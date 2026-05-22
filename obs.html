@@ -227,6 +227,75 @@
     .code-guide { margin-top: 8px; font-size: 0.88rem; color: var(--muted); line-height: 1.35; }
     .code-guide code { font-weight: bold; color: var(--ink); }
 
+    .teacher-position-control {
+      margin-top: 6px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fafafa;
+      padding: 6px;
+    }
+
+    .teacher-position-status {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+
+    .teacher-position-status strong {
+      color: var(--ink);
+      display: block;
+      margin-top: 1px;
+    }
+
+    .teacher-position-map {
+      display: block;
+      width: fit-content;
+    }
+
+    .teacher-position-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 30px);
+      grid-template-rows: repeat(3, 26px);
+      border: 1px solid #666;
+      background: white;
+    }
+
+    .teacher-position-cell {
+      min-height: 26px;
+      border: 1px solid #666;
+      border-radius: 0;
+      background: #f7f7f7;
+      color: var(--ink);
+      font-size: 0.75rem;
+      padding: 0;
+    }
+
+    .teacher-position-cell:hover {
+      background: #ececec;
+      filter: none;
+    }
+
+    .teacher-position-cell.is-selected {
+      background: var(--maroon);
+      color: white;
+      font-weight: bold;
+    }
+
+    .teacher-position-front {
+      width: 90px;
+      border: 1px solid #666;
+      border-top: 0;
+      padding: 2px 0;
+      text-align: center;
+      background: white;
+      font-size: 0.68rem;
+    }
+
+    .teacher-position-hidden {
+      display: none;
+    }
+
     .student-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
     .rating-row { display: grid; grid-template-columns: 110px 1fr; gap: 8px; align-items: center; margin: 8px 0; }
     .rating-label { font-weight: bold; font-size: 0.92rem; }
@@ -799,6 +868,69 @@
         align-items: start;
       }
 
+      .print-area-ratings {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 5px;
+        margin: 6px 0;
+      }
+
+      .print-area-rating {
+        border: 1px solid #aaa;
+        padding: 4px 5px;
+        background: #fafafa;
+      }
+
+      .print-area-rating-title {
+        display: block;
+        font-size: 7.5pt;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #555;
+        margin-bottom: 2px;
+      }
+
+      .print-area-rating-score {
+        display: block;
+        font-size: 13pt;
+        font-weight: 900;
+        color: #111;
+        line-height: 1;
+      }
+
+      .print-area-rating-level {
+        display: block;
+        font-size: 7.8pt;
+        margin-top: 2px;
+        line-height: 1.15;
+      }
+
+      .print-summary-metrics {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 7px;
+        margin: 6px 0;
+      }
+
+      .print-summary-box {
+        border: 1px solid #aaa;
+        padding: 5px 6px;
+        background: #fff;
+      }
+
+      .print-summary-box h3 {
+        margin: 0 0 3px 0;
+      }
+
+      .print-compact-list {
+        margin: 2px 0 0 16px;
+        padding: 0;
+      }
+
+      .print-compact-list li {
+        margin: 1px 0;
+      }
+
       .print-big-score {
         font-size: 22pt;
         font-weight: 900;
@@ -991,7 +1123,7 @@
       <div class="file-actions">
         <div><label for="savedObservationSelect">Observations in file</label><select id="savedObservationSelect"><option value="">Open a file or save this observation</option></select></div>
         <button id="openMasterFileBtn" class="secondary-button" type="button">Open file</button>
-        <button id="newObservationBtn" class="secondary-button" type="button">New observation</button>
+        <button id="newObservationBtn" class="secondary-button" type="button">Add new observation</button>
         <button id="saveMasterFileBtn" type="button">Save current</button>
         <button id="loadObservationBtn" class="secondary-button" type="button">Load selected</button>
         <button id="deleteObservationBtn" class="secondary-button" type="button">Delete selected</button>
@@ -1426,7 +1558,7 @@
       }
 
       function buildDefaultRubricEvidence(areaKey, itemKey, code, meaning) {
-        return "Running record code [" + code + "] " + meaning + " was noted during the observation.";
+        return "Observed in lesson: [" + code + "] " + meaning + ".";
       }
 
       function buildStudentRatings() {
@@ -1445,6 +1577,116 @@
       function getRatingValue(key) {
         var selected = document.querySelector(".rating-group[data-rating='" + key + "'] .rating-button.is-selected");
         return selected ? Number(selected.getAttribute("data-value")) : 0;
+      }
+
+      function getTeacherPositionMap() {
+        return {
+          "back-left": "Back left",
+          "back-centre": "Back centre",
+          "back-right": "Back right",
+          "middle-left": "Middle left",
+          "middle-centre": "Middle centre",
+          "middle-right": "Middle right",
+          "front-left": "Front left",
+          "front-centre": "Front centre",
+          "front-right": "Front right"
+        };
+      }
+
+      function getTeacherPositionValues(value) {
+        return String(value || "")
+          .split(",")
+          .map(function (item) { return item.trim(); })
+          .filter(function (item) { return item.length > 0; });
+      }
+
+      function formatTeacherPosition(value) {
+        var map = getTeacherPositionMap();
+        var values = getTeacherPositionValues(value);
+        if (!values.length) return "Not set";
+        return values.map(function (position) {
+          return map[position] || position;
+        }).join(", ");
+      }
+
+      function closeOtherPositionMaps(activeControl) {
+        document.querySelectorAll(".teacher-position-control.is-open").forEach(function (control) {
+          if (control !== activeControl) control.classList.remove("is-open");
+        });
+      }
+
+      function updateTeacherPositionControl(control) {
+        var hidden = control.querySelector(".record-position");
+        var status = control.querySelector(".teacher-position-current");
+        var value = hidden ? hidden.value : "";
+        var selectedValues = getTeacherPositionValues(value);
+        if (status) status.textContent = formatTeacherPosition(value);
+        control.querySelectorAll(".teacher-position-cell").forEach(function (cell) {
+          var position = cell.getAttribute("data-position");
+          cell.classList.toggle("is-selected", selectedValues.indexOf(position) !== -1);
+        });
+      }
+
+      function createTeacherPositionControl(selectedValue) {
+        var control = document.createElement("div");
+        control.className = "teacher-position-control";
+
+        var hidden = document.createElement("input");
+        hidden.type = "hidden";
+        hidden.className = "teacher-position-hidden record-position";
+        hidden.value = selectedValue || "";
+        control.appendChild(hidden);
+
+        var status = document.createElement("div");
+        status.className = "teacher-position-status";
+        status.innerHTML = "Teacher position <strong class=\"teacher-position-current\">Not set</strong>";
+        control.appendChild(status);
+
+        var mapWrap = document.createElement("div");
+        mapWrap.className = "teacher-position-map";
+        var grid = document.createElement("div");
+        grid.className = "teacher-position-grid";
+        var positions = [
+          ["back-left", "↖"],
+          ["back-centre", "↑"],
+          ["back-right", "↗"],
+          ["middle-left", "←"],
+          ["middle-centre", "●"],
+          ["middle-right", "→"],
+          ["front-left", "↙"],
+          ["front-centre", "↓"],
+          ["front-right", "↘"]
+        ];
+        positions.forEach(function (position) {
+          var button = document.createElement("button");
+          button.type = "button";
+          button.className = "teacher-position-cell";
+          button.textContent = position[1];
+          button.title = formatTeacherPosition(position[0]);
+          button.setAttribute("data-position", position[0]);
+          button.addEventListener("click", function () {
+            var selectedValues = getTeacherPositionValues(hidden.value);
+            var existingIndex = selectedValues.indexOf(position[0]);
+            if (existingIndex === -1) {
+              selectedValues.push(position[0]);
+            } else {
+              selectedValues.splice(existingIndex, 1);
+            }
+            hidden.value = selectedValues.join(",");
+            updateTeacherPositionControl(control);
+            updatePrintVisibility();
+            saveState();
+          });
+          grid.appendChild(button);
+        });
+        mapWrap.appendChild(grid);
+        var front = document.createElement("div");
+        front.className = "teacher-position-front";
+        front.textContent = "Front";
+        mapWrap.appendChild(front);
+        control.appendChild(mapWrap);
+        updateTeacherPositionControl(control);
+        return control;
       }
 
       function addActivityCode(textarea, code, meaning) {
@@ -1489,19 +1731,23 @@
         var codeGroups = [
           {
             title: "Interaction scale",
-            codes: [["In", "Individual"], ["Pr", "Pair"], ["GP", "Group"], ["WC", "Whole Class"], ["TT", "Tuakana-Teina"], ["SS", "Student-to-student"], ["SV", "Student voice"]]
+            codes: [["In", "Individual"], ["GP", "Group"], ["WC", "Whole Class"], ["TT", "Tuakana-Teina"], ["SS", "Student-to-student"], ["SV", "Student voice"]]
           },
           {
-            title: "Teaching / learning moves",
-            codes: [["I", "Instruction"], ["LI", "Learning intention"], ["SC", "Success criteria"], ["Mod", "Modelling"], ["CFU", "Check for understanding"], ["Q", "Questioning"], ["PK", "Prior knowledge"], ["Co", "Co-construction"]]
+            title: "Teaching / learning",
+            codes: [["I", "Instruction"], ["LI", "Learning intention"], ["SC", "Success criteria"], ["Mod", "Modelling"], ["CFU", "Check for understanding"], ["PK", "Prior knowledge"], ["Co", "Co-construction"]]
           },
           {
             title: "Monitoring / routines / agency",
             codes: [["M", "Monitoring"], ["R", "Routine"], ["Red", "Redirection or reminder"], ["Ch", "Challenge / productive struggle"], ["Ag", "Learner agency / choice"]]
           },
           {
-            title: "Feedback / feedforward",
-            codes: [["FBB", "Feedback Behaviour"], ["FBB-", "Feedback Behaviour negative"], ["FBB+", "Feedback Behaviour positive"], ["FBA", "Feedback Academic"], ["FBA-", "Feedback Academic negative"], ["FBA+", "Feedback Academic positive"], ["FFB", "Feedforward Behaviour"], ["FFA", "Feedforward Academic"], ["Prs", "Praise"]]
+            title: "Behaviour feedback / feedforward",
+            codes: [["FBB", "Feedback Behaviour"], ["FBB-", "Feedback Behaviour negative"], ["FBB+", "Feedback Behaviour positive"], ["FFB", "Feedforward Behaviour"]]
+          },
+          {
+            title: "Academic feedback / feedforward",
+            codes: [["FBA", "Feedback Academic"], ["FBA-", "Feedback Academic negative"], ["FBA+", "Feedback Academic positive"], ["FFA", "Feedforward Academic"]]
           },
           {
             title: "Culture / language / identity",
@@ -1531,6 +1777,7 @@
         });
         timeCell.appendChild(timeInput);
         timeCell.appendChild(deleteButton);
+        timeCell.appendChild(createTeacherPositionControl(data && data.position ? data.position : ""));
         noteCell.appendChild(tools);
         noteCell.appendChild(noteTextarea);
         row.appendChild(timeCell);
@@ -1691,6 +1938,8 @@
         document.querySelectorAll(".record-row").forEach(function (row) {
           var visible = false;
           row.querySelectorAll("input, textarea").forEach(function (field) { if (hasValue(field)) visible = true; });
+          var positionField = row.querySelector(".record-position");
+          if (positionField && positionField.value) visible = true;
           row.classList.toggle("has-print-content", visible);
         });
         document.querySelectorAll(".student-card").forEach(function (card) {
@@ -1755,6 +2004,46 @@
         return getStudentVoicePrintParts(metric, value);
       }
 
+      function getStudentVoiceAverageLines() {
+        var metrics = [
+          ["Engagement", "Engagement"],
+          ["Cognitive", "Cognitive challenge"],
+          ["LearningArticulation", "Explains learning"],
+          ["WhyArticulation", "Explains purpose"],
+          ["SuccessArticulation", "Explains success / next step"],
+          ["Work", "Work completed"],
+          ["Enjoyment", "Enjoyment"]
+        ];
+        var lines = [];
+        metrics.forEach(function (metric) {
+          var values = [];
+          for (var s = 1; s <= 4; s += 1) {
+            var value = getRatingValue("student" + s + metric[0]);
+            if (value) values.push(value);
+          }
+          var avg = average(values);
+          if (avg) lines.push(metric[1] + ": " + avg.toFixed(1) + "/5 (n=" + values.length + ")");
+        });
+        return lines;
+      }
+
+      function getUnvisitedTeacherPositions() {
+        var allPositions = [
+          "back-left", "back-centre", "back-right",
+          "middle-left", "middle-centre", "middle-right",
+          "front-left", "front-centre", "front-right"
+        ];
+        var visited = {};
+        document.querySelectorAll(".record-position").forEach(function (field) {
+          getTeacherPositionValues(field.value).forEach(function (position) {
+            visited[position] = true;
+          });
+        });
+        return allPositions.filter(function (position) {
+          return !visited[position];
+        }).map(formatTeacherPosition);
+      }
+
       function buildPrintableReport() {
         updateAll();
         var report = byId("printReport");
@@ -1788,6 +2077,45 @@
         reviewCard.appendChild(scoreBox);
         reviewCard.appendChild(feedbackBox);
         reviewBody.appendChild(reviewCard);
+
+        var areaRatingGrid = document.createElement("div");
+        areaRatingGrid.className = "print-area-ratings";
+        rubrics.forEach(function (area) {
+          var areaCard = document.createElement("div");
+          areaCard.className = "print-area-rating";
+          var scoreText = byId("score-" + area.key) ? byId("score-" + area.key).textContent : "-";
+          var levelText = byId("level-" + area.key) ? byId("level-" + area.key).textContent : "-";
+          printText(areaCard, "span", "print-area-rating-title", area.title);
+          printText(areaCard, "span", "print-area-rating-score", scoreText);
+          printText(areaCard, "span", "print-area-rating-level", levelText);
+          areaRatingGrid.appendChild(areaCard);
+        });
+        reviewBody.appendChild(areaRatingGrid);
+
+        var summaryMetrics = document.createElement("div");
+        summaryMetrics.className = "print-summary-metrics";
+
+        var movementBox = document.createElement("div");
+        movementBox.className = "print-summary-box";
+        printText(movementBox, "h3", "", "Classroom areas not visited");
+        var notVisited = getUnvisitedTeacherPositions();
+        printText(movementBox, "p", "", notVisited.length ? notVisited.join(", ") : "All recorded classroom areas were visited.");
+        summaryMetrics.appendChild(movementBox);
+
+        var studentScoreBox = document.createElement("div");
+        studentScoreBox.className = "print-summary-box";
+        printText(studentScoreBox, "h3", "", "Average student voice scores");
+        var studentAverages = getStudentVoiceAverageLines();
+        if (studentAverages.length) {
+          var studentAverageList = document.createElement("ul");
+          studentAverageList.className = "print-compact-list";
+          studentAverages.forEach(function (line) { addListItem(studentAverageList, line); });
+          studentScoreBox.appendChild(studentAverageList);
+        } else {
+          printText(studentScoreBox, "p", "", "No student voice ratings entered.");
+        }
+        summaryMetrics.appendChild(studentScoreBox);
+        reviewBody.appendChild(summaryMetrics);
         var summaryCols = document.createElement("div");
         summaryCols.className = "print-two-col";
         var strengthsBox = document.createElement("div");
@@ -1820,7 +2148,9 @@
         document.querySelectorAll(".record-row").forEach(function (row) {
           var time = row.querySelector(".record-time").value.trim();
           var note = row.querySelector(".record-note").value.trim();
-          if (time || note) recordRows.push({ time: time, note: note });
+          var positionField = row.querySelector(".record-position");
+          var position = positionField ? positionField.value : "";
+          if (time || note || position) recordRows.push({ time: time, note: note, position: position });
         });
         if (recordRows.length) {
           var recordBody = addPrintSection(report, "10-minute observation - running record");
@@ -1829,6 +2159,7 @@
           var thead = document.createElement("thead");
           var headRow = document.createElement("tr");
           printText(headRow, "th", "", "Time");
+          printText(headRow, "th", "", "Teacher position");
           printText(headRow, "th", "", "Teacher/Student Activity");
           thead.appendChild(headRow);
           table.appendChild(thead);
@@ -1836,6 +2167,7 @@
           recordRows.forEach(function (record) {
             var tr = document.createElement("tr");
             printText(tr, "td", "", record.time);
+            printText(tr, "td", "", formatTeacherPosition(record.position));
             printText(tr, "td", "", record.note);
             tbody.appendChild(tr);
           });
@@ -1941,8 +2273,10 @@
         document.querySelectorAll(".record-row").forEach(function (row) {
           var time = row.querySelector(".record-time").value;
           var note = row.querySelector(".record-note").value;
-          if (String(time).trim() || String(note).trim()) {
-            data.records.push({ time: time, note: note });
+          var positionField = row.querySelector(".record-position");
+          var position = positionField ? positionField.value : "";
+          if (String(time).trim() || String(note).trim() || String(position).trim()) {
+            data.records.push({ time: time, note: note, position: position });
           }
         });
         return data;
@@ -1991,7 +2325,7 @@
           setRubricSelection(parts[0], parts.slice(1).join("-"), rank);
         });
         var savedRecords = (saved.records || []).filter(function (record) {
-          return (record.time && String(record.time).trim()) || (record.note && String(record.note).trim());
+          return (record.time && String(record.time).trim()) || (record.note && String(record.note).trim()) || (record.position && String(record.position).trim());
         });
         if (savedRecords.length) savedRecords.forEach(function (record) { addRecordRow(record); });
         else addRecordRow();
