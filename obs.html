@@ -597,6 +597,7 @@
 
     @media print {
       @page {
+        size: A4;
         margin: 8mm 10mm 10mm 10mm;
       }
 
@@ -604,18 +605,56 @@
       body {
         height: auto !important;
         min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
       }
 
+      body {
+        background: white !important;
+      }
+
+      main,
       main.wrap {
         display: block !important;
+        height: auto !important;
+        min-height: 0 !important;
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+        overflow: visible !important;
+      }
+
+      header {
+        margin-bottom: 4px !important;
       }
 
       .panel,
       .section,
       .summary-panel {
-        margin: 0 0 4px 0 !important;
+        margin: 0 0 3px 0 !important;
+        padding-bottom: 0 !important;
         break-inside: auto !important;
         page-break-inside: auto !important;
+        page-break-after: auto !important;
+      }
+
+      .section-body {
+        padding: 3px 5px !important;
+      }
+
+      .field-card,
+      .student-card,
+      .summary-box,
+      .feedback-card,
+      .final-score-card,
+      .rubric-item {
+        padding-top: 2px !important;
+        padding-bottom: 2px !important;
+        margin-bottom: 2px !important;
+      }
+
+      .running-record-table {
+        margin-bottom: 2px !important;
       }
 
       #finalReview,
@@ -626,41 +665,301 @@
         page-break-inside: avoid;
       }
 
-      .section-body {
-        padding: 4px 6px !important;
-      }
-
-      .field-card,
-      .student-card,
-      .summary-box,
-      .feedback-card,
-      .final-score-card,
-      .rubric-item {
-        padding-top: 3px !important;
-        padding-bottom: 3px !important;
+      #reflectionSection {
+        margin-bottom: 3px !important;
       }
 
       #reflectionSection .field-card {
-        min-height: 24mm !important;
+        min-height: 18mm !important;
       }
 
       #reflectionSection textarea {
-        min-height: 16mm !important;
+        min-height: 10mm !important;
       }
 
       .signature-panel {
         margin: 0 !important;
-        padding: 5px 6px !important;
+        padding: 4px 5px !important;
+        break-inside: avoid;
+        page-break-inside: avoid;
+        page-break-after: avoid !important;
+      }
+
+      .signature-box {
+        min-height: 9mm !important;
+      }
+
+      .signature-line {
+        margin-top: 5mm !important;
+      }
+
+      body::after,
+      main::after,
+      .wrap::after {
+        content: none !important;
+        display: none !important;
+      }
+
+      body > *:last-child,
+      main > *:last-child,
+      .wrap > *:last-child {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+      }
+    }
+
+    .print-report {
+      display: none;
+    }
+
+    @media print {
+      body > header,
+      body > main.wrap {
+        display: none !important;
+      }
+
+      .print-report {
+        display: block !important;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #111;
+        font-size: 9pt;
+        line-height: 1.2;
+        margin: 0;
+        padding: 0;
+      }
+
+      .print-report h1 {
+        font-size: 17pt;
+        margin: 0 0 2px 0;
+        letter-spacing: 0.02em;
+        border-bottom: 2px solid #111;
+        padding-bottom: 4px;
+      }
+
+      .print-report h2 {
+        font-size: 10.5pt;
+        margin: 0;
+        padding: 4px 6px;
+        background: #f0f0f0;
+        border-bottom: 1px solid #999;
+      }
+
+      .print-report h3 {
+        font-size: 9.2pt;
+        margin: 0 0 2px 0;
+      }
+
+      .print-report p {
+        margin: 2px 0;
+      }
+
+      .print-section {
+        border: 1px solid #999;
+        margin: 0 0 5px 0;
+        padding: 0;
+        break-inside: auto;
+        page-break-inside: auto;
+      }
+
+      .print-section-body {
+        padding: 5px 6px;
+      }
+
+      .print-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0;
+        border-top: 1px solid #999;
+        border-left: 1px solid #999;
+      }
+
+      .print-field {
+        border-right: 1px solid #999;
+        border-bottom: 1px solid #999;
+        padding: 3px 5px;
+        min-height: 10mm;
+      }
+
+      .print-label {
+        display: block;
+        font-size: 7.5pt;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: #555;
+        font-weight: bold;
+        margin-bottom: 1px;
+      }
+
+      .print-review-card {
+        display: grid;
+        grid-template-columns: 70px 1fr;
+        gap: 8px;
+        align-items: start;
+      }
+
+      .print-big-score {
+        font-size: 22pt;
+        font-weight: 900;
+      }
+
+      .print-two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 7px;
+      }
+
+      .print-student-card,
+      .print-rubric-item,
+      .print-note-box {
+        border: 1px solid #bbb;
+        padding: 5px 7px;
+        margin: 0 0 5px 0;
         break-inside: avoid;
         page-break-inside: avoid;
       }
 
-      .signature-box {
-        min-height: 12mm !important;
+      .print-score-line {
+        display: grid;
+        grid-template-columns: 35mm 12mm 1fr;
+        gap: 4px;
+        border-bottom: 1px solid #e5e5e5;
+        padding: 2px 0;
       }
 
-      .signature-line {
-        margin-top: 7mm !important;
+      .print-score-line:last-child {
+        border-bottom: 0;
+      }
+
+      .print-score-name,
+      .print-score-value {
+        font-weight: bold;
+      }
+
+      .print-score-value {
+        text-align: center;
+        border: 1px solid #aaa;
+        border-radius: 8px;
+        padding: 0 3px;
+        white-space: nowrap;
+      }
+
+      .print-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .print-table th,
+      .print-table td {
+        border: 1px solid #999;
+        padding: 3px 4px;
+        vertical-align: top;
+      }
+
+      .print-table th {
+        background: #f0f0f0;
+        text-align: left;
+      }
+
+      .print-write-space {
+        min-height: 22mm;
+        border-top: 1px solid #ddd;
+        margin-top: 3px;
+        padding-top: 3px;
+        white-space: pre-wrap;
+      }
+
+      .print-signatures {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .print-signature-box {
+        min-height: 18mm;
+        border-top: 1px solid #999;
+        padding-top: 4px;
+      }
+
+      .print-signature-line {
+        margin-top: 11mm;
+        border-top: 1px solid #111;
+        padding-top: 2px;
+      }
+
+      .print-empty {
+        color: #777;
+        font-style: italic;
+      }
+    }
+
+    @media print {
+      html, body {
+        width: auto !important;
+        height: auto !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
+        background: white !important;
+      }
+
+      body > header,
+      body > main.wrap,
+      body > script,
+      body > .signature-panel {
+        display: none !important;
+        height: 0 !important;
+        min-height: 0 !important;
+        max-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+        visibility: hidden !important;
+      }
+
+      #printReport {
+        display: block !important;
+        position: static !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
+        break-after: avoid !important;
+        page-break-after: avoid !important;
+      }
+
+      #printReport:empty {
+        display: none !important;
+      }
+
+      #printReport * {
+        max-height: none !important;
+        overflow: visible !important;
+      }
+
+      #printReport > *:last-child,
+      #printReport .print-section:last-child,
+      #printReport .print-section:last-child *:last-child {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+        break-after: avoid !important;
+        page-break-after: avoid !important;
+      }
+
+      .print-section {
+        break-before: auto !important;
+        page-break-before: auto !important;
+        break-after: auto !important;
+        page-break-after: auto !important;
+      }
+
+      .print-section:empty,
+      .print-section-body:empty {
+        display: none !important;
       }
     }
   </style>
@@ -775,6 +1074,9 @@
       </div>
     </section>
   </main>
+
+
+  <section id="printReport" class="print-report" aria-label="Printable observation report"></section>
 
   <script>
     (function () {
@@ -1411,6 +1713,224 @@
 
       function updateAll() { updateStudentVoice(); updateAnalysis(); updatePrintVisibility(); }
 
+      function getValueForPrint(id) {
+        var element = byId(id);
+        return element ? String(element.value || "").trim() : "";
+      }
+
+      function printText(parent, tag, className, text) {
+        return addText(parent, tag, className, text);
+      }
+
+      function addPrintSection(report, title) {
+        var section = document.createElement("section");
+        section.className = "print-section";
+        printText(section, "h2", "", title);
+        var body = document.createElement("div");
+        body.className = "print-section-body";
+        section.appendChild(body);
+        report.appendChild(section);
+        return body;
+      }
+
+      function addPrintField(grid, label, value) {
+        var box = document.createElement("div");
+        box.className = "print-field";
+        printText(box, "span", "print-label", label);
+        printText(box, "div", "", value || "");
+        grid.appendChild(box);
+      }
+
+      function addPrintList(parent, items, emptyText) {
+        var list = document.createElement("ul");
+        if (items.length) {
+          items.forEach(function (item) { addListItem(list, item); });
+        } else {
+          addListItem(list, emptyText);
+        }
+        parent.appendChild(list);
+      }
+
+      function getStudentVoiceParts(metric, value) {
+        return getStudentVoicePrintParts(metric, value);
+      }
+
+      function buildPrintableReport() {
+        updateAll();
+        var report = byId("printReport");
+        if (!report) return;
+        clearElement(report);
+
+        printText(report, "h1", "", "Observation Tool - Arotake Whaiaro");
+        printText(report, "p", "", "Pukekohe High School Effective Teacher Profile observation review");
+
+        var detailsBody = addPrintSection(report, "Observation details");
+        var detailsGrid = document.createElement("div");
+        detailsGrid.className = "print-grid";
+        addPrintField(detailsGrid, "Teacher", getValueForPrint("teacherName"));
+        addPrintField(detailsGrid, "Observer", getValueForPrint("observerName"));
+        addPrintField(detailsGrid, "Date", getValueForPrint("dateInput"));
+        addPrintField(detailsGrid, "Period", getValueForPrint("periodInput"));
+        addPrintField(detailsGrid, "Class", getValueForPrint("classInput"));
+        addPrintField(detailsGrid, "Room", getValueForPrint("roomInput"));
+        addPrintField(detailsGrid, "No. of students", getValueForPrint("studentsInput"));
+        detailsBody.appendChild(detailsGrid);
+
+        var reviewBody = addPrintSection(report, "Observation review summary");
+        var reviewCard = document.createElement("div");
+        reviewCard.className = "print-review-card";
+        var scoreBox = document.createElement("div");
+        printText(scoreBox, "div", "print-big-score", byId("finalEtpAverage") ? byId("finalEtpAverage").textContent : "-");
+        printText(scoreBox, "div", "print-label", "ETP average");
+        var feedbackBox = document.createElement("div");
+        printText(feedbackBox, "h3", "", byId("finalEtpLevel") ? byId("finalEtpLevel").textContent : "Select statements");
+        printText(feedbackBox, "p", "", byId("overallFeedback") ? byId("overallFeedback").textContent : "");
+        reviewCard.appendChild(scoreBox);
+        reviewCard.appendChild(feedbackBox);
+        reviewBody.appendChild(reviewCard);
+        var summaryCols = document.createElement("div");
+        summaryCols.className = "print-two-col";
+        var strengthsBox = document.createElement("div");
+        var stepsBox = document.createElement("div");
+        printText(strengthsBox, "h3", "", "Strengths / evidence to affirm");
+        printText(stepsBox, "h3", "", "Priority next steps");
+        addPrintList(strengthsBox, Array.prototype.map.call(byId("strengthsList").querySelectorAll("li"), function (li) { return li.textContent; }), "Select statements and add evidence to identify strengths.");
+        addPrintList(stepsBox, Array.prototype.map.call(byId("nextStepsList").querySelectorAll("li"), function (li) { return li.textContent; }), "Select statements and add evidence to generate next steps.");
+        summaryCols.appendChild(strengthsBox);
+        summaryCols.appendChild(stepsBox);
+        reviewBody.appendChild(summaryCols);
+
+        var focusValues = [getValueForPrint("observationFocus"), getValueForPrint("firstFiveContext")];
+        if (focusValues[0] || focusValues[1]) {
+          var focusBody = addPrintSection(report, "Agreed observation focus");
+          var focusCols = document.createElement("div");
+          focusCols.className = "print-two-col";
+          var focusBox = document.createElement("div");
+          var contextBox = document.createElement("div");
+          printText(focusBox, "h3", "", "Agreed Observation Focus");
+          printText(focusBox, "p", "", focusValues[0]);
+          printText(contextBox, "h3", "", "First 5 minutes - observation context");
+          printText(contextBox, "p", "", focusValues[1]);
+          focusCols.appendChild(focusBox);
+          focusCols.appendChild(contextBox);
+          focusBody.appendChild(focusCols);
+        }
+
+        var recordRows = [];
+        document.querySelectorAll(".record-row").forEach(function (row) {
+          var time = row.querySelector(".record-time").value.trim();
+          var note = row.querySelector(".record-note").value.trim();
+          if (time || note) recordRows.push({ time: time, note: note });
+        });
+        if (recordRows.length) {
+          var recordBody = addPrintSection(report, "10-minute observation - running record");
+          var table = document.createElement("table");
+          table.className = "print-table";
+          var thead = document.createElement("thead");
+          var headRow = document.createElement("tr");
+          printText(headRow, "th", "", "Time");
+          printText(headRow, "th", "", "Teacher/Student Activity");
+          thead.appendChild(headRow);
+          table.appendChild(thead);
+          var tbody = document.createElement("tbody");
+          recordRows.forEach(function (record) {
+            var tr = document.createElement("tr");
+            printText(tr, "td", "", record.time);
+            printText(tr, "td", "", record.note);
+            tbody.appendChild(tr);
+          });
+          table.appendChild(tbody);
+          recordBody.appendChild(table);
+        }
+
+        var studentCards = [];
+        for (var s = 1; s <= 4; s += 1) {
+          var lines = [];
+          ["Engagement", "Cognitive", "LearningArticulation", "WhyArticulation", "SuccessArticulation", "Work", "Enjoyment"].forEach(function (metric) {
+            var key = "student" + s + metric;
+            var value = getRatingValue(key);
+            if (value) lines.push(getStudentVoiceParts(metric, value));
+          });
+          var note = getValueForPrint("student" + s + "VoiceNote");
+          if (lines.length || note) studentCards.push({ number: s, lines: lines, note: note });
+        }
+        if (studentCards.length) {
+          var studentBody = addPrintSection(report, "Student Voice Sample");
+          var studentGrid = document.createElement("div");
+          studentGrid.className = "print-two-col";
+          studentCards.forEach(function (student) {
+            var card = document.createElement("div");
+            card.className = "print-student-card";
+            printText(card, "h3", "", "Student " + student.number);
+            student.lines.forEach(function (line) {
+              var scoreLine = document.createElement("div");
+              scoreLine.className = "print-score-line";
+              printText(scoreLine, "span", "print-score-name", line.label);
+              printText(scoreLine, "span", "print-score-value", line.score);
+              printText(scoreLine, "span", "", line.sentence);
+              card.appendChild(scoreLine);
+            });
+            if (student.note) {
+              printText(card, "p", "", "Note: " + student.note);
+            }
+            studentGrid.appendChild(card);
+          });
+          studentBody.appendChild(studentGrid);
+        }
+
+        rubrics.forEach(function (area) {
+          var areaItems = [];
+          area.items.forEach(function (item) {
+            var rank = getRubricSelection(area.key, item.key);
+            var notes = getValueForPrint("notes-" + getItemId(area.key, item.key));
+            if (rank || notes) {
+              areaItems.push({ title: item.title, rank: rank, statement: rank ? item.statements[rank - 1] : "", notes: notes });
+            }
+          });
+          if (areaItems.length) {
+            var areaBody = addPrintSection(report, area.title);
+            areaItems.forEach(function (entry) {
+              var card = document.createElement("div");
+              card.className = "print-rubric-item";
+              printText(card, "h3", "", entry.title);
+              if (entry.rank) {
+                printText(card, "p", "", "Assigned rank: " + getLevelLabel(entry.rank));
+                printText(card, "p", "", entry.statement);
+              }
+              if (entry.notes) printText(card, "p", "", "Evidence / notes: " + entry.notes);
+              areaBody.appendChild(card);
+            });
+          }
+        });
+
+        var reflectionBody = addPrintSection(report, "Reflection and future directions");
+        var teacherBox = document.createElement("div");
+        teacherBox.className = "print-note-box";
+        printText(teacherBox, "h3", "", "Reflection on lesson (Teacher)");
+        printText(teacherBox, "div", "print-write-space", getValueForPrint("teacherReflection"));
+        var futureBox = document.createElement("div");
+        futureBox.className = "print-note-box";
+        printText(futureBox, "h3", "", "Future directions (To be co-constructed)");
+        printText(futureBox, "div", "print-write-space", getValueForPrint("futureDirections"));
+        reflectionBody.appendChild(teacherBox);
+        reflectionBody.appendChild(futureBox);
+
+        var signatureBody = addPrintSection(report, "Sign off");
+        var sigGrid = document.createElement("div");
+        sigGrid.className = "print-signatures";
+        var teacherSig = document.createElement("div");
+        teacherSig.className = "print-signature-box";
+        printText(teacherSig, "strong", "", "Teacher");
+        printText(teacherSig, "div", "print-signature-line", "Signature / date");
+        var observerSig = document.createElement("div");
+        observerSig.className = "print-signature-box";
+        printText(observerSig, "strong", "", "Observer");
+        printText(observerSig, "div", "print-signature-line", "Signature / date");
+        sigGrid.appendChild(teacherSig);
+        sigGrid.appendChild(observerSig);
+        signatureBody.appendChild(sigGrid);
+      }
+
       function collectState() {
         var data = { fields: {}, ratings: {}, rubric: {}, records: [] };
         document.querySelectorAll("[data-save]").forEach(function (field) { data.fields[field.id] = field.value; });
@@ -1674,7 +2194,7 @@
           if (!event.target.closest(".statement-picker")) closeOtherPickers(null);
         });
         byId("addRecordRowBtn").addEventListener("click", function () { addRecordRow(); saveState(); });
-        byId("printBtn").addEventListener("click", function () { updateAll(); window.print(); });
+        byId("printBtn").addEventListener("click", function () { buildPrintableReport(); window.print(); });
         byId("clearSavedBtn").addEventListener("click", clearSaved);
         byId("newObservationBtn").addEventListener("click", addNewObservation);
         byId("saveMasterFileBtn").addEventListener("click", function () {
@@ -1689,7 +2209,7 @@
           importMasterFileFromInput(this.files && this.files[0]);
           this.value = "";
         });
-        window.addEventListener("beforeprint", updateAll);
+        window.addEventListener("beforeprint", buildPrintableReport);
         updateAll();
       }
 
