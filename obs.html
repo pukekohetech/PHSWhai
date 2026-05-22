@@ -594,6 +594,75 @@
       .feedback-card ul { margin: 2px 0 0 16px; }
       a, a:visited { color: #111; text-decoration: none; }
     }
+
+    @media print {
+      @page {
+        margin: 8mm 10mm 10mm 10mm;
+      }
+
+      html,
+      body {
+        height: auto !important;
+        min-height: 0 !important;
+      }
+
+      main.wrap {
+        display: block !important;
+      }
+
+      .panel,
+      .section,
+      .summary-panel {
+        margin: 0 0 4px 0 !important;
+        break-inside: auto !important;
+        page-break-inside: auto !important;
+      }
+
+      #finalReview,
+      .student-card,
+      .rubric-item,
+      .field-card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .section-body {
+        padding: 4px 6px !important;
+      }
+
+      .field-card,
+      .student-card,
+      .summary-box,
+      .feedback-card,
+      .final-score-card,
+      .rubric-item {
+        padding-top: 3px !important;
+        padding-bottom: 3px !important;
+      }
+
+      #reflectionSection .field-card {
+        min-height: 24mm !important;
+      }
+
+      #reflectionSection textarea {
+        min-height: 16mm !important;
+      }
+
+      .signature-panel {
+        margin: 0 !important;
+        padding: 5px 6px !important;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .signature-box {
+        min-height: 12mm !important;
+      }
+
+      .signature-line {
+        margin-top: 7mm !important;
+      }
+    }
   </style>
 </head>
 <body>
