@@ -189,13 +189,13 @@
     .week-head h3{margin:0}
     .phs-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
     .phs-box{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fbfcff}
-    .phs-principles-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-    .phs-principle-card{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fbfcff}
-    .phs-principle-card .chips{margin:8px 0}
-    .phs-principle-title{font-weight:800;color:#26344a;margin-bottom:3px}
-    .phs-principle-card textarea{min-height:95px}
-    .phs-principle-check{margin-top:10px}
-    @media(max-width:740px){.phs-principles-grid{grid-template-columns:1fr}}
+    .phs-principles-grid,.tiriti-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .phs-principle-card,.tiriti-card{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fbfcff}
+    .phs-principle-card .chips,.tiriti-card .chips{margin:8px 0}
+    .phs-principle-title,.tiriti-title{font-weight:800;color:#26344a;margin-bottom:3px}
+    .phs-principle-card textarea,.tiriti-card textarea{min-height:105px}
+    .phs-principle-check,.tiriti-check{margin-top:10px}
+    @media(max-width:740px){.phs-principles-grid,.tiriti-grid{grid-template-columns:1fr}}
     .phs-label{font-weight:800;color:#26344a;margin-bottom:6px}
     details.utility{border:1px dashed var(--line);border-radius:14px;padding:10px;background:#fbfcff}
     details.utility summary{cursor:pointer;font-weight:700}
@@ -320,10 +320,21 @@
         <div id="phsPrinciplesCheck" class="notice phs-principle-check">Select at least one curriculum design principle connection.</div>
         <div id="phsPrinciplesGrid" class="phs-principles-grid"></div>
       </div>
+      <div class="next-actions no-print"><button type="button" class="primary" data-next-step="tiritiBarriers">Next: Te Tiriti and barriers</button></div>
+    </section>
+    <section id="tiritiBarriers" class="card">
+      <div class="titlebar"><div><h2>4. Te Tiriti o Waitangi and reducing barriers</h2><p>Describe how this learning gives practical effect to Te Tiriti o Waitangi and supports ōritetanga for Māori learners.</p></div></div>
+      <div class="step-note">Recommended: select chips that genuinely apply, then add a teacher comment explaining the practical classroom actions for this unit.</div>
+      <div class="card soft">
+        <h3>How does this learning give practical effect to Te Tiriti o Waitangi?</h3>
+        <h3>How does this reduce barriers to learning for Māori (ōritetanga)?</h3>
+        <div id="tiritiBarriersCheck" class="notice tiriti-check">Select at least one Te Tiriti / barrier-reduction action.</div>
+        <div id="tiritiBarriersGrid" class="tiriti-grid"></div>
+      </div>
       <div class="next-actions no-print"><button type="button" class="primary" data-next-step="planning">Next: unit strategies</button></div>
     </section>
         <section id="planning" class="card">
-      <div class="titlebar"><div><h2>4. Unit strategies</h2><p>Choose the main teaching supports for the unit.</p></div></div><div class="step-note">Recommended: choose about 5–8 strategies in total.</div>
+      <div class="titlebar"><div><h2>5. Unit strategies</h2><p>Choose the main teaching supports for the unit.</p></div></div><div class="step-note">Recommended: choose about 5–8 strategies in total.</div>
       <div class="stack">
         <div class="card soft">
           <h3>Learning progressions</h3>
@@ -351,7 +362,7 @@
 
     <section id="weeks" class="card">
       <div class="titlebar">
-        <div><h2>5. Review learning focus plans</h2><p>These are created automatically from the selected curriculum statements. Fix only the items listed in Needs attention.</p></div>
+        <div><h2>6. Review learning focus plans</h2><p>These are created automatically from the selected curriculum statements. Fix only the items listed in Needs attention.</p></div>
         <div class="toolbar"><button id="generateWeeksBtn" class="primary small">Refresh plans</button><button id="suggestAllWeeksBtn" class="small">Fill missing suggestions</button><button id="applyProgressionBtn" class="small">Apply progression</button><button id="addWeekBtn" class="small">Add custom plan</button></div>
       </div><div class="step-note">Automatic: plans appear when curriculum statements are selected. Suggestions and progression are applied automatically.</div>
       <div id="weeksList" class="stack"></div>
@@ -360,7 +371,7 @@
 
     <section id="marking" class="card">
       <div class="titlebar">
-        <div><h2>6. Assessment guide</h2><p>Edit marking guide wording here. The relevant guide updates under its matching learning focus and appears after that learning focus in the Word/print document.</p></div>
+        <div><h2>7. Assessment guide</h2><p>Edit marking guide wording here. The relevant guide updates under its matching learning focus and appears after that learning focus in the Word/print document.</p></div>
         <details class="utility no-print" style="padding:0;border:0;background:transparent"><summary class="button-like">Assessment actions</summary><div class="toolbar" style="justify-content:flex-start;margin-top:8px"><button id="generateMarkingBtn" class="primary small">Update from selected SC</button><button id="regenerateMarkingBtn" class="small">Regenerate all</button><button id="addMarkingRowBtn" class="small">Add custom area</button></div></details>
       </div>
       <div class="notice" style="margin-bottom:12px">Review only if needed. The guide is generated from the selected success criteria and appears under each matching learning focus.</div>
@@ -378,7 +389,7 @@
   </div>
 
   <section id="document" class="card no-print" style="margin-top:16px">
-    <div class="titlebar"><div><h2>7. Export document</h2><p>Review the generated plan, then download the Word document.</p></div><button id="refreshDocumentBtn" class="small">Refresh document</button></div>
+    <div class="titlebar"><div><h2>8. Export document</h2><p>Review the generated plan, then download the Word document.</p></div><button id="refreshDocumentBtn" class="small">Refresh document</button></div>
     <div class="toolbar no-print" style="justify-content:flex-start;margin:10px 0 14px"><button id="downloadDocBtn" class="success">Download Word plan</button><button id="printBtn" class="primary">Print / PDF</button><details class="utility" style="padding:0;border:0;background:transparent"><summary class="button-like">Save / backup options</summary><div class="toolbar" style="justify-content:flex-start;margin-top:8px"><button id="savePlanJsonBtn">Save editable planning file</button></div></details></div>
     <div id="documentPreview"></div>
   </section>
@@ -448,6 +459,23 @@ const DEFAULT_LIBRARY={
       "Offer flexible pathways, tools, materials, or evidence formats",
       "Personalise challenge through support, extension, or student goals",
       "Allow students to adapt the brief, process, or final product to suit purpose"
+    ]
+  },
+  tiriti_barrier_prompts:{
+    practical_effect:[
+      "Use te ao Māori perspectives, tikanga, mātauranga Māori, or local pūrākau where appropriate",
+      "Include mana whenua, whānau, hapū, iwi, or Māori community voice where authentic and respectful",
+      "Use correct pronunciation, kupu Māori, place names, and culturally sustaining classroom routines",
+      "Make space for Māori learners to bring identity, language, culture, and lived experience into the learning",
+      "Connect learning to kaitiakitanga, manaakitanga, whanaungatanga, or rangatiratanga where relevant"
+    ],
+    barriers:[
+      "Make success criteria explicit using examples, modelling, and visual supports",
+      "Reduce literacy barriers through vocabulary pre-teaching, sentence starters, oral rehearsal, and exemplars",
+      "Provide multiple ways to show learning: oral, visual, practical, digital, written, or collaborative evidence",
+      "Use flexible grouping, teacher conferencing, checkpoints, and timely feedback to support progress",
+      "Check access to tools, materials, digital resources, prior knowledge, time, and safe learning routines",
+      "Use high expectations with scaffolded pathways so Māori learners can progress and extend"
     ]
   },
   curriculum_chunks:[],project_context_bank:[],unit_pattern_bank:[],lesson_template_bank:[],
@@ -599,6 +627,10 @@ function createBlankPlan(){
       innovation:{selected:[],comment:""},
       relevance:{selected:[],comment:""},
       choice:{selected:[],comment:""}
+    },
+    te_tiriti_reflection:{
+      practical_effect:{selected:[],comment:""},
+      barriers:{selected:[],comment:""}
     },
     planning_mode:"curriculum_chunks",
     weekly_sequence:[],
@@ -795,6 +827,7 @@ function renderWorkflowChecklist(){
     {label:"One strand selected",done:selectedStrands===1,help:`Selected: ${selectedStrands}/1`},
     {label:"Curriculum statements selected",done:(state.plan.selected_chunk_ids||[]).length>0,help:"Select curriculum statements."},
     {label:"PHS design principle selected",done:phsPrinciplesSelectedCount()>0,help:"Select at least one PHS curriculum design principle connection."},
+    {label:"Te Tiriti / barriers considered",done:tiritiBarrierSelectedCount()>0,help:"Select at least one Te Tiriti or barrier-reduction action."},
     {label:"Learning focus plans generated",done:(state.plan.weekly_sequence||[]).length>0,help:"Generate plans after choosing statements."},
     {label:"Assessment guide generated",done:(state.plan.marking_scheme||[]).length>0,help:"Generate/update all SC."},
     {label:"Ready to export",done:(state.plan.weekly_sequence||[]).length>0 && (state.plan.marking_scheme||[]).length>0,help:"Download Word plan."}
@@ -865,8 +898,66 @@ function docPHSPrinciplesHtml(){
   if(!rows) return `<div class="doc-section"><div class="section-title">PHS Curriculum Design Principles</div><div class="doc-section-content"><p class="doc-muted">No PHS curriculum design principle connection has been selected yet.</p></div></div>`;
   return `<div class="doc-section"><div class="section-title">PHS Curriculum Design Principles</div><div class="doc-section-content"><p class="doc-muted">Units of work should connect to a minimum of one PHS curriculum design principle.</p><table class="doc-table"><tbody>${rows}</tbody></table></div></div>`;
 }
+function tiritiBarrierMeta(){
+  return [
+    {key:"practical_effect",title:"Practical effect to Te Tiriti o Waitangi",question:"How does this learning give practical effect to Te Tiriti o Waitangi?",hint:"Select actions that make Te Tiriti visible through relationships, local context, te ao Māori, mana whenua/whānau voice, tikanga, language, or shared authority where appropriate."},
+    {key:"barriers",title:"Reducing barriers for Māori learners (ōritetanga)",question:"How does this reduce barriers to learning for Māori (ōritetanga)?",hint:"Select actions that remove barriers to access, participation, progress, evidence, feedback, and success while keeping expectations high."}
+  ];
+}
+function ensureTiritiBarrierReflection(){
+  const defaults=createBlankPlan().te_tiriti_reflection;
+  state.plan.te_tiriti_reflection=state.plan.te_tiriti_reflection||structuredClone(defaults);
+  tiritiBarrierMeta().forEach(meta=>{
+    const current=state.plan.te_tiriti_reflection[meta.key];
+    if(Array.isArray(current)){state.plan.te_tiriti_reflection[meta.key]={selected:current,comment:""};}
+    else if(typeof current==="string"){state.plan.te_tiriti_reflection[meta.key]={selected:current?[current]:[],comment:""};}
+    else state.plan.te_tiriti_reflection[meta.key]=Object.assign({selected:[],comment:""},current||{});
+    state.plan.te_tiriti_reflection[meta.key].selected=unique(state.plan.te_tiriti_reflection[meta.key].selected||[]);
+    state.plan.te_tiriti_reflection[meta.key].comment=state.plan.te_tiriti_reflection[meta.key].comment||"";
+  });
+}
+function tiritiBarrierOptions(key){return (state.library.tiriti_barrier_prompts&&state.library.tiriti_barrier_prompts[key])||DEFAULT_LIBRARY.tiriti_barrier_prompts[key]||[];}
+function tiritiBarrierSelectedCount(){ensureTiritiBarrierReflection();return tiritiBarrierMeta().reduce((sum,meta)=>sum+(state.plan.te_tiriti_reflection[meta.key].selected||[]).length,0);}
+function renderTiritiBarriers(){
+  const grid=$("tiritiBarriersGrid");
+  if(!grid) return;
+  ensureTiritiBarrierReflection();
+  const count=tiritiBarrierSelectedCount();
+  const check=$("tiritiBarriersCheck");
+  if(check){
+    check.className=count?"success-box tiriti-check":"notice tiriti-check";
+    check.textContent=count?`Te Tiriti / barrier-reduction check: ${count} action(s) selected.`:"Te Tiriti / barrier-reduction check: select at least one action that genuinely applies to this unit.";
+  }
+  grid.innerHTML=tiritiBarrierMeta().map(meta=>{
+    const data=state.plan.te_tiriti_reflection[meta.key];
+    const options=tiritiBarrierOptions(meta.key);
+    return `<div class="tiriti-card">
+      <div class="tiriti-title">${escapeHtml(meta.title)}</div>
+      <div class="hint"><strong>${escapeHtml(meta.question)}</strong><br>${escapeHtml(meta.hint)}</div>
+      <div class="chips">${options.map(option=>`<button type="button" class="chip ${data.selected.includes(option)?"active":""}" data-tiriti-key="${escapeAttr(meta.key)}" data-tiriti-option="${escapeAttr(option)}">${escapeHtml(option)}</button>`).join("")}</div>
+      <label>Teacher comment / unit-specific action<textarea data-tiriti-comment="${escapeAttr(meta.key)}" placeholder="Add what this will look like in practice for this unit and class...">${escapeHtml(data.comment||"")}</textarea></label>
+    </div>`;
+  }).join("");
+}
+function toggleTiritiBarrier(key,option){
+  ensureTiritiBarrierReflection();
+  const data=state.plan.te_tiriti_reflection[key];
+  data.selected=data.selected.includes(option)?data.selected.filter(x=>x!==option):[...data.selected,option];
+  renderTiritiBarriers();
+  updateDocument();
+}
+function docTiritiBarriersHtml(){
+  ensureTiritiBarrierReflection();
+  const rows=tiritiBarrierMeta().map(meta=>{
+    const data=state.plan.te_tiriti_reflection[meta.key]||{selected:[],comment:""};
+    if(!(data.selected||[]).length && !String(data.comment||"").trim()) return "";
+    return `<tr><th class="row-title">${escapeHtml(meta.title)}<br><span class="doc-small">${escapeHtml(meta.question)}</span></th><td>${docInlineList(data.selected||[])}${String(data.comment||"").trim()?`<p><strong>Teacher comment:</strong><br>${nl2br(data.comment)}</p>`:""}</td></tr>`;
+  }).filter(Boolean).join("");
+  if(!rows) return `<div class="doc-section"><div class="section-title">Te Tiriti o Waitangi and reducing barriers</div><div class="doc-section-content"><p class="doc-muted">No Te Tiriti / barrier-reduction actions have been selected yet.</p></div></div>`;
+  return `<div class="doc-section"><div class="section-title">Te Tiriti o Waitangi and reducing barriers</div><div class="doc-section-content"><table class="doc-table"><tbody>${rows}</tbody></table></div></div>`;
+}
 
-function render(){renderSetup();renderCurriculum();renderPHSPrinciples();renderPlanning();renderWeeks();renderMarkingScheme();renderWorkflowChecklist();updateDocument()}
+function render(){renderSetup();renderCurriculum();renderPHSPrinciples();renderTiritiBarriers();renderPlanning();renderWeeks();renderMarkingScheme();renderWorkflowChecklist();updateDocument()}
 function renderSetup(){
   const h=state.plan.header;
   normaliseOneStrandSelection();
@@ -2340,6 +2431,8 @@ function buildDocumentHtml(){
 
     ${docPHSPrinciplesHtml()}
 
+    ${docTiritiBarriersHtml()}
+
     <div class="doc-section">
       <div class="section-title">Support, literacy/numeracy, Te Tiriti/equity, and assessment</div>
       <div class="doc-section-content">
@@ -2617,6 +2710,7 @@ function downloadText(filename,text,type="text/html"){const blob=new Blob([text]
 function safeFileBase(){return state.plan.header.unit_title?state.plan.header.unit_title.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,""):"weekly-unit-plan"}
 function reconcilePlanWithLibrary(){
   ensurePHSPrinciples();
+  ensureTiritiBarrierReflection();
   const h=state.plan.header;
   const areas=getAreaOptions();
   if(areas.length && !areas.includes(h.learning_area)) h.learning_area=areas[0];
@@ -2639,7 +2733,7 @@ function reconcilePlanWithLibrary(){
   state.ui.sectionFilter="All";
   syncPlansToSelectedCurriculum();
 }
-function loadLibraryJson(file){const r=new FileReader();r.onload=()=>{try{const parsed=JSON.parse(r.result);state.library=Object.assign(structuredClone(DEFAULT_LIBRARY),parsed);state.library.dropdown_options=Object.assign({},DEFAULT_LIBRARY.dropdown_options,parsed.dropdown_options||{});state.library.weekly_activity_bank=Object.assign({},DEFAULT_LIBRARY.weekly_activity_bank,parsed.weekly_activity_bank||{});state.library.phs_design_principles=Object.assign({},DEFAULT_LIBRARY.phs_design_principles,parsed.phs_design_principles||{});reconcilePlanWithLibrary();refreshSummaries(true);render()}catch(e){console.error(e);alert("Could not read that curriculum JSON.")}};r.readAsText(file)}
+function loadLibraryJson(file){const r=new FileReader();r.onload=()=>{try{const parsed=JSON.parse(r.result);state.library=Object.assign(structuredClone(DEFAULT_LIBRARY),parsed);state.library.dropdown_options=Object.assign({},DEFAULT_LIBRARY.dropdown_options,parsed.dropdown_options||{});state.library.weekly_activity_bank=Object.assign({},DEFAULT_LIBRARY.weekly_activity_bank,parsed.weekly_activity_bank||{});state.library.phs_design_principles=Object.assign({},DEFAULT_LIBRARY.phs_design_principles,parsed.phs_design_principles||{});state.library.tiriti_barrier_prompts=Object.assign({},DEFAULT_LIBRARY.tiriti_barrier_prompts,parsed.tiriti_barrier_prompts||{});reconcilePlanWithLibrary();refreshSummaries(true);render()}catch(e){console.error(e);alert("Could not read that curriculum JSON.")}};r.readAsText(file)}
 function loadPlanJson(file){const r=new FileReader();r.onload=()=>{try{const parsed=JSON.parse(r.result);if(!parsed.header){alert("That does not look like a saved planning file.");return}state.plan=Object.assign(createBlankPlan(),parsed);render()}catch(e){alert("Could not read that plan JSON.")}};r.readAsText(file)}
 function bindInput(id,path){$(id).addEventListener("input",()=>{setPath(state.plan,path,$(id).value);updateDocument()})}
 function appendText(path,text){if(!text)return;const cur=getPath(state.plan,path)||"";setPath(state.plan,path,cur?cur+"\n"+text:text);render()}
@@ -2760,6 +2854,22 @@ function initEvents(){
       if(!input) return;
       ensurePHSPrinciples();
       state.plan.phs_principles[input.dataset.phsPrincipleComment].comment=input.value;
+      updateDocument();
+    });
+  }
+  const tiritiSection=$("tiritiBarriers");
+  if(tiritiSection){
+    tiritiSection.addEventListener("click",event=>{
+      const btn=event.target.closest("[data-tiriti-key]");
+      if(!btn) return;
+      event.preventDefault();
+      toggleTiritiBarrier(btn.dataset.tiritiKey,btn.dataset.tiritiOption);
+    });
+    tiritiSection.addEventListener("input",event=>{
+      const input=event.target.closest("[data-tiriti-comment]");
+      if(!input) return;
+      ensureTiritiBarrierReflection();
+      state.plan.te_tiriti_reflection[input.dataset.tiritiComment].comment=input.value;
       updateDocument();
     });
   }
