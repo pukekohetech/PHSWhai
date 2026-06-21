@@ -245,15 +245,18 @@
     @media(max-width:740px){.fields,.fields.three,.fields.four,.doc-grid,.doc-two,.curriculum-filter-row{grid-template-columns:1fr}.doc-cell,.doc-two>div{border-right:0;border-bottom:1px solid #111827}header{position:static}}
     @media print{header,.editor,.no-print{display:none!important}main{padding:0}.wrap{max-width:none}#printDocument{display:block!important}.document-preview{box-shadow:none;border:0;border-radius:0;padding:0}@page{margin:6mm}}
   
-    /* v114 stability-first: restore Te Tiriti and unit-overview chip selection cards */
+    /* v117: Te Tiriti and unit strategy cards restored; unit pedagogical strategy card intentionally removed */
     #tiritiBarriers{display:block}
-    /* v114: green = already covered somewhere else in the learning focuses, still selectable */
     .chip.used-elsewhere,.vocab-chip.used-elsewhere{border-color:#16a34a;background:#ecfdf5;color:#166534}
     .chip.active.used-elsewhere{background:var(--accent);color:#fff;border-color:var(--accent)}
     .vocab-chip.active.used-elsewhere{background:#1e3a8a;color:white;border-color:#1e3a8a}
     .custom-chip-add{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:8px}
     .custom-chip-add input{max-width:360px;min-width:220px;padding:7px 10px;font-size:.82rem}
     .custom-chip-add button{padding:6px 10px;min-height:31px;font-size:.82rem}
+    .readiness-strip{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+    .readiness-pill{border:1px solid var(--line);border-radius:999px;padding:3px 7px;font-size:.72rem;background:#fff;color:var(--muted)}
+    .readiness-pill.done{background:#ecfdf5;border-color:#16a34a;color:#166534;font-weight:800}
+    .readiness-pill.next{background:#fff7ed;border-color:#f97316;color:#9a3412;font-weight:800}
 
 
     /* v107 targeted AI resource + duration + export enhancements */
@@ -365,7 +368,7 @@
       <div class="next-actions no-print"><button type="button" class="primary" data-next-step="planning">Next: unit strategies</button></div>
     </section>
         <section id="planning" class="card">
-      <div class="titlebar"><div><h2>4. Unit overview</h2><p>Keep the knowledge, practices, and capabilities overview here. Strategies are selected inside each learning focus.</p></div></div><div class="step-note">Select or add whole-unit pedagogical, literacy, numeracy, support, extension, and Te Tiriti / equity strategy chips here first, then customise or add chips inside each individual learning focus.</div>
+      <div class="titlebar"><div><h2>4. Unit overview</h2><p>Keep the knowledge, practices, and capabilities overview here. Strategies are selected inside each learning focus.</p></div></div><div class="step-note">Select or add whole-unit literacy, numeracy, support, extension, and Te Tiriti / equity strategy chips here first, then customise or add chips inside each individual learning focus. Pedagogical strategies are selected inside each learning focus only.</div>
       <div class="stack">
         <div class="card soft">
           <h3>Unit overview</h3>
@@ -375,7 +378,6 @@
             <label class="full">Capabilities development<textarea id="capabilities_summary"></textarea></label>
           </div>
         </div>
-        <div class="card soft"><h3>Pedagogical strategies</h3><p class="hint">Select or add the teaching approaches you want available across the learning focuses, then customise them in each focus.</p><div id="pedagogyOptions" class="chips"></div></div>
         <div class="card soft"><h3>Literacy and numeracy</h3><div class="fields"><div><label>Literacy strategies</label><div id="literacyOptions" class="chips"></div></div><div><label>Numeracy strategies</label><div id="numeracyOptions" class="chips"></div></div></div></div>
         <div class="card soft"><h3>Te Tiriti, equity, and reducing barriers</h3><div id="equityOptions" class="chips"></div></div>
         <div class="card soft"><h3>Learner support and extension</h3><div class="fields"><div><label>Support strategies</label><div id="supportOptions" class="chips"></div></div><div><label>Extension strategies</label><div id="extensionOptions" class="chips"></div></div></div></div>
@@ -628,23 +630,9 @@ function createBlankPlan(){
     marking_scheme:[]
   };
 }
-function createBlankWeek(n){
-  return {block_type:"curriculum_chunk",curriculum_chunk_id:"",week_number:n,start_week:n,end_week:n,weeks_covered:1,week_title:`Learning focus ${n}`,lesson_count:state.plan.header.lessons_per_week||3,weekly_focus:"",progression_level:state.plan.header.expected_median_level||"Consolidating",progression_stage_note:"",knowledge:"",practices_capabilities:"",learning_intentions:[],learning_intention_stages:[],success_criteria:[],key_vocabulary:[],vocab_open:true,focus_open:false,use_unit_strategy_defaults:false,selected_literacy_strategies:[],selected_numeracy_strategies:[],selected_support_strategies:[],selected_extension_strategies:[],selected_equity_strategies:[],strategy_explanation:"",strategies_open:true,selected_pedagogical_strategies:[],pedagogical_strategy:"",lit_num:"",do_now:"",activity_1:"",activity_2:"",additional_activities:[],check_exit:"",reflection_next:"",evidence:[],support_extension:""};
-}
-function unitDurationTextFromHeader(){
-  const h=(state&&state.plan&&state.plan.header)||{};
-  const weeks=Math.max(1, Number(h.unit_weeks||6)||6);
-  const lessonsPerWeek=Math.max(1, Number(h.lessons_per_week||3)||3);
-  const totalLessons=weeks*lessonsPerWeek;
-  return `${weeks} week${weeks===1?'':'s'} (${totalLessons} total lessons at ${lessonsPerWeek} lessons/week)`;
-}
-function syncUnitDuration(){
-  if(!state || !state.plan || !state.plan.header) return;
-  const h=state.plan.header;
-  h.unit_weeks=Math.max(1, Number(h.unit_weeks||6)||6);
-  h.lessons_per_week=Math.max(1, Number(h.lessons_per_week||3)||3);
-  h.unit_duration=unitDurationTextFromHeader();
-}
+function createBlankWeek(n){return {block_type:"curriculum_chunk",curriculum_chunk_id:"",week_number:n,start_week:n,end_week:n,weeks_covered:1,week_title:`Learning focus ${n}`,lesson_count:state.plan.header.lessons_per_week||3,weekly_focus:"",progression_level:state.plan.header.expected_median_level||"Consolidating",progression_stage_note:"",knowledge:"",practices_capabilities:"",learning_intentions:[],learning_intention_stages:[],success_criteria:[],key_vocabulary:[],vocab_open:false,focus_open:false,use_unit_strategy_defaults:false,selected_literacy_strategies:[],selected_numeracy_strategies:[],selected_support_strategies:[],selected_extension_strategies:[],selected_equity_strategies:[],strategy_explanation:"",strategies_open:false,selected_pedagogical_strategies:[],pedagogical_strategy:"",lit_num:"",do_now:"",activity_1:"",activity_2:"",additional_activities:[],check_exit:"",reflection_next:"",evidence:[],support_extension:""};}
+function unitDurationTextFromHeader(){const h=(state&&state.plan&&state.plan.header)||{};const weeks=Math.max(1,Number(h.unit_weeks||6)||6);const lpw=Math.max(1,Number(h.lessons_per_week||3)||3);return `${weeks} week${weeks===1?'':'s'} (${weeks*lpw} total lessons at ${lpw} lessons/week)`;}
+function syncUnitDuration(){if(!state||!state.plan||!state.plan.header)return;const h=state.plan.header;h.unit_weeks=Math.max(1,Number(h.unit_weeks||6)||6);h.lessons_per_week=Math.max(1,Number(h.lessons_per_week||3)||3);h.unit_duration=unitDurationTextFromHeader();}
 
 function populateSelect(id,options,value,placeholder){
   const el=$(id); if(!el)return; el.innerHTML="";
@@ -652,37 +640,7 @@ function populateSelect(id,options,value,placeholder){
   options.forEach(x=>{const o=document.createElement("option");o.value=typeof x==="object"?x.value:x;o.textContent=typeof x==="object"?x.label:x;el.appendChild(o)});
   if(value!==undefined) el.value=String(value);
 }
-function makeChips(id,options,selected,onChange,emptyText,config={}){
-  const c=$(id); if(!c) return; c.innerHTML="";
-  selected=Array.isArray(selected)?selected:[];
-  const chipOptions=unique([...(options||[]),...selected]).filter(Boolean);
-  if(!chipOptions.length && !config.allowCustom){c.innerHTML=`<div class="empty">${emptyText||"No options loaded yet."}</div>`;return}
-  const category=config.category||"";
-  const weekIndex=Number.isInteger(config.weekIndex)?config.weekIndex:null;
-  const enableCrossHighlight=!!category && weekIndex!==null;
-  chipOptions.forEach(option=>{
-    const b=document.createElement("button");
-    const isActive=selected.includes(option);
-    const used=isStrategyUsed(option);
-    const usedElsewhere=enableCrossHighlight?strategyUsedElsewhere(category,option,weekIndex):false;
-    b.type="button";
-    b.className="chip"+(isActive?" active":"")+((usedElsewhere&&!isActive)?" used-elsewhere":"");
-    if(isActive && !used){b.classList.add("unused");b.textContent="⚠ "+option;}
-    else if(isActive){b.textContent="✔ "+option;}
-    else if(usedElsewhere){b.textContent="↺ "+option;}
-    else{b.textContent=option;}
-    b.addEventListener("click",()=>{const next=isActive?selected.filter(i=>i!==option):unique([...selected,option]);onChange(next);render()});
-    c.appendChild(b);
-  });
-  if(config.allowCustom){
-    const wrap=document.createElement("div");wrap.className="custom-chip-add";
-    const input=document.createElement("input");input.type="text";input.placeholder=config.placeholder||"Add custom chip...";
-    const btn=document.createElement("button");btn.type="button";btn.textContent=config.buttonText||"+ Add chip";
-    const add=()=>{const value=input.value.trim();if(!value)return;onChange(unique([...selected,value]));input.value="";render();};
-    btn.addEventListener("click",add);input.addEventListener("keydown",event=>{if(event.key==="Enter"){event.preventDefault();add();}});
-    wrap.appendChild(input);wrap.appendChild(btn);c.appendChild(wrap);
-  }
-}
+function makeChips(id,options,selected,onChange,emptyText,config={}){const c=$(id);if(!c)return;c.innerHTML="";selected=Array.isArray(selected)?selected:[];const opts=unique([...(options||[]),...selected]).filter(Boolean);if(!opts.length&&!config.allowCustom){c.innerHTML=`<div class="empty">${emptyText||"No options loaded yet."}</div>`;return}const category=config.category||"";const weekIndex=Number.isInteger(config.weekIndex)?config.weekIndex:null;opts.forEach(option=>{const b=document.createElement("button");const active=selected.includes(option);const used=isStrategyUsed(option);const elsewhere=(category&&weekIndex!==null)?strategyUsedElsewhere(category,option,weekIndex):false;b.type="button";b.className="chip"+(active?" active":"")+((elsewhere&&!active)?" used-elsewhere":"");if(active&&!used){b.classList.add("unused");b.textContent="⚠ "+option}else if(active)b.textContent="✔ "+option;else if(elsewhere)b.textContent="↺ "+option;else b.textContent=option;b.addEventListener("click",()=>{onChange(active?selected.filter(i=>i!==option):unique([...selected,option]));render()});c.appendChild(b)});if(config.allowCustom){const wrap=document.createElement("div");wrap.className="custom-chip-add";const input=document.createElement("input");input.type="text";input.placeholder=config.placeholder||"Add custom chip...";const btn=document.createElement("button");btn.type="button";btn.textContent="+ Add chip";const add=()=>{const value=input.value.trim();if(!value)return;onChange(unique([...selected,value]));input.value="";render()};btn.addEventListener("click",add);input.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();add()}});wrap.append(input,btn);c.appendChild(wrap)}}
 function getYearOptions(){const vals=unique((state.library.curriculum_chunks||[]).map(chunkYear).filter(Boolean));return vals.length?vals:opt("year_levels")}
 function getAreaOptions(){const vals=unique((state.library.curriculum_chunks||[]).map(chunkArea).filter(Boolean));return vals.length?vals:opt("learning_areas")}
 function getStrandOptions(){
@@ -875,14 +833,14 @@ function phsPrincipleMeta(){return [{key:"relationships",title:"Relationships an
 function ensurePHSPrinciples(){const defaults=createBlankPlan().phs_principles;state.plan.phs_principles=state.plan.phs_principles||structuredClone(defaults);phsPrincipleMeta().forEach(meta=>{const current=state.plan.phs_principles[meta.key];if(Array.isArray(current)){state.plan.phs_principles[meta.key]={selected:current,comment:""};}else if(typeof current==="string"){state.plan.phs_principles[meta.key]={selected:current?[current]:[],comment:""};}else state.plan.phs_principles[meta.key]=Object.assign({selected:[],comment:""},current||{});state.plan.phs_principles[meta.key].selected=unique(state.plan.phs_principles[meta.key].selected||[]);state.plan.phs_principles[meta.key].comment=state.plan.phs_principles[meta.key].comment||"";});}
 function phsPrincipleOptions(key){return (state.library.phs_design_principles&&state.library.phs_design_principles[key])||DEFAULT_LIBRARY.phs_design_principles[key]||[];}
 function phsPrinciplesSelectedCount(){ensurePHSPrinciples();return phsPrincipleMeta().reduce((sum,meta)=>sum+(state.plan.phs_principles[meta.key].selected||[]).length,0);}
-function renderPHSPrinciples(){const grid=$("phsPrinciplesGrid");if(!grid)return;ensurePHSPrinciples();const count=phsPrinciplesSelectedCount();const check=$("phsPrinciplesCheck");if(check){check.className=count?"success-box phs-principle-check":"notice phs-principle-check";check.textContent=count?`Curriculum design principle check: ${count} connection(s) selected.`:"Curriculum design principle check: select at least one connection for this unit.";}grid.innerHTML=phsPrincipleMeta().map(meta=>{const data=state.plan.phs_principles[meta.key];const options=unique([...phsPrincipleOptions(meta.key),...(data.selected||[])]);return `<div class="phs-principle-card"><div class="phs-principle-title">${escapeHtml(meta.title)}</div><div class="hint">${escapeHtml(meta.hint)}</div><div class="chips">${options.map(option=>`<button type="button" class="chip ${data.selected.includes(option)?"active":""}" data-phs-principle-key="${escapeAttr(meta.key)}" data-phs-principle-option="${escapeAttr(option)}">${escapeHtml(data.selected.includes(option)?"✔ "+option:option)}</button>`).join("")}</div>${customChipAddHtml("phs",meta.key,null,"Add custom principle connection...")}<label>Teacher comment / unit-specific connection<textarea data-phs-principle-comment="${escapeAttr(meta.key)}" placeholder="Add how this principle will show up in this unit...">${escapeHtml(data.comment||"")}</textarea></label></div>`;}).join("");}
+function renderPHSPrinciples(){const grid=$("phsPrinciplesGrid");if(!grid)return;ensurePHSPrinciples();const count=phsPrinciplesSelectedCount();const check=$("phsPrinciplesCheck");if(check){check.className=count?"success-box phs-principle-check":"notice phs-principle-check";check.textContent=count?`Curriculum design principle check: ${count} connection(s) selected.`:"Curriculum design principle check: select at least one connection for this unit.";}grid.innerHTML=phsPrincipleMeta().map(meta=>{const data=state.plan.phs_principles[meta.key];const options=unique([...phsPrincipleOptions(meta.key),...(data.selected||[])]);return `<div class="phs-principle-card"><div class="phs-principle-title">${escapeHtml(meta.title)}</div><div class="hint">${escapeHtml(meta.hint)}</div><div class="chips">${options.map(option=>`<button type="button" class="chip ${data.selected.includes(option)?"active":""}" data-phs-principle-key="${escapeAttr(meta.key)}" data-phs-principle-option="${escapeAttr(option)}">${escapeHtml(data.selected.includes(option)?"✔ "+option:option)}</button>`).join("")}</div>${customChipAddHtml("phs",meta.key,null,"Add custom principle connection...")}<label>Teacher comment / unit-specific connection<textarea data-phs-principle-comment="${escapeAttr(meta.key)}" placeholder="Add how this principle will show up in this unit...">${escapeHtml(data.comment||"")}</textarea></label></div>`}).join("");}
 function togglePHSPrinciple(key,option){ensurePHSPrinciples();const data=state.plan.phs_principles[key];data.selected=data.selected.includes(option)?data.selected.filter(x=>x!==option):[...data.selected,option];renderPHSPrinciples();updateDocument();}
 function docPHSPrinciplesHtml(){ensurePHSPrinciples();const rows=phsPrincipleMeta().map(meta=>{const data=state.plan.phs_principles[meta.key]||{selected:[],comment:""};if(!(data.selected||[]).length&&!String(data.comment||"").trim())return "";return `<tr><th class="row-title">${escapeHtml(meta.title)}</th><td>${docInlineList(data.selected||[])}${String(data.comment||"").trim()?`<p><strong>Teacher comment:</strong><br>${nl2br(data.comment)}</p>`:""}</td></tr>`;}).filter(Boolean).join("");if(!rows)return `<div class="doc-section"><div class="section-title">PHS Curriculum Design Principles</div><div class="doc-section-content"><p class="doc-muted">No PHS curriculum design principle connection has been selected yet.</p></div></div>`;return `<div class="doc-section"><div class="section-title">PHS Curriculum Design Principles</div><div class="doc-section-content"><p class="doc-muted">Units of work should connect to a minimum of one PHS curriculum design principle.</p><table class="doc-table"><tbody>${rows}</tbody></table></div></div>`;}
 function tiritiBarrierMeta(){return [{key:"practical_effect",title:"Practical effect to Te Tiriti o Waitangi",question:"How does this learning give practical effect to Te Tiriti o Waitangi?",hint:"Select actions that make Te Tiriti visible through relationships, local context, te ao Māori, mana whenua/whānau voice, tikanga, language, or shared authority where appropriate."},{key:"barriers",title:"Reducing barriers for Māori learners (ōritetanga)",question:"How does this reduce barriers to learning for Māori (ōritetanga)?",hint:"Select actions that remove barriers to access, participation, progress, evidence, feedback, and success while keeping expectations high."}];}
 function ensureTiritiBarrierReflection(){const defaults=createBlankPlan().te_tiriti_reflection;state.plan.te_tiriti_reflection=state.plan.te_tiriti_reflection||structuredClone(defaults);tiritiBarrierMeta().forEach(meta=>{const current=state.plan.te_tiriti_reflection[meta.key];if(Array.isArray(current)){state.plan.te_tiriti_reflection[meta.key]={selected:current,comment:""};}else if(typeof current==="string"){state.plan.te_tiriti_reflection[meta.key]={selected:current?[current]:[],comment:""};}else state.plan.te_tiriti_reflection[meta.key]=Object.assign({selected:[],comment:""},current||{});state.plan.te_tiriti_reflection[meta.key].selected=unique(state.plan.te_tiriti_reflection[meta.key].selected||[]);state.plan.te_tiriti_reflection[meta.key].comment=state.plan.te_tiriti_reflection[meta.key].comment||"";});}
 function tiritiBarrierOptions(key){return (state.library.tiriti_barrier_prompts&&state.library.tiriti_barrier_prompts[key])||DEFAULT_LIBRARY.tiriti_barrier_prompts[key]||[];}
 function tiritiBarrierSelectedCount(){ensureTiritiBarrierReflection();return tiritiBarrierMeta().reduce((sum,meta)=>sum+(state.plan.te_tiriti_reflection[meta.key].selected||[]).length,0);}
-function renderTiritiBarriers(){const grid=$("tiritiBarriersGrid");if(!grid)return;ensureTiritiBarrierReflection();const count=tiritiBarrierSelectedCount();const check=$("tiritiBarriersCheck");if(check){check.className=count?"success-box tiriti-check":"notice tiriti-check";check.textContent=count?`Te Tiriti / barrier-reduction check: ${count} action(s) selected.`:"Te Tiriti / barrier-reduction check: select at least one action that genuinely applies to this unit.";}grid.innerHTML=tiritiBarrierMeta().map(meta=>{const data=state.plan.te_tiriti_reflection[meta.key];const options=unique([...tiritiBarrierOptions(meta.key),...(data.selected||[])]);return `<div class="tiriti-card"><div class="tiriti-title">${escapeHtml(meta.title)}</div><div class="hint"><strong>${escapeHtml(meta.question)}</strong><br>${escapeHtml(meta.hint)}</div><div class="chips">${options.map(option=>`<button type="button" class="chip ${data.selected.includes(option)?"active":""}" data-tiriti-key="${escapeAttr(meta.key)}" data-tiriti-option="${escapeAttr(option)}">${escapeHtml(data.selected.includes(option)?"✔ "+option:option)}</button>`).join("")}</div>${customChipAddHtml("tiriti",meta.key,null,"Add custom Te Tiriti / barrier action...")}<label>Teacher comment / unit-specific action<textarea data-tiriti-comment="${escapeAttr(meta.key)}" placeholder="Add what this will look like in practice for this unit and class...">${escapeHtml(data.comment||"")}</textarea></label></div>`;}).join("");}
+function renderTiritiBarriers(){const grid=$("tiritiBarriersGrid");if(!grid)return;ensureTiritiBarrierReflection();const count=tiritiBarrierSelectedCount();const check=$("tiritiBarriersCheck");if(check){check.className=count?"success-box tiriti-check":"notice tiriti-check";check.textContent=count?`Te Tiriti / barrier-reduction check: ${count} action(s) selected.`:"Te Tiriti / barrier-reduction check: select at least one action that genuinely applies to this unit.";}grid.innerHTML=tiritiBarrierMeta().map(meta=>{const data=state.plan.te_tiriti_reflection[meta.key];const options=unique([...tiritiBarrierOptions(meta.key),...(data.selected||[])]);return `<div class="tiriti-card"><div class="tiriti-title">${escapeHtml(meta.title)}</div><div class="hint"><strong>${escapeHtml(meta.question)}</strong><br>${escapeHtml(meta.hint)}</div><div class="chips">${options.map(option=>`<button type="button" class="chip ${data.selected.includes(option)?"active":""}" data-tiriti-key="${escapeAttr(meta.key)}" data-tiriti-option="${escapeAttr(option)}">${escapeHtml(data.selected.includes(option)?"✔ "+option:option)}</button>`).join("")}</div>${customChipAddHtml("tiriti",meta.key,null,"Add custom Te Tiriti / barrier action...")}<label>Teacher comment / unit-specific action<textarea data-tiriti-comment="${escapeAttr(meta.key)}" placeholder="Add what this will look like in practice for this unit and class...">${escapeHtml(data.comment||"")}</textarea></label></div>`}).join("");}
 function toggleTiritiBarrier(key,option){ensureTiritiBarrierReflection();const data=state.plan.te_tiriti_reflection[key];data.selected=data.selected.includes(option)?data.selected.filter(x=>x!==option):[...data.selected,option];renderTiritiBarriers();updateDocument();}
 function docTiritiBarriersHtml(){ensureTiritiBarrierReflection();const rows=tiritiBarrierMeta().map(meta=>{const data=state.plan.te_tiriti_reflection[meta.key]||{selected:[],comment:""};if(!(data.selected||[]).length&&!String(data.comment||"").trim())return "";return `<tr><th class="row-title">${escapeHtml(meta.title)}<br><span class="doc-small">${escapeHtml(meta.question)}</span></th><td>${docInlineList(data.selected||[])}${String(data.comment||"").trim()?`<p><strong>Teacher comment:</strong><br>${nl2br(data.comment)}</p>`:""}</td></tr>`;}).filter(Boolean).join("");if(!rows)return `<div class="doc-section"><div class="section-title">Te Tiriti o Waitangi and reducing barriers</div><div class="doc-section-content"><p class="doc-muted">No Te Tiriti / barrier-reduction actions have been selected yet.</p></div></div>`;return `<div class="doc-section"><div class="section-title">Te Tiriti o Waitangi and reducing barriers</div><div class="doc-section-content"><table class="doc-table"><tbody>${rows}</tbody></table></div></div>`;}
 
@@ -998,29 +956,7 @@ function renderCurriculum(){
 }
 
 function toggleChunk(id){state.plan.selected_chunk_ids=state.plan.selected_chunk_ids.includes(id)?state.plan.selected_chunk_ids.filter(x=>x!==id):[...state.plan.selected_chunk_ids,id];refreshSummaries(true);syncPlansToSelectedCurriculum();render()}
-function renderPlanning(){
-  state.plan.planning=state.plan.planning||{};
-  state.plan.planning.literacy_learning_strategies=Array.isArray(state.plan.planning.literacy_learning_strategies)?state.plan.planning.literacy_learning_strategies:[];
-  state.plan.planning.numeracy_learning_strategies=Array.isArray(state.plan.planning.numeracy_learning_strategies)?state.plan.planning.numeracy_learning_strategies:[];
-  state.plan.planning.te_tiriti_equity=Array.isArray(state.plan.planning.te_tiriti_equity)?state.plan.planning.te_tiriti_equity:[];
-  state.plan.planning.support_strategies=Array.isArray(state.plan.planning.support_strategies)?state.plan.planning.support_strategies:[];
-  state.plan.planning.extension_strategies=Array.isArray(state.plan.planning.extension_strategies)?state.plan.planning.extension_strategies:[];
-  ensurePlanningPedagogicalStrategies();
-  $("knowledge_summary").value=state.plan.planning.knowledge_summary;
-  $("practices_summary").value=state.plan.planning.practices_summary;
-  $("capabilities_summary").value=state.plan.planning.capabilities_summary;
-  $("formativeChecks").value=state.plan.planning.formative_checks;
-  $("summativeEvidence").value=state.plan.planning.summative_evidence;
-  populateSelect("formativeQuickSelect",getQuick("formative_checks"),"","Add formative check...");
-  populateSelect("summativeQuickSelect",getQuick("summative_evidence"),"","Add summative evidence...");
-  const bank=getActivityBank();
-  makeChips("pedagogyOptions",bank.pedagogical_strategies||[],state.plan.planning.pedagogical_strategies,next=>state.plan.planning.pedagogical_strategies=next,"No pedagogical strategies loaded yet.",{allowCustom:true,placeholder:"Add custom pedagogical strategy..."});
-  makeChips("literacyOptions",shortlistOptions("literacy_learning_strategies",state.plan.planning.literacy_learning_strategies,8),state.plan.planning.literacy_learning_strategies,next=>state.plan.planning.literacy_learning_strategies=next,"No literacy strategies loaded yet.",{allowCustom:true,placeholder:"Add custom literacy strategy..."});
-  makeChips("numeracyOptions",shortlistOptions("numeracy_learning_strategies",state.plan.planning.numeracy_learning_strategies,8),state.plan.planning.numeracy_learning_strategies,next=>state.plan.planning.numeracy_learning_strategies=next,"No numeracy strategies loaded yet.",{allowCustom:true,placeholder:"Add custom numeracy strategy..."});
-  makeChips("equityOptions",shortlistOptions("te_tiriti_or_equity_options",state.plan.planning.te_tiriti_equity,8),state.plan.planning.te_tiriti_equity,next=>state.plan.planning.te_tiriti_equity=next,"No Te Tiriti / equity strategies loaded yet.",{allowCustom:true,placeholder:"Add custom Te Tiriti / equity strategy..."});
-  makeChips("supportOptions",shortlistOptions("support_strategies",state.plan.planning.support_strategies,8),state.plan.planning.support_strategies,next=>state.plan.planning.support_strategies=next,"No support strategies loaded yet.",{allowCustom:true,placeholder:"Add custom support strategy..."});
-  makeChips("extensionOptions",shortlistOptions("extension_strategies",state.plan.planning.extension_strategies,8),state.plan.planning.extension_strategies,next=>state.plan.planning.extension_strategies=next,"No extension strategies loaded yet.",{allowCustom:true,placeholder:"Add custom extension strategy..."});
-}
+function renderPlanning(){state.plan.planning=state.plan.planning||{};state.plan.planning.literacy_learning_strategies=Array.isArray(state.plan.planning.literacy_learning_strategies)?state.plan.planning.literacy_learning_strategies:[];state.plan.planning.numeracy_learning_strategies=Array.isArray(state.plan.planning.numeracy_learning_strategies)?state.plan.planning.numeracy_learning_strategies:[];state.plan.planning.te_tiriti_equity=Array.isArray(state.plan.planning.te_tiriti_equity)?state.plan.planning.te_tiriti_equity:[];state.plan.planning.support_strategies=Array.isArray(state.plan.planning.support_strategies)?state.plan.planning.support_strategies:[];state.plan.planning.extension_strategies=Array.isArray(state.plan.planning.extension_strategies)?state.plan.planning.extension_strategies:[];$("knowledge_summary").value=state.plan.planning.knowledge_summary;$("practices_summary").value=state.plan.planning.practices_summary;$("capabilities_summary").value=state.plan.planning.capabilities_summary;$("formativeChecks").value=state.plan.planning.formative_checks;$("summativeEvidence").value=state.plan.planning.summative_evidence;populateSelect("formativeQuickSelect",getQuick("formative_checks"),"","Add formative check...");populateSelect("summativeQuickSelect",getQuick("summative_evidence"),"","Add summative evidence...");makeChips("literacyOptions",shortlistOptions("literacy_learning_strategies",state.plan.planning.literacy_learning_strategies,8),state.plan.planning.literacy_learning_strategies,next=>state.plan.planning.literacy_learning_strategies=next,"No literacy strategies loaded yet.",{allowCustom:true,placeholder:"Add custom literacy strategy..."});makeChips("numeracyOptions",shortlistOptions("numeracy_learning_strategies",state.plan.planning.numeracy_learning_strategies,8),state.plan.planning.numeracy_learning_strategies,next=>state.plan.planning.numeracy_learning_strategies=next,"No numeracy strategies loaded yet.",{allowCustom:true,placeholder:"Add custom numeracy strategy..."});makeChips("equityOptions",shortlistOptions("te_tiriti_or_equity_options",state.plan.planning.te_tiriti_equity,8),state.plan.planning.te_tiriti_equity,next=>state.plan.planning.te_tiriti_equity=next,"No Te Tiriti / equity strategies loaded yet.",{allowCustom:true,placeholder:"Add custom Te Tiriti / equity strategy..."});makeChips("supportOptions",shortlistOptions("support_strategies",state.plan.planning.support_strategies,8),state.plan.planning.support_strategies,next=>state.plan.planning.support_strategies=next,"No support strategies loaded yet.",{allowCustom:true,placeholder:"Add custom support strategy..."});makeChips("extensionOptions",shortlistOptions("extension_strategies",state.plan.planning.extension_strategies,8),state.plan.planning.extension_strategies,next=>state.plan.planning.extension_strategies=next,"No extension strategies loaded yet.",{allowCustom:true,placeholder:"Add custom extension strategy..."});}
 function autoFillWeek(w,index,total){
   const chunks=selectedChunks(); const chunk=w.curriculum_chunk_id?getChunkById(w.curriculum_chunk_id):(chunks.length?chunks[index%chunks.length]:null); const level=progressionLevel(index,total);
   w.lesson_count=state.plan.header.lessons_per_week; w.progression_level=level;
@@ -1405,75 +1341,23 @@ function planStrategyField(group){
     equity:"selected_equity_strategies"
   }[group];
 }
-function strategyUsedElsewhere(group,option,currentIndex){
-  const field=planStrategyField(group);
-  if(!field) return false;
-  return (state.plan.weekly_sequence||[]).some((plan,index)=>{
-    if(index===currentIndex) return false;
-    const values=Array.isArray(plan&&plan[field])?plan[field]:[];
-    return values.includes(option);
-  });
-}
+function strategyUsedElsewhere(group,option,currentIndex){const field=planStrategyField(group);if(!field)return false;return (state.plan.weekly_sequence||[]).some((p,i)=>i!==currentIndex&&(Array.isArray(p&&p[field])?p[field]:[]).includes(option));}
 function normaliseVocabTerm(term){return String(term||"").trim().toLowerCase();}
-function vocabularyUsedElsewhere(term,currentIndex){
-  const target=normaliseVocabTerm(term);
-  if(!target) return false;
-  return (state.plan.weekly_sequence||[]).some((plan,index)=>{
-    if(index===currentIndex) return false;
-    return (plan.key_vocabulary||[]).some(item=>normaliseVocabTerm(item)===target);
-  });
-}
-function pedagogyUsedElsewhere(option,currentIndex){
-  return (state.plan.weekly_sequence||[]).some((plan,index)=>{
-    if(index===currentIndex) return false;
-    return (plan.selected_pedagogical_strategies||[]).includes(option);
-  });
-}
-function ensurePlanningPedagogicalStrategies(){
-  state.plan.planning=state.plan.planning||{};
-  if(!Array.isArray(state.plan.planning.pedagogical_strategies)) state.plan.planning.pedagogical_strategies=[];
-  if(!state.plan.planning.pedagogical_strategies.length){
-    const fromFocus=unique((state.plan.weekly_sequence||[]).flatMap(plan=>plan.selected_pedagogical_strategies||[]));
-    if(fromFocus.length) state.plan.planning.pedagogical_strategies=fromFocus;
-  }
-}
-function unitPedagogicalOptions(bank){ensurePlanningPedagogicalStrategies();return state.plan.planning.pedagogical_strategies||[];}
-function ensureUnitOverviewChipBank(group,value){
-  if(!value) return;
-  state.plan.planning=state.plan.planning||{};
-  const map={literacy:"literacy_learning_strategies",numeracy:"numeracy_learning_strategies",support:"support_strategies",extension:"extension_strategies",equity:"te_tiriti_equity"};
-  const field=map[group];
-  if(!field) return;
-  state.plan.planning[field]=unique([...(Array.isArray(state.plan.planning[field])?state.plan.planning[field]:[]),value]);
-}
-function customChipAddHtml(type,indexOrKey,extra,placeholder="Add custom chip..."){
-  const attrs=[`data-custom-add-type="${escapeAttr(type)}"`];
-  if(indexOrKey!==undefined && indexOrKey!==null) attrs.push(`data-custom-add-target="${escapeAttr(indexOrKey)}"`);
-  if(extra!==undefined && extra!==null) attrs.push(`data-custom-add-extra="${escapeAttr(extra)}"`);
-  return `<div class="custom-chip-add"><input type="text" data-custom-chip-input placeholder="${escapeAttr(placeholder)}"><button type="button" ${attrs.join(" ")}>+ Add chip</button></div>`;
-}
-function customChipValue(btn){const box=btn.closest(".custom-chip-add");const input=box?box.querySelector("[data-custom-chip-input]"):null;return {box,input,value:String(input?input.value:"").trim()};}
+function vocabularyUsedElsewhere(term,currentIndex){const target=normaliseVocabTerm(term);if(!target)return false;return (state.plan.weekly_sequence||[]).some((p,i)=>i!==currentIndex&&(p.key_vocabulary||[]).some(v=>normaliseVocabTerm(v)===target));}
+function pedagogyUsedElsewhere(option,currentIndex){return (state.plan.weekly_sequence||[]).some((p,i)=>i!==currentIndex&&(p.selected_pedagogical_strategies||[]).includes(option));}
+function ensureUnitOverviewChipBank(group,value){if(!value)return;state.plan.planning=state.plan.planning||{};const map={literacy:"literacy_learning_strategies",numeracy:"numeracy_learning_strategies",support:"support_strategies",extension:"extension_strategies",equity:"te_tiriti_equity"};const field=map[group];if(!field)return;state.plan.planning[field]=unique([...(Array.isArray(state.plan.planning[field])?state.plan.planning[field]:[]),value]);}
+function customChipAddHtml(type,indexOrKey,extra,placeholder="Add custom chip..."){const attrs=[`data-custom-add-type="${escapeAttr(type)}"`];if(indexOrKey!==undefined&&indexOrKey!==null)attrs.push(`data-custom-add-target="${escapeAttr(indexOrKey)}"`);if(extra!==undefined&&extra!==null)attrs.push(`data-custom-add-extra="${escapeAttr(extra)}"`);return `<div class="custom-chip-add"><input type="text" data-custom-chip-input placeholder="${escapeAttr(placeholder)}"><button type="button" ${attrs.join(" ")}>+ Add chip</button></div>`;}
+function customChipValue(btn){const box=btn.closest(".custom-chip-add");const input=box?box.querySelector("[data-custom-chip-input]"):null;return {input,value:String(input?input.value:"").trim()};}
 function addFocusStrategyChip(index,group,value){const plan=state.plan.weekly_sequence[index];if(!plan||!value)return;ensurePlanStrategyFields(plan);const field=planStrategyField(group);if(!field)return;plan[field]=unique([...(plan[field]||[]),value]);ensureUnitOverviewChipBank(group,value);plan.strategies_open=true;render();}
-function addPedagogyChip(index,value){const plan=state.plan.weekly_sequence[index];if(!plan||!value)return;ensurePedagogicalStrategies(plan);plan.selected_pedagogical_strategies=unique([...(plan.selected_pedagogical_strategies||[]),value]);ensurePlanningPedagogicalStrategies();state.plan.planning.pedagogical_strategies=unique([...(state.plan.planning.pedagogical_strategies||[]),value]);render();}
+function addPedagogyChip(index,value){const plan=state.plan.weekly_sequence[index];if(!plan||!value)return;ensurePedagogicalStrategies(plan);plan.selected_pedagogical_strategies=unique([...(plan.selected_pedagogical_strategies||[]),value]);render();}
 function addVocabularyChip(index,value){const plan=state.plan.weekly_sequence[index];if(!plan||!value)return;plan.key_vocabulary=unique([...(plan.key_vocabulary||[]),value]);plan.vocab_open=true;render();}
 function addPHSPrincipleChip(key,value){if(!key||!value)return;ensurePHSPrinciples();const data=state.plan.phs_principles[key];data.selected=unique([...(data.selected||[]),value]);renderPHSPrinciples();updateDocument();}
 function addTiritiChip(key,value){if(!key||!value)return;ensureTiritiBarrierReflection();const data=state.plan.te_tiriti_reflection[key];data.selected=unique([...(data.selected||[]),value]);renderTiritiBarriers();updateDocument();}
-function initCustomChipAddEvents(){
-  if(window.__phsCustomChipAddEventsBound) return;
-  window.__phsCustomChipAddEventsBound=true;
-  document.addEventListener("click",event=>{
-    const btn=event.target.closest("[data-custom-add-type]");if(!btn) return;event.preventDefault();
-    const {input,value}=customChipValue(btn);if(!value) return;
-    const type=btn.dataset.customAddType;const target=btn.dataset.customAddTarget;const extra=btn.dataset.customAddExtra;
-    if(type==="strategy") addFocusStrategyChip(Number(target),extra,value);
-    else if(type==="pedagogy") addPedagogyChip(Number(target),value);
-    else if(type==="vocab") addVocabularyChip(Number(target),value);
-    else if(type==="phs") addPHSPrincipleChip(target,value);
-    else if(type==="tiriti") addTiritiChip(target,value);
-    if(input) input.value="";
-  });
-  document.addEventListener("keydown",event=>{if(event.key!=="Enter") return;const input=event.target.closest("[data-custom-chip-input]");if(!input) return;const btn=input.closest(".custom-chip-add")?.querySelector("[data-custom-add-type]");if(btn){event.preventDefault();btn.click();}});
-}
+function initCustomChipAddEvents(){if(window.__phsCustomChipAddEventsBound)return;window.__phsCustomChipAddEventsBound=true;document.addEventListener("click",e=>{const btn=e.target.closest("[data-custom-add-type]");if(!btn)return;e.preventDefault();const {input,value}=customChipValue(btn);if(!value)return;const type=btn.dataset.customAddType,target=btn.dataset.customAddTarget,extra=btn.dataset.customAddExtra;if(type==="strategy")addFocusStrategyChip(Number(target),extra,value);else if(type==="pedagogy")addPedagogyChip(Number(target),value);else if(type==="vocab")addVocabularyChip(Number(target),value);else if(type==="phs")addPHSPrincipleChip(target,value);else if(type==="tiriti")addTiritiChip(target,value);if(input)input.value=""});document.addEventListener("keydown",e=>{if(e.key!=="Enter")return;const input=e.target.closest("[data-custom-chip-input]");if(!input)return;const btn=input.closest(".custom-chip-add")?.querySelector("[data-custom-add-type]");if(btn){e.preventDefault();btn.click()}})}
+function readinessStripHtml(status){const tiers=["Minimum ready","Teaching ready","High-quality ready"];return `<div class="readiness-strip">${tiers.map(t=>`<span class="readiness-pill ${status.tiers.includes(t)?"done":(status.nextTier===t?"next":"")}">${escapeHtml(t)}</span>`).join("")}</div>`;}
+function aiBestUseText(kind){if(kind==='activity')return '<strong>Best use:</strong> this is an activity-specific prompt. Copy it into ChatGPT or Copilot, choose what fits your room/resources, then paste the improved activity back into the matching learning-focus field.';if(kind==='workbook')return '<strong>Best use:</strong> this is a workbook/resource prompt. Copy it into ChatGPT or Copilot, generate student-facing material, then adapt it for your workshop, timing, safety, and class needs.';if(kind==='resource')return '<strong>Best use:</strong> this is a targeted resource prompt. Copy it into ChatGPT or Copilot, generate the selected resource, then paste or save the parts you want to use with students.';return '<strong>Best use:</strong> this is the whole-unit improvement prompt. Copy it into ChatGPT or Copilot, ask it to improve the whole plan, and return valid JSON only. Save that response as a .json file, then load it back here using <em>Open saved plan</em>.';}
+function updateAiBestUseNotice(kind){const notice=document.querySelector('#aiPrompt .notice');const box=document.getElementById('aiPromptText');const activeKind=kind||(box&&box.dataset.promptKind)||'unit';if(notice)notice.innerHTML=aiBestUseText(activeKind);}
+function installAiPromptModePatch(){if(window.__aiPromptModePatchInstalled)return;window.__aiPromptModePatchInstalled=true;const oldRenderAiPrompt=renderAiPrompt;renderAiPrompt=function(){const box=document.getElementById('aiPromptText');const activeKind=box&&box.dataset.promptKind;const activeValue=box&&String(box.value||'');if(box&&activeKind&&activeKind!=='unit'&&activeValue.trim()){updateAiBestUseNotice(activeKind);return;}oldRenderAiPrompt();updateAiBestUseNotice('unit');};['showActivityPrompt','showWorkbookPrompt','showSupportMaterialPrompt'].forEach(name=>{const old=window[name];if(typeof old==='function'){window[name]=function(){const result=old.apply(this,arguments);const box=document.getElementById('aiPromptText');if(box){box.dataset.promptKind=name==='showActivityPrompt'?'activity':(name==='showWorkbookPrompt'?'workbook':'resource');updateAiBestUseNotice(box.dataset.promptKind)}return result}}})}
 
 function unitStrategyOptions(group){
   const p=state.plan.planning||{};
@@ -1555,17 +1439,7 @@ function applyUnitStrategyDefaults(plan){
     plan[field]=inferred[group] || [];
   });
 }
-function ensurePlanStrategyFields(plan){
-  if(!plan) return;
-  if(plan.use_unit_strategy_defaults===undefined) plan.use_unit_strategy_defaults=false;
-  ["literacy","numeracy","support","extension","equity"].forEach(group=>{
-    const field=planStrategyField(group);
-    plan[field]=unique(Array.isArray(plan[field])?plan[field]:[]).filter(Boolean);
-  });
-  plan.use_unit_strategy_defaults=false;
-  plan.strategy_explanation=plan.strategy_explanation||"";
-  plan.strategies_open=plan.strategies_open!==false;
-}
+function ensurePlanStrategyFields(plan){if(!plan)return;if(plan.use_unit_strategy_defaults===undefined)plan.use_unit_strategy_defaults=false;["literacy","numeracy","support","extension","equity"].forEach(group=>{const field=planStrategyField(group);plan[field]=unique(Array.isArray(plan[field])?plan[field]:[]).filter(Boolean)});plan.use_unit_strategy_defaults=false;plan.strategy_explanation=plan.strategy_explanation||"";plan.strategies_open=plan.strategies_open===true;}
 function setUnitStrategyDefaults(index,useDefaults){
   const plan=state.plan.weekly_sequence[index];
   if(!plan) return;
@@ -1597,13 +1471,7 @@ function strategySummaryLines(plan){
   ].filter(([label,items])=>items&&items.length);
   return lines;
 }
-function chunkStrategyGroupHtml(plan,index,group,label){
-  ensurePlanStrategyFields(plan);
-  const options=unique([...unitStrategyOptions(group),...(plan[planStrategyField(group)]||[])]);
-  const field=planStrategyField(group);
-  if(!options.length) return `<div class="chunk-strategy-group"><h4>${escapeHtml(label)}</h4><div class="hint">Select ${escapeHtml(label.toLowerCase())} in section 4 Unit overview first, or add a custom chip below.</div>${customChipAddHtml("strategy",index,group,`Add custom ${label.toLowerCase()} chip...`)}</div>`;
-  return `<div class="chunk-strategy-group"><h4>${escapeHtml(label)}</h4><div class="chips">${options.map(option=>{const active=plan[field].includes(option);const elsewhere=strategyUsedElsewhere(group,option,index);const cls="chip"+(active?" active":(elsewhere?" used-elsewhere":""));const prefix=active?"✔ ":(elsewhere?"↺ ":"");return `<button type="button" class="${cls}" data-strategy-toggle="${index}" data-strategy-group="${escapeAttr(group)}" data-strategy-value="${escapeAttr(option)}">${escapeHtml(prefix+option)}</button>`;}).join("")}</div>${customChipAddHtml("strategy",index,group,`Add custom ${label.toLowerCase()} chip...`)}</div>`;
-}
+function chunkStrategyGroupHtml(plan,index,group,label){ensurePlanStrategyFields(plan);const field=planStrategyField(group);const options=unique([...unitStrategyOptions(group),...(plan[field]||[])]);if(!options.length)return `<div class="chunk-strategy-group"><h4>${escapeHtml(label)}</h4><div class="hint">Select ${escapeHtml(label.toLowerCase())} in Unit overview first, or add a custom chip below.</div>${customChipAddHtml("strategy",index,group,`Add custom ${label.toLowerCase()} chip...`)}</div>`;return `<div class="chunk-strategy-group"><h4>${escapeHtml(label)}</h4><div class="chips">${options.map(option=>{const active=plan[field].includes(option);const elsewhere=strategyUsedElsewhere(group,option,index);const cls="chip"+(active?" active":(elsewhere?" used-elsewhere":""));const prefix=active?"✔ ":(elsewhere?"↺ ":"");return `<button type="button" class="${cls}" data-strategy-toggle="${index}" data-strategy-group="${escapeAttr(group)}" data-strategy-value="${escapeAttr(option)}">${escapeHtml(prefix+option)}</button>`}).join("")}</div>${customChipAddHtml("strategy",index,group,`Add custom ${label.toLowerCase()} chip...`)}</div>`;}
 function chunkStrategiesSelectedCount(plan){
   ensurePlanStrategyFields(plan);
   return ["literacy","numeracy","support","extension","equity"].reduce((sum,group)=>sum+(plan[planStrategyField(group)]||[]).length,0);
@@ -1746,21 +1614,7 @@ function toggleVocabularyTerm(index, term){
   plan.vocab_open=true;
   render();
 }
-function vocabularySectionHtml(plan,index){
-  const selected=(plan.key_vocabulary||[]);
-  const selectedText=selected.length ? `${selected.length} selected` : "open to type or select";
-  const terms=unique([...vocabularyTermsForPlan(plan),...selected]);
-  if(!terms.length){
-    return `<div class="phs-box full"><details class="vocab-details" data-vocab-details="${index}" ${plan.vocab_open?"open":""}><summary>Key vocabulary to pre-teach <span class="vocab-summary-note">${escapeHtml(selectedText)}</span></summary><div class="vocab-details-body"><div class="empty">No vocabulary terms found for the selected curriculum statements.</div><textarea data-week-list="${index}" data-list-field="key_vocabulary" placeholder="Type key vocabulary here...">${escapeHtml(selected.join("\n"))}</textarea>${customChipAddHtml("vocab",index,null,"Add custom vocabulary chip...")}</div></details></div>`;
-  }
-  return `<div class="phs-box full"><details class="vocab-details" data-vocab-details="${index}" ${plan.vocab_open?"open":""}><summary>Key vocabulary to pre-teach <span class="vocab-summary-note">${escapeHtml(selectedText)}</span></summary>
-    <div class="vocab-details-body">
-      <div class="hint">Type your own words, or click terms to include them in this learning focus plan. Green vocabulary has already been covered in another learning focus but can still be selected here.</div>
-      <textarea data-week-list="${index}" data-list-field="key_vocabulary" placeholder="Type key vocabulary here...">${escapeHtml(selected.join("\n"))}</textarea>
-      <div class="vocab-box"><div class="chips">${terms.map(term=>{const active=selected.includes(term);const elsewhere=vocabularyUsedElsewhere(term,index);const cls="vocab-chip"+(active?" active":(elsewhere?" used-elsewhere":""));const prefix=active?"✔ ":(elsewhere?"↺ ":"");return `<button type="button" class="${cls}" data-vocab-toggle="${index}" data-vocab-term="${escapeAttr(term)}">${escapeHtml(prefix+term)}</button>`;}).join("")}</div>${customChipAddHtml("vocab",index,null,"Add custom vocabulary chip...")}</div>
-    </div>
-  </details></div>`;
-}
+function vocabularySectionHtml(plan,index){const selected=(plan.key_vocabulary||[]);const selectedText=selected.length?`${selected.length} selected`:"open to type or select";const terms=unique([...vocabularyTermsForPlan(plan),...selected]);return `<div class="phs-box full"><details class="vocab-details" data-vocab-details="${index}" ${plan.vocab_open?"open":""}><summary>Key vocabulary to pre-teach <span class="vocab-summary-note">${escapeHtml(selectedText)}</span></summary><div class="vocab-details-body">${terms.length?`<div class="hint">Type your own words, or click terms to include them. Green vocabulary has already been covered elsewhere.</div>`:`<div class="empty">No vocabulary terms found for the selected curriculum statements.</div>`}<textarea data-week-list="${index}" data-list-field="key_vocabulary" placeholder="Type key vocabulary here...">${escapeHtml(selected.join("\n"))}</textarea>${terms.length?`<div class="vocab-box"><div class="chips">${terms.map(term=>{const active=selected.includes(term);const elsewhere=vocabularyUsedElsewhere(term,index);const cls="vocab-chip"+(active?" active":(elsewhere?" used-elsewhere":""));const prefix=active?"✔ ":(elsewhere?"↺ ":"");return `<button type="button" class="${cls}" data-vocab-toggle="${index}" data-vocab-term="${escapeAttr(term)}">${escapeHtml(prefix+term)}</button>`}).join("")}</div></div>`:""}${customChipAddHtml("vocab",index,null,"Add custom vocabulary chip...")}</div></details></div>`;}
 
 function ensureAdditionalActivities(plan){
   if(!plan) return;
@@ -1854,18 +1708,7 @@ function docAdditionalActivitiesHtml(plan){
   }).join("");
 }
 
-function ensurePedagogicalStrategies(plan,bank=getActivityBank()){
-  if(!plan) return;
-  const options=bank.pedagogical_strategies||[];
-  plan.selected_pedagogical_strategies=unique(Array.isArray(plan.selected_pedagogical_strategies)?plan.selected_pedagogical_strategies:[]).filter(Boolean);
-  if(plan.pedagogical_strategy && !plan._pedagogy_migrated){
-    if(options.includes(plan.pedagogical_strategy)){
-      plan.selected_pedagogical_strategies=unique([...plan.selected_pedagogical_strategies,plan.pedagogical_strategy]);
-      plan.pedagogical_strategy="";
-    }
-    plan._pedagogy_migrated=true;
-  }
-}
+function ensurePedagogicalStrategies(plan,bank=getActivityBank()){if(!plan)return;const options=bank.pedagogical_strategies||[];plan.selected_pedagogical_strategies=unique(Array.isArray(plan.selected_pedagogical_strategies)?plan.selected_pedagogical_strategies:[]).filter(Boolean);if(plan.pedagogical_strategy&&!plan._pedagogy_migrated){if(options.includes(plan.pedagogical_strategy)){plan.selected_pedagogical_strategies=unique([...plan.selected_pedagogical_strategies,plan.pedagogical_strategy]);plan.pedagogical_strategy="";}plan._pedagogy_migrated=true;}}
 function togglePedagogicalStrategy(index,value){
   const plan=state.plan.weekly_sequence[index];
   if(!plan || !value) return;
@@ -1875,20 +1718,7 @@ function togglePedagogicalStrategy(index,value){
     : [...plan.selected_pedagogical_strategies,value];
   render();
 }
-function pedagogicalStrategiesHtml(plan,index,bank){
-  ensurePedagogicalStrategies(plan,bank);
-  ensurePlanningPedagogicalStrategies();
-  const options=unique([...unitPedagogicalOptions(bank),...(plan.selected_pedagogical_strategies||[])]);
-  if(!options.length){
-    return `<div class="phs-box"><div class="phs-label">Pedagogical strategies</div><div class="hint">Select pedagogical strategy chips in section 4 Unit overview first, or add a custom chip below.</div>${customChipAddHtml("pedagogy",index,null,"Add custom pedagogical strategy...")}<textarea data-week="${index}" data-field="pedagogical_strategy" placeholder="Type or adapt additional pedagogical strategy wording...">${escapeHtml(plan.pedagogical_strategy||"")}</textarea></div>`;
-  }
-  return `<div class="phs-box"><div class="phs-label">Pedagogical strategies</div>
-    <div class="hint">Click one or more strategies for this learning focus. Green strategies have already been used in another focus but can still be selected here.</div>
-    <div class="chips">${options.map(option=>{const active=plan.selected_pedagogical_strategies.includes(option);const elsewhere=pedagogyUsedElsewhere(option,index);const cls="chip"+(active?" active":(elsewhere?" used-elsewhere":""));const prefix=active?"✔ ":(elsewhere?"↺ ":"");return `<button type="button" class="${cls}" data-pedagogy-toggle="${index}" data-pedagogy-value="${escapeAttr(option)}">${escapeHtml(prefix+option)}</button>`;}).join("")}</div>
-    ${customChipAddHtml("pedagogy",index,null,"Add custom pedagogical strategy...")}
-    <textarea data-week="${index}" data-field="pedagogical_strategy" placeholder="Type or adapt additional pedagogical strategy wording...">${escapeHtml(plan.pedagogical_strategy||"")}</textarea>
-  </div>`;
-}
+function pedagogicalStrategiesHtml(plan,index,bank){ensurePedagogicalStrategies(plan,bank);const options=unique([...(bank.pedagogical_strategies||[]),...(plan.selected_pedagogical_strategies||[])]);return `<div class="phs-box"><div class="phs-label">Pedagogical strategies</div><div class="hint">Select one or more strategies for this learning focus. Green means used in another focus.</div><div class="chips">${options.map(option=>{const active=plan.selected_pedagogical_strategies.includes(option);const elsewhere=pedagogyUsedElsewhere(option,index);const cls="chip"+(active?" active":(elsewhere?" used-elsewhere":""));const prefix=active?"✔ ":(elsewhere?"↺ ":"");return `<button type="button" class="${cls}" data-pedagogy-toggle="${index}" data-pedagogy-value="${escapeAttr(option)}">${escapeHtml(prefix+option)}</button>`}).join("")}</div>${customChipAddHtml("pedagogy",index,null,"Add custom pedagogical strategy...")}<textarea data-week="${index}" data-field="pedagogical_strategy" placeholder="Type or adapt additional pedagogical strategy wording...">${escapeHtml(plan.pedagogical_strategy||"")}</textarea></div>`;}
 function docPedagogicalStrategyHtml(plan){
   ensurePedagogicalStrategies(plan);
   const selected=plan.selected_pedagogical_strategies||[];
@@ -1907,17 +1737,7 @@ function deriveLitNum(plan){
   return "";
 }
 
-function planCompleteness(plan){
-  ensurePlanStrategyFields(plan);ensurePedagogicalStrategies(plan);ensureAdditionalActivities(plan);
-  const hasLearningStrategies=["literacy","numeracy","support","extension","equity"].some(group=>{const field=planStrategyField(group);return (plan[field]||[]).length>0;});
-  const hasActivity2=!!String(plan.activity_2||"").trim() || (plan.additional_activities||[]).some(a=>String(a.title||a.detail||"").trim());
-  const checks=[{key:"curriculum",done:!!plan.curriculum_chunk_id},{key:"knowledge",done:!!String(plan.knowledge||"").trim()},{key:"practices",done:!!String(plan.practices_capabilities||"").trim()},{key:"LI",done:(plan.learning_intentions||[]).length>0},{key:"SC",done:(plan.success_criteria||[]).length>0},{key:"vocabulary",done:(plan.key_vocabulary||[]).length>0},{key:"pedagogy",done:(plan.selected_pedagogical_strategies||[]).length>0 || !!String(plan.pedagogical_strategy||"").trim()},{key:"strategies",done:hasLearningStrategies},{key:"Do Now",done:!!String(plan.do_now||"").trim()},{key:"Activity 1",done:!!String(plan.activity_1||"").trim()},{key:"Activity 2",done:hasActivity2},{key:"Exit",done:!!String(plan.check_exit||"").trim()},{key:"Evidence",done:(plan.evidence||[]).length>0}];
-  const done=checks.filter(x=>x.done).length;const total=checks.length;const ratio=done/total;
-  const status=done===total?"complete":(ratio>=0.4?"partial":"empty");
-  const label=status==="complete"?"Ready":(status==="partial"?"In progress":"Needs setup");
-  const missing=checks.filter(x=>!x.done).map(x=>x.key);
-  return {done,total,status,label,className:`status-${status}`,missing};
-}
+function planCompleteness(plan){ensurePlanStrategyFields(plan);ensurePedagogicalStrategies(plan);ensureAdditionalActivities(plan);const hasStrategies=["literacy","numeracy","support","extension","equity"].some(g=>{const f=planStrategyField(g);return (plan[f]||[]).length>0});const hasActivity2=!!String(plan.activity_2||"").trim()||(plan.additional_activities||[]).some(a=>String(a.title||a.detail||"").trim());const minimumChecks=[{key:"curriculum",done:!!plan.curriculum_chunk_id},{key:"knowledge",done:!!String(plan.knowledge||"").trim()},{key:"practices",done:!!String(plan.practices_capabilities||"").trim()},{key:"LI",done:(plan.learning_intentions||[]).length>0},{key:"SC",done:(plan.success_criteria||[]).length>0}];const teachingChecks=[...minimumChecks,{key:"vocabulary",done:(plan.key_vocabulary||[]).length>0},{key:"pedagogy",done:(plan.selected_pedagogical_strategies||[]).length>0||!!String(plan.pedagogical_strategy||"").trim()},{key:"strategies",done:hasStrategies},{key:"Do Now",done:!!String(plan.do_now||"").trim()},{key:"Activity 1",done:!!String(plan.activity_1||"").trim()},{key:"Exit",done:!!String(plan.check_exit||"").trim()}];const highQualityChecks=[...teachingChecks,{key:"Activity 2",done:hasActivity2},{key:"Evidence",done:(plan.evidence||[]).length>0},{key:"Reflection",done:!!String(plan.reflection_next||"").trim()},{key:"Support / extension note",done:!!String(plan.support_extension||"").trim()||hasStrategies}];const doneMinimum=minimumChecks.every(x=>x.done),doneTeaching=teachingChecks.every(x=>x.done),doneHigh=highQualityChecks.every(x=>x.done);const tiers=[];if(doneMinimum)tiers.push("Minimum ready");if(doneTeaching)tiers.push("Teaching ready");if(doneHigh)tiers.push("High-quality ready");const done=highQualityChecks.filter(x=>x.done).length,total=highQualityChecks.length;const status=doneHigh?"complete":(doneMinimum||done/total>=.35?"partial":"empty");const label=doneHigh?"High-quality ready":(doneTeaching?"Teaching ready":(doneMinimum?"Minimum ready":(done?"In progress":"Needs setup")));const nextTier=doneTeaching?"High-quality ready":(doneMinimum?"Teaching ready":"Minimum ready");const missing=highQualityChecks.filter(x=>!x.done).map(x=>x.key);return {done,total,status,label,className:`status-${status}`,missing,tiers,nextTier};}
 function markingGuideRowForPlan(plan){
   if(!plan?.curriculum_chunk_id) return null;
   const existing=(state.plan.marking_scheme||[]).find(row=>row.source_id===plan.curriculum_chunk_id);
@@ -1955,29 +1775,8 @@ function docPlanMarkingGuideHtml(plan){
     </div>`;
 }
 
-function attentionIssuesForPlan(plan,index){
-  const issues=[];ensurePlanStrategyFields(plan);ensurePedagogicalStrategies(plan);ensureAdditionalActivities(plan);
-  if(!plan.curriculum_chunk_id) issues.push("choose curriculum focus");
-  if(!String(plan.knowledge||"").trim()) issues.push("add knowledge");
-  if(!String(plan.practices_capabilities||"").trim()) issues.push("add practices / capabilities");
-  if(!(plan.learning_intentions||[]).length) issues.push("add LI");
-  if(!(plan.success_criteria||[]).length) issues.push("add SC");
-  if(!(plan.key_vocabulary||[]).length) issues.push("select key vocabulary");
-  if(!(plan.selected_pedagogical_strategies||[]).length && !String(plan.pedagogical_strategy||"").trim()) issues.push("choose pedagogical strategy");
-  const hasLearningStrategies=["literacy","numeracy","support","extension","equity"].some(group=>{const field=planStrategyField(group);return (plan[field]||[]).length>0;});
-  if(!hasLearningStrategies) issues.push("select at least one literacy/numeracy/support/extension/equity strategy");
-  if(!String(plan.do_now||"").trim()) issues.push("add Do Now");
-  if(!String(plan.activity_1||"").trim()) issues.push("add Activity / Lesson Task 1");
-  if(!String(plan.activity_2||"").trim() && !(plan.additional_activities||[]).some(a=>String(a.title||a.detail||"").trim())) issues.push("add Activity / Lesson Task 2 or additional activity");
-  if(!String(plan.check_exit||"").trim()) issues.push("add check / exit task");
-  if(!(plan.evidence||[]).length) issues.push("add evidence");
-  return issues;
-}
-function needsAttentionHtml(){
-  const items=(state.plan.weekly_sequence||[]).map((plan,index)=>({plan,index,issues:attentionIssuesForPlan(plan,index),status:planCompleteness(plan)})).filter(x=>x.issues.length);
-  if(!items.length) return `<div class="attention-panel ready"><h3>Ready to export</h3><p class="hint">All learning focuses have the required curriculum, strategy, activity, evidence, and checking sections completed. You can still customise details before downloading the Word document.</p></div>`;
-  return `<div class="attention-panel"><h3>Needs attention</h3><p class="hint">The Ready badge only appears when all required focus sections are complete. Fix these items where they matter.</p><ul>${items.slice(0,6).map(item=>`<li><strong>${escapeHtml(item.plan.week_title||rangeLabel(item.plan))} (${item.status.done}/${item.status.total}):</strong> ${escapeHtml(item.issues.slice(0,5).join(", "))}${item.issues.length>5?"...":""}</li>`).join("")}</ul>${items.length>6?`<p class="hint">+ ${items.length-6} more learning focus(es)</p>`:""}</div>`;
-}
+function attentionIssuesForPlan(plan,index){return planCompleteness(plan).missing.map(x=>`complete ${x}`);}
+function needsAttentionHtml(){const items=(state.plan.weekly_sequence||[]).map((plan,index)=>({plan,index,status:planCompleteness(plan)})).filter(x=>!x.status.tiers.includes("High-quality ready"));if(!items.length)return `<div class="attention-panel ready"><h3>High-quality ready to export</h3><p class="hint">All learning focuses meet the high-quality readiness check.</p></div>`;return `<div class="attention-panel"><h3>Readiness check</h3><p class="hint">Minimum ready = curriculum essentials; Teaching ready = teachable plan; High-quality ready = evidence/reflection/support complete.</p><ul>${items.slice(0,6).map(item=>`<li><strong>${escapeHtml(item.plan.week_title||rangeLabel(item.plan))} — ${escapeHtml(item.status.label)} (${item.status.done}/${item.status.total}):</strong> next: ${escapeHtml(item.status.nextTier)}; missing ${escapeHtml(item.status.missing.slice(0,5).join(", "))}${item.status.missing.length>5?"...":""}</li>`).join("")}</ul>${items.length>6?`<p class="hint">+ ${items.length-6} more learning focus(es)</p>`:""}</div>`;}
 
 function refreshLIAndSCWordingForMode(){
   state.plan.weekly_sequence.forEach(plan=>{
@@ -2007,7 +1806,7 @@ function groupedLIStages(plan){
   });
   return groups;
 }
-function liStagesHtml(plan){const groups=groupedLIStages(plan);if(!useStudentFriendlyWording()||!groups.length)return "";return `<details class="vocab-details" style="margin-top:8px" open><summary>Student LI steps <span class="vocab-summary-note">Lesson steps</span></summary><div class="vocab-details-body">${groups.map(group=>`<div class="auto-strategy-preview"><ul class="compact-list">${group.stages.map(stage=>`<li>${escapeHtml(stage)}</li>`).join("")}</ul></div>`).join("")}</div></details>`;}
+function liStagesHtml(plan){const groups=groupedLIStages(plan);if(!useStudentFriendlyWording()||!groups.length)return "";return `<details class="vocab-details" style="margin-top:8px"><summary>Student LI steps <span class="vocab-summary-note">Lesson steps</span></summary><div class="vocab-details-body">${groups.map(group=>`<div class="auto-strategy-preview"><ul class="compact-list">${group.stages.map(stage=>`<li>${escapeHtml(stage)}</li>`).join("")}</ul></div>`).join("")}</div></details>`;}
 function docLearningIntentionStages(plan){const groups=groupedLIStages(plan);if(!useStudentFriendlyWording()||!groups.length)return "";return `<tr><th class="row-title">Student LI steps</th><td>${groups.map(group=>`<ul class="compact-list">${group.stages.map(stage=>`<li>${escapeHtml(stage)}</li>`).join("")}</ul>`).join("")}</td></tr>`;}
 
 function activityPromptButton(index,field,label,extraIndex=""){
@@ -2218,7 +2017,7 @@ function renderWeeks(){
     ensureAdditionalActivities(w);
     const status=planCompleteness(w);
     const div=document.createElement("div");div.className=`week-card ${weekColourClass(index)} ${status.className}`;div.id=`week-card-${index+1}`;
-    div.innerHTML=`<details class="focus-details" data-focus-details="${index}" ${w.focus_open===true?"open":""}><summary class="week-head"><div><h3>${escapeHtml(w.week_title||rangeLabel(w))}<span class="status-badge ${status.className}">${status.label} ${status.done}/${status.total}</span></h3><p class="doc-small"><span class="range-pill">${escapeHtml(rangeLabel(w))}</span> · ${w.lesson_count||rangeLessonCount(w)} estimated lesson(s) · Progression: ${escapeHtml(w.progression_level)} ${w.progression_stage_note?("· "+escapeHtml(w.progression_stage_note)):""}</p></div><div class="toolbar"><button class="small" data-move-week-up="${index}" ${index===0?"disabled":""}>Move up</button><button class="small" data-move-week-down="${index}" ${index===state.plan.weekly_sequence.length-1?"disabled":""}>Move down</button><button class="small" data-suggest-week="${index}">Fill missing suggestions</button><button class="small" data-add-week-after="${index}">Add custom plan after</button><button class="small danger" data-remove-week="${index}">Remove plan</button></div></summary>
+    div.innerHTML=`<details class="focus-details" data-focus-details="${index}" ${w.focus_open===true?"open":""}><summary class="week-head"><div><h3>${escapeHtml(w.week_title||rangeLabel(w))}<span class="status-badge ${status.className}">${status.label} ${status.done}/${status.total}</span></h3>${readinessStripHtml(status)}<p class="doc-small"><span class="range-pill">${escapeHtml(rangeLabel(w))}</span> · ${w.lesson_count||rangeLessonCount(w)} estimated lesson(s) · Progression: ${escapeHtml(w.progression_level)} ${w.progression_stage_note?("· "+escapeHtml(w.progression_stage_note)):""}</p></div><div class="toolbar"><button class="small" data-move-week-up="${index}" ${index===0?"disabled":""}>Move up</button><button class="small" data-move-week-down="${index}" ${index===state.plan.weekly_sequence.length-1?"disabled":""}>Move down</button><button class="small" data-suggest-week="${index}">Fill missing suggestions</button><button class="small" data-add-week-after="${index}">Add custom plan after</button><button class="small danger" data-remove-week="${index}">Remove plan</button></div></summary>
     <div class="focus-body"><div class="fields three">
       <label>Estimated lessons<select data-block-lessons="${index}">${[1,2,3,4,5,6,7,8,9,10,12,15,20].map(n=>`<option value="${n}" ${Number(w.lesson_count||state.plan.header.lessons_per_week||3)===n?"selected":""}>${n} lesson${n>1?"s":""}</option>`).join("")}</select></label>
       <label>Plan title<input data-week="${index}" data-field="week_title" value="${escapeAttr(w.week_title)}"></label>
@@ -2686,11 +2485,11 @@ function reconcilePlanWithLibrary(){
   state.ui.sectionFilter="All";
   syncPlansToSelectedCurriculum();
 }
-function loadLibraryJson(file){const r=new FileReader();r.onload=()=>{try{const raw=String(r.result||"").replace(/^﻿/,"");const parsed=JSON.parse(raw);if(!parsed||typeof parsed!=="object"||!Array.isArray(parsed.curriculum_chunks)){alert("That JSON opened, but it does not look like a curriculum library file. Use Load curriculum JSON for files with curriculum_chunks.");return}state.library=Object.assign(structuredClone(DEFAULT_LIBRARY),parsed);state.library.dropdown_options=Object.assign({},DEFAULT_LIBRARY.dropdown_options,parsed.dropdown_options||{});state.library.weekly_activity_bank=Object.assign({},DEFAULT_LIBRARY.weekly_activity_bank,parsed.weekly_activity_bank||{});state.library.phs_design_principles=Object.assign({},DEFAULT_LIBRARY.phs_design_principles,parsed.phs_design_principles||{});state.library.tiriti_barrier_prompts=Object.assign({},DEFAULT_LIBRARY.tiriti_barrier_prompts,parsed.tiriti_barrier_prompts||{});reconcilePlanWithLibrary();refreshSummaries(true);syncUnitDuration();render();}catch(e){console.error(e);alert("Could not read that curriculum JSON. Error: "+(e&&e.message?e.message:e));}};r.onerror=()=>alert("Could not open that curriculum JSON file.");r.readAsText(file);}
+function loadLibraryJson(file){const r=new FileReader();r.onload=()=>{try{const raw=String(r.result||"").replace(/^﻿/,"");const parsed=JSON.parse(raw);if(!parsed||typeof parsed!=="object"||!Array.isArray(parsed.curriculum_chunks)){alert("That JSON opened, but it does not look like a curriculum library file. Use Load curriculum JSON for files with curriculum_chunks.");return}state.library=Object.assign(structuredClone(DEFAULT_LIBRARY),parsed);state.library.dropdown_options=Object.assign({},DEFAULT_LIBRARY.dropdown_options,parsed.dropdown_options||{});state.library.weekly_activity_bank=Object.assign({},DEFAULT_LIBRARY.weekly_activity_bank,parsed.weekly_activity_bank||{});state.library.phs_design_principles=Object.assign({},DEFAULT_LIBRARY.phs_design_principles,parsed.phs_design_principles||{});state.library.tiriti_barrier_prompts=Object.assign({},DEFAULT_LIBRARY.tiriti_barrier_prompts,parsed.tiriti_barrier_prompts||{});reconcilePlanWithLibrary();refreshSummaries(true);syncUnitDuration();render()}catch(e){console.error(e);alert("Could not read that curriculum JSON. Error: "+(e&&e.message?e.message:e))}};r.onerror=()=>alert("Could not open that curriculum JSON file.");r.readAsText(file)}
 function isPlainObject(value){return value&&typeof value==="object"&&!Array.isArray(value);}
 function mergeMissingDefaults(defaults,saved){if(Array.isArray(defaults))return Array.isArray(saved)?saved:structuredClone(defaults);if(isPlainObject(defaults)){const out=isPlainObject(saved)?{...saved}:{};Object.keys(defaults).forEach(key=>{out[key]=mergeMissingDefaults(defaults[key],out[key]);});return out;}return saved===undefined||saved===null?defaults:saved;}
-function migratePlan(savedPlan){const migrated=mergeMissingDefaults(createBlankPlan(),savedPlan||{});migrated.header=migrated.header||{};migrated.header.unit_weeks=Math.max(1,Number(migrated.header.unit_weeks||6)||6);migrated.header.lessons_per_week=Math.max(1,Number(migrated.header.lessons_per_week||3)||3);migrated.header.unit_duration=migrated.header.unit_duration||`${migrated.header.unit_weeks} weeks`;migrated.planning=migrated.planning||{};migrated.planning.pedagogical_strategies=Array.isArray(migrated.planning.pedagogical_strategies)?migrated.planning.pedagogical_strategies:[];migrated.weekly_sequence=Array.isArray(migrated.weekly_sequence)?migrated.weekly_sequence:[];migrated.marking_scheme=Array.isArray(migrated.marking_scheme)?migrated.marking_scheme:[];return migrated;}
-function loadPlanJson(file){const r=new FileReader();r.onload=()=>{try{const raw=String(r.result||"").replace(/^﻿/,"");const parsed=JSON.parse(raw);if(!parsed||typeof parsed!=="object"||!parsed.header){alert("That JSON opened, but it does not look like a saved planning file. Use Open saved plan for files with a header.");return}state.plan=migratePlan(parsed);ensurePHSPrinciples();ensureTiritiBarrierReflection();syncUnitDuration();render();}catch(e){console.error(e);alert("Could not read that plan JSON. Error: "+(e&&e.message?e.message:e));}};r.onerror=()=>alert("Could not open that plan JSON file.");r.readAsText(file);}
+function migratePlan(savedPlan){const migrated=mergeMissingDefaults(createBlankPlan(),savedPlan||{});migrated.header=migrated.header||{};migrated.header.unit_weeks=Math.max(1,Number(migrated.header.unit_weeks||6)||6);migrated.header.lessons_per_week=Math.max(1,Number(migrated.header.lessons_per_week||3)||3);migrated.header.unit_duration=migrated.header.unit_duration||`${migrated.header.unit_weeks} weeks`;migrated.planning=migrated.planning||{};migrated.weekly_sequence=Array.isArray(migrated.weekly_sequence)?migrated.weekly_sequence:[];migrated.weekly_sequence.forEach(w=>{if(w.focus_open===undefined)w.focus_open=false;if(w.vocab_open===undefined)w.vocab_open=false;if(w.strategies_open===undefined)w.strategies_open=false});migrated.marking_scheme=Array.isArray(migrated.marking_scheme)?migrated.marking_scheme:[];return migrated;}
+function loadPlanJson(file){const r=new FileReader();r.onload=()=>{try{const raw=String(r.result||"").replace(/^﻿/,"");const parsed=JSON.parse(raw);if(!parsed||typeof parsed!=="object"||!parsed.header){alert("That JSON opened, but it does not look like a saved planning file. Use Open saved plan for files with a header.");return}state.plan=migratePlan(parsed);ensurePHSPrinciples();ensureTiritiBarrierReflection();syncUnitDuration();render()}catch(e){console.error(e);alert("Could not read that plan JSON. Error: "+(e&&e.message?e.message:e))}};r.onerror=()=>alert("Could not open that plan JSON file.");r.readAsText(file)}
 function bindInput(id,path){$(id).addEventListener("input",()=>{setPath(state.plan,path,$(id).value);updateDocument()})}
 function appendText(path,text){if(!text)return;const cur=getPath(state.plan,path)||"";setPath(state.plan,path,cur?cur+"\n"+text:text);render()}
 function applyUnitPattern(id){
@@ -2853,7 +2652,7 @@ function initEvents(){
   $("openCopilotSectionBtn").addEventListener("click",()=>copyAndOpenAi("https://copilot.microsoft.com/"));
   document.querySelectorAll("[data-jump]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");$(b.dataset.jump).scrollIntoView({behavior:"smooth",block:"start"})}));
 }
-initEvents();initCustomChipAddEvents();render();
+initEvents();initCustomChipAddEvents();installAiPromptModePatch();render();
 </script>
 
 <script>
@@ -2870,15 +2669,15 @@ initEvents();initCustomChipAddEvents();render();
     const t=String(value||'').trim();
     return t ? t : '- Not selected yet';
   }
-  function plannedUnitLengthData(){const header=(typeof state!=="undefined"&&state.plan&&state.plan.header)||{};const lessonsPerWeek=Math.max(1, Number(header.lessons_per_week||3)||3);const unitWeeks=Math.max(1, Number(header.unit_weeks||6)||6);const totalLessons=unitWeeks*lessonsPerWeek;return {lessonsPerWeek,totalLessons,weeksRaw:unitWeeks,weeksRounded:unitWeeks,unitWeeks};}
+  function plannedUnitLengthData(){const header=(typeof state!=="undefined"&&state.plan&&state.plan.header)||{};const lessonsPerWeek=Math.max(1,Number(header.lessons_per_week||3)||3);const unitWeeks=Math.max(1,Number(header.unit_weeks||6)||6);return {lessonsPerWeek,totalLessons:unitWeeks*lessonsPerWeek,weeksRaw:unitWeeks,weeksRounded:unitWeeks,unitWeeks};}
   function plannedUnitLengthText(){
     const data=plannedUnitLengthData();
     const whole=Math.abs(data.weeksRounded - Math.round(data.weeksRounded)) < 0.001;
     const weeksText=whole ? String(Math.round(data.weeksRounded)) : String(data.weeksRounded);
     return weeksText + ' week' + (weeksText==='1' ? '' : 's') + ' (' + data.totalLessons + ' total lessons at ' + data.lessonsPerWeek + ' lessons/week)';
   }
-  function ensureUnitLengthCalculatedHint(){const unitWeeks=document.getElementById('unitWeeks');if(!unitWeeks||!unitWeeks.parentElement)return;let hint=document.getElementById('unitLengthCalculatedHint');if(!hint){hint=document.createElement('div');hint.id='unitLengthCalculatedHint';hint.className='hint';unitWeeks.parentElement.appendChild(hint);}if(typeof syncUnitDuration==="function")syncUnitDuration();hint.textContent='Calculated duration: '+((typeof state!=="undefined"&&state.plan&&state.plan.header&&state.plan.header.unit_duration)||plannedUnitLengthText());}
-  function updateUnitLengthDisplay(){const setup=document.getElementById('setup');if(!setup||typeof state==="undefined"||!state.plan||!state.plan.header)return;if(typeof syncUnitDuration==="function")syncUnitDuration();else state.plan.header.unit_duration=plannedUnitLengthText();let note=document.getElementById('unitLengthLive');if(!note){note=document.createElement('div');note.id='unitLengthLive';note.className='success-box';const status=document.getElementById('libraryStatus');if(status&&status.parentNode){status.parentNode.insertBefore(note,status);}else{setup.appendChild(note);}}note.innerHTML='<strong>Unit duration:</strong> '+escapeHtml(state.plan.header.unit_duration)+'. This is controlled by the selected unit length and lessons per week.';ensureUnitLengthCalculatedHint();}
+  function ensureUnitLengthCalculatedHint(){const unitWeeks=document.getElementById('unitWeeks');if(!unitWeeks||!unitWeeks.parentElement)return;let hint=document.getElementById('unitLengthCalculatedHint');if(!hint){hint=document.createElement('div');hint.id='unitLengthCalculatedHint';hint.className='hint';unitWeeks.parentElement.appendChild(hint)}if(typeof syncUnitDuration==="function")syncUnitDuration();hint.textContent='Calculated duration: '+((typeof state!=="undefined"&&state.plan&&state.plan.header&&state.plan.header.unit_duration)||plannedUnitLengthText())}
+  function updateUnitLengthDisplay(){const setup=document.getElementById('setup');if(!setup||typeof state==="undefined"||!state.plan||!state.plan.header)return;if(typeof syncUnitDuration==="function")syncUnitDuration();else state.plan.header.unit_duration=plannedUnitLengthText();let note=document.getElementById('unitLengthLive');if(!note){note=document.createElement('div');note.id='unitLengthLive';note.className='success-box';const status=document.getElementById('libraryStatus');if(status&&status.parentNode)status.parentNode.insertBefore(note,status);else setup.appendChild(note)}note.innerHTML='<strong>Unit duration:</strong> '+escapeHtml(state.plan.header.unit_duration)+'. This is controlled by the selected unit length and lessons per week.';ensureUnitLengthCalculatedHint()}
   function focusTargetStudentsTable(){
     let rows='';
     for(let i=0;i<5;i++){ rows += '<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>'; }
