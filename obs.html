@@ -1700,6 +1700,13 @@
         saveState();
       }
 
+      function getCurrentLocalDate() {
+        var now = new Date();
+        return String(now.getFullYear()) + "-"
+          + String(now.getMonth() + 1).padStart(2, "0") + "-"
+          + String(now.getDate()).padStart(2, "0");
+      }
+
       function getCurrentLocalTime() {
         var now = new Date();
         return String(now.getHours()).padStart(2, "0") + ":" + String(now.getMinutes()).padStart(2, "0");
@@ -2295,7 +2302,7 @@
 
       function resetCurrentForm() {
         document.querySelectorAll("input, textarea").forEach(function (field) { field.value = ""; });
-        byId("dateInput").value = new Date().toISOString().slice(0, 10);
+        byId("dateInput").value = getCurrentLocalDate();
         document.querySelectorAll(".rating-button").forEach(function (button) { button.classList.remove("is-selected"); });
         document.querySelectorAll(".rubric-item").forEach(function (item) { item.removeAttribute("data-rank"); item.classList.remove("is-complete"); });
         document.querySelectorAll(".statement-picker-button").forEach(function (button) { button.textContent = "Select statement"; });
@@ -2319,7 +2326,7 @@
           var field = byId(id);
           if (field) field.value = saved.fields[id];
         });
-        if (!byId("dateInput").value) byId("dateInput").value = new Date().toISOString().slice(0, 10);
+        if (!byId("dateInput").value) byId("dateInput").value = getCurrentLocalDate();
         Object.keys(saved.ratings || {}).forEach(function (key) {
           var value = saved.ratings[key];
           var button = document.querySelector(".rating-group[data-rating='" + key + "'] .rating-button[data-value='" + value + "']");
@@ -2374,7 +2381,7 @@
       function getAutomaticObservationName() {
         var teacher = byId("teacherName").value.trim() || "Unknown teacher";
         var observer = byId("observerName").value.trim() || "Unknown observer";
-        var date = byId("dateInput").value || new Date().toISOString().slice(0, 10);
+        var date = byId("dateInput").value || getCurrentLocalDate();
         return teacher + " - " + observer + " - " + date;
       }
 
@@ -2446,7 +2453,7 @@
       }
 
       function getDefaultMasterFilename() {
-        var date = new Date().toISOString().slice(0, 10);
+        var date = getCurrentLocalDate();
         return "arotake-observations-master-" + date + ".json";
       }
 
