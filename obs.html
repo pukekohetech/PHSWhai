@@ -1700,6 +1700,11 @@
         saveState();
       }
 
+      function getCurrentLocalTime() {
+        var now = new Date();
+        return String(now.getHours()).padStart(2, "0") + ":" + String(now.getMinutes()).padStart(2, "0");
+      }
+
       function addRecordRow(data) {
         var row = document.createElement("tr");
         row.className = "record-row";
@@ -1709,7 +1714,9 @@
         timeInput.type = "text";
         timeInput.className = "time-input record-time";
         timeInput.placeholder = "Time";
-        timeInput.value = data && data.time ? data.time : "";
+        timeInput.value = data && Object.prototype.hasOwnProperty.call(data, "time")
+          ? data.time
+          : getCurrentLocalTime();
         var deleteButton = document.createElement("button");
         deleteButton.type = "button";
         deleteButton.className = "delete-record-button";
