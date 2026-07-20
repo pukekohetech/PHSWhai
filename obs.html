@@ -2378,11 +2378,33 @@
         });
       }
 
+      function getObservationNameParts() {
+        return {
+          teacher: byId("teacherName").value.trim() || "Teacher not entered",
+          observer: byId("observerName").value.trim() || "Observer not entered",
+          className: byId("classInput").value.trim() || "Class not entered",
+          date: byId("dateInput").value || getCurrentLocalDate()
+        };
+      }
+
       function getAutomaticObservationName() {
-        var teacher = byId("teacherName").value.trim() || "Unknown teacher";
-        var observer = byId("observerName").value.trim() || "Unknown observer";
-        var date = byId("dateInput").value || getCurrentLocalDate();
-        return teacher + " - " + observer + " - " + date;
+        var parts = getObservationNameParts();
+        return parts.teacher + " - " + parts.className + " - " + parts.date + " - Observer " + parts.observer;
+      }
+
+      function cleanFilenamePart(value, fallback) {
+        var cleaned = String(value || fallback || "")
+          .trim()
+          .replace(/[\\/:*?"<>|]+/g, "-")
+          .replace(/\s+/g, " ")
+          .replace(/[. ]+$/g, "")
+          .slice(0, 60);
+        return cleaned || fallback || "Not entered";
+      }
+
+      function getSuggestedDocumentTitle() {
+        var parts = getObservationNameParts();
+        return "Arotake - " + parts.teacher + " - " + parts.className + " - " + parts.date + " - Observer " + parts.observer;
       }
 
       function saveNamedObservation() {
@@ -2453,8 +2475,12 @@
       }
 
       function getDefaultMasterFilename() {
-        var date = getCurrentLocalDate();
-        return "arotake-observations-master-" + date + ".json";
+        var parts = getObservationNameParts();
+        return "Arotake - "
+          + cleanFilenamePart(parts.teacher, "Teacher not entered") + " - "
+          + cleanFilenamePart(parts.className, "Class not entered") + " - "
+          + cleanFilenamePart(parts.date, getCurrentLocalDate()) + " - Observer "
+          + cleanFilenamePart(parts.observer, "Observer not entered") + ".json";
       }
 
       async function saveMasterFile() {
@@ -2542,7 +2568,11 @@
           if (!event.target.closest(".statement-picker")) closeOtherPickers(null);
         });
         byId("addRecordRowBtn").addEventListener("click", function () { addRecordRow(); saveState(); });
-        byId("printBtn").addEventListener("click", function () { buildPrintableReport(); window.print(); });
+        byId("printBtn").addEventListener("click", function () {
+          document.title = getSuggestedDocumentTitle();
+          buildPrintableReport();
+          window.print();
+        });
         byId("clearSavedBtn").addEventListener("click", clearSaved);
         byId("newObservationBtn").addEventListener("click", addNewObservation);
         byId("saveMasterFileBtn").addEventListener("click", function () {
@@ -2557,7 +2587,13 @@
           importMasterFileFromInput(this.files && this.files[0]);
           this.value = "";
         });
-        window.addEventListener("beforeprint", buildPrintableReport);
+        window.addEventListener("beforeprint", function () {
+          document.title = getSuggestedDocumentTitle();
+          buildPrintableReport();
+        });
+        window.addEventListener("afterprint", function () {
+          document.title = "Observation Tool - Arotake Whaiaro";
+        });
         updateAll();
       }
 
