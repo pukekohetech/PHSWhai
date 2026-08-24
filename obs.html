@@ -187,6 +187,35 @@
     .section-title h2 { margin: 0; font-size: 1.25rem; letter-spacing: 0.03em; }
     .section-body { padding: 16px; }
 
+    .section-collapse-button {
+      width: auto;
+      min-height: 32px;
+      padding: 5px 10px;
+      border: 1px solid rgba(255,255,255,0.5);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.16);
+      color: white;
+      font-size: 0.82rem;
+      white-space: nowrap;
+    }
+
+    .section-collapse-button:hover,
+    .section-collapse-button:focus-visible {
+      background: rgba(255,255,255,0.26);
+      outline: 2px solid white;
+      outline-offset: 2px;
+      filter: none;
+    }
+
+    .section.is-collapsed > .section-body,
+    .section.is-collapsed > #rubricContainer {
+      display: none;
+    }
+
+    .teacher-reflection-card { grid-column: 1 / -1; }
+    #teacherReflection { min-height: 170px; }
+    #observerComments, #futureDirections { min-height: 118px; }
+
     .count-pill {
       background: rgba(255,255,255,0.18);
       border: 1px solid rgba(255,255,255,0.4);
@@ -912,6 +941,10 @@
         margin: 6px 0;
       }
 
+      .print-summary-metrics.single-column {
+        grid-template-columns: 1fr;
+      }
+
       .print-summary-box {
         border: 1px solid #aaa;
         padding: 5px 6px;
@@ -1002,6 +1035,10 @@
         white-space: pre-wrap;
       }
 
+      .print-write-space-large {
+        min-height: 38mm;
+      }
+
       .print-signatures {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -1009,13 +1046,13 @@
       }
 
       .print-signature-box {
-        min-height: 18mm;
+        min-height: 14mm;
         border-top: 1px solid #999;
         padding-top: 4px;
       }
 
       .print-signature-line {
-        margin-top: 11mm;
+        margin-top: 8mm;
         border-top: 1px solid #111;
         padding-top: 2px;
       }
@@ -1170,12 +1207,12 @@
       </div>
     </section>
 
-    <section class="section" id="studentVoice">
+    <section class="section" id="studentVoice" data-collapse-when-empty>
       <div class="section-title"><h2>Student Voice Sample</h2><span class="print-only area-rank" id="studentVoicePrintSummary"></span></div>
       <div class="section-body">
         <p class="help-text">Ask the student voice questions, then score how clearly the student can articulate their response. A brief optional note can be added if there is a useful quote or pattern.</p>
         <div class="student-grid" id="studentGrid"></div>
-        <div class="field-card" style="margin-top:14px;"><h3>Additional observer notes</h3><textarea id="additionalNotes" data-save></textarea></div>
+        <div class="field-card" style="margin-top:14px;"><h3>Additional student voice notes</h3><textarea id="additionalNotes" data-save></textarea></div>
       </div>
     </section>
 
@@ -1184,10 +1221,11 @@
       <div id="rubricContainer"></div>
     </section>
 
-    <section class="section" id="reflectionSection">
+    <section class="section" id="reflectionSection" data-collapse-when-empty>
       <div class="section-title"><h2>Reflection and future directions</h2></div>
       <div class="section-body grid-2">
-        <div class="field-card"><h3>Reflection on lesson (Teacher)</h3><textarea id="teacherReflection" data-save></textarea></div>
+        <div class="field-card teacher-reflection-card"><h3>Reflection on lesson (Teacher)</h3><textarea id="teacherReflection" data-save placeholder="Teacher reflection on the lesson, learner response and possible changes"></textarea></div>
+        <div class="field-card"><h3>Observer comments</h3><textarea id="observerComments" data-save placeholder="Observer feedback, questions or comments"></textarea></div>
         <div class="field-card"><h3>Future directions (To be co-constructed)</h3><textarea id="futureDirections" data-save></textarea></div>
       </div>
     </section>
@@ -1974,6 +2012,49 @@
         });
       }
 
+      function optionalSectionHasContent(section) {
+        if (!section) return false;
+        var hasContent = false;
+        section.querySelectorAll("input, textarea").forEach(function (field) {
+          if (hasValue(field)) hasContent = true;
+        });
+        if (section.querySelector(".rating-button.is-selected, .rubric-item.is-complete, .record-row.has-print-content, .student-card.has-print-content")) {
+          hasContent = true;
+        }
+        return hasContent;
+      }
+
+      function setOptionalSectionCollapsed(section, collapsed) {
+        if (!section) return;
+        section.classList.toggle("is-collapsed", collapsed);
+        var button = section.querySelector(".section-collapse-button");
+        if (button) {
+          button.setAttribute("aria-expanded", collapsed ? "false" : "true");
+          button.textContent = collapsed ? "Open section" : "Collapse section";
+        }
+      }
+
+      function refreshOptionalSections() {
+        document.querySelectorAll(".section[data-collapse-when-empty]").forEach(function (section) {
+          setOptionalSectionCollapsed(section, !optionalSectionHasContent(section));
+        });
+      }
+
+      function setupOptionalSections() {
+        document.querySelectorAll(".section[data-collapse-when-empty]").forEach(function (section) {
+          var title = section.querySelector(".section-title");
+          if (!title || title.querySelector(".section-collapse-button")) return;
+          var button = document.createElement("button");
+          button.type = "button";
+          button.className = "section-collapse-button";
+          button.addEventListener("click", function () {
+            setOptionalSectionCollapsed(section, !section.classList.contains("is-collapsed"));
+          });
+          title.appendChild(button);
+        });
+        refreshOptionalSections();
+      }
+
       function updateAll() { updateStudentVoice(); updateAnalysis(); updatePrintVisibility(); }
 
       function getValueForPrint(id) {
@@ -2108,28 +2189,36 @@
 
         var summaryMetrics = document.createElement("div");
         summaryMetrics.className = "print-summary-metrics";
+        var summaryMetricCount = 0;
+        var hasRecordedPosition = Array.prototype.some.call(document.querySelectorAll(".record-position"), function (field) {
+          return String(field.value || "").trim().length > 0;
+        });
+        if (hasRecordedPosition) {
+          var movementBox = document.createElement("div");
+          movementBox.className = "print-summary-box";
+          printText(movementBox, "h3", "", "Classroom areas not visited");
+          var notVisited = getUnvisitedTeacherPositions();
+          printText(movementBox, "p", "", notVisited.length ? notVisited.join(", ") : "All recorded classroom areas were visited.");
+          summaryMetrics.appendChild(movementBox);
+          summaryMetricCount += 1;
+        }
 
-        var movementBox = document.createElement("div");
-        movementBox.className = "print-summary-box";
-        printText(movementBox, "h3", "", "Classroom areas not visited");
-        var notVisited = getUnvisitedTeacherPositions();
-        printText(movementBox, "p", "", notVisited.length ? notVisited.join(", ") : "All recorded classroom areas were visited.");
-        summaryMetrics.appendChild(movementBox);
-
-        var studentScoreBox = document.createElement("div");
-        studentScoreBox.className = "print-summary-box";
-        printText(studentScoreBox, "h3", "", "Average student voice scores");
         var studentAverages = getStudentVoiceAverageLines();
         if (studentAverages.length) {
+          var studentScoreBox = document.createElement("div");
+          studentScoreBox.className = "print-summary-box";
+          printText(studentScoreBox, "h3", "", "Average student voice scores");
           var studentAverageList = document.createElement("ul");
           studentAverageList.className = "print-compact-list";
           studentAverages.forEach(function (line) { addListItem(studentAverageList, line); });
           studentScoreBox.appendChild(studentAverageList);
-        } else {
-          printText(studentScoreBox, "p", "", "No student voice ratings entered.");
+          summaryMetrics.appendChild(studentScoreBox);
+          summaryMetricCount += 1;
         }
-        summaryMetrics.appendChild(studentScoreBox);
-        reviewBody.appendChild(summaryMetrics);
+        if (summaryMetricCount) {
+          if (summaryMetricCount === 1) summaryMetrics.classList.add("single-column");
+          reviewBody.appendChild(summaryMetrics);
+        }
         var summaryCols = document.createElement("div");
         summaryCols.className = "print-two-col";
         var strengthsBox = document.createElement("div");
@@ -2200,28 +2289,38 @@
           var note = getValueForPrint("student" + s + "VoiceNote");
           if (lines.length || note) studentCards.push({ number: s, lines: lines, note: note });
         }
-        if (studentCards.length) {
+        var additionalStudentVoiceNotes = getValueForPrint("additionalNotes");
+        if (studentCards.length || additionalStudentVoiceNotes) {
           var studentBody = addPrintSection(report, "Student Voice Sample");
-          var studentGrid = document.createElement("div");
-          studentGrid.className = "print-two-col";
-          studentCards.forEach(function (student) {
-            var card = document.createElement("div");
-            card.className = "print-student-card";
-            printText(card, "h3", "", "Student " + student.number);
-            student.lines.forEach(function (line) {
-              var scoreLine = document.createElement("div");
-              scoreLine.className = "print-score-line";
-              printText(scoreLine, "span", "print-score-name", line.label);
-              printText(scoreLine, "span", "print-score-value", line.score);
-              printText(scoreLine, "span", "", line.sentence);
-              card.appendChild(scoreLine);
+          if (studentCards.length) {
+            var studentGrid = document.createElement("div");
+            studentGrid.className = "print-two-col";
+            studentCards.forEach(function (student) {
+              var card = document.createElement("div");
+              card.className = "print-student-card";
+              printText(card, "h3", "", "Student " + student.number);
+              student.lines.forEach(function (line) {
+                var scoreLine = document.createElement("div");
+                scoreLine.className = "print-score-line";
+                printText(scoreLine, "span", "print-score-name", line.label);
+                printText(scoreLine, "span", "print-score-value", line.score);
+                printText(scoreLine, "span", "", line.sentence);
+                card.appendChild(scoreLine);
+              });
+              if (student.note) {
+                printText(card, "p", "", "Note: " + student.note);
+              }
+              studentGrid.appendChild(card);
             });
-            if (student.note) {
-              printText(card, "p", "", "Note: " + student.note);
-            }
-            studentGrid.appendChild(card);
-          });
-          studentBody.appendChild(studentGrid);
+            studentBody.appendChild(studentGrid);
+          }
+          if (additionalStudentVoiceNotes) {
+            var studentNotesBox = document.createElement("div");
+            studentNotesBox.className = "print-note-box";
+            printText(studentNotesBox, "h3", "", "Additional student voice notes");
+            printText(studentNotesBox, "p", "", additionalStudentVoiceNotes);
+            studentBody.appendChild(studentNotesBox);
+          }
         }
 
         rubrics.forEach(function (area) {
@@ -2249,17 +2348,33 @@
           }
         });
 
-        var reflectionBody = addPrintSection(report, "Reflection and future directions");
-        var teacherBox = document.createElement("div");
-        teacherBox.className = "print-note-box";
-        printText(teacherBox, "h3", "", "Reflection on lesson (Teacher)");
-        printText(teacherBox, "div", "print-write-space", getValueForPrint("teacherReflection"));
-        var futureBox = document.createElement("div");
-        futureBox.className = "print-note-box";
-        printText(futureBox, "h3", "", "Future directions (To be co-constructed)");
-        printText(futureBox, "div", "print-write-space", getValueForPrint("futureDirections"));
-        reflectionBody.appendChild(teacherBox);
-        reflectionBody.appendChild(futureBox);
+        var teacherReflection = getValueForPrint("teacherReflection");
+        var observerComments = getValueForPrint("observerComments");
+        var futureDirections = getValueForPrint("futureDirections");
+        if (teacherReflection || observerComments || futureDirections) {
+          var reflectionBody = addPrintSection(report, "Reflection and future directions");
+          if (teacherReflection) {
+            var teacherBox = document.createElement("div");
+            teacherBox.className = "print-note-box";
+            printText(teacherBox, "h3", "", "Reflection on lesson (Teacher)");
+            printText(teacherBox, "div", "print-write-space print-write-space-large", teacherReflection);
+            reflectionBody.appendChild(teacherBox);
+          }
+          if (observerComments) {
+            var observerBox = document.createElement("div");
+            observerBox.className = "print-note-box";
+            printText(observerBox, "h3", "", "Observer comments");
+            printText(observerBox, "div", "print-write-space", observerComments);
+            reflectionBody.appendChild(observerBox);
+          }
+          if (futureDirections) {
+            var futureBox = document.createElement("div");
+            futureBox.className = "print-note-box";
+            printText(futureBox, "h3", "", "Future directions (To be co-constructed)");
+            printText(futureBox, "div", "print-write-space", futureDirections);
+            reflectionBody.appendChild(futureBox);
+          }
+        }
 
         var signatureBody = addPrintSection(report, "Sign off");
         var sigGrid = document.createElement("div");
@@ -2313,6 +2428,7 @@
           addText(output, "p", "", "Select the statement that best matches the evidence. The rank will be assigned automatically.");
         });
         clearElement(byId("recordRows"));
+        refreshOptionalSections();
       }
 
       function applyState(saved) {
@@ -2320,6 +2436,7 @@
         if (!saved) {
           addRecordRow();
           updateAll();
+          refreshOptionalSections();
           return;
         }
         Object.keys(saved.fields || {}).forEach(function (id) {
@@ -2344,6 +2461,7 @@
         if (savedRecords.length) savedRecords.forEach(function (record) { addRecordRow(record); });
         else addRecordRow();
         updateAll();
+        refreshOptionalSections();
       }
 
       function loadState() {
@@ -2559,6 +2677,7 @@
         buildRubric();
         buildStudentRatings();
         loadState();
+        setupOptionalSections();
         populateSavedObservationSelect();
         populateSavedObservationSelect();
         document.querySelectorAll("[data-save]").forEach(function (field) {
