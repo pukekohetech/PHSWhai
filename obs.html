@@ -1131,6 +1131,118 @@
         display: none !important;
       }
     }
+
+    /* Final print cleanup: print only the generated report and keep handwriting boxes visible. */
+    @media print {
+      @page {
+        size: A4;
+        margin: 8mm 10mm 9mm 10mm;
+      }
+
+      html,
+      body {
+        width: auto !important;
+        height: auto !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
+        background: white !important;
+      }
+
+      body > header,
+      body > main.wrap,
+      body > script,
+      body > .signature-panel {
+        display: none !important;
+        height: 0 !important;
+        min-height: 0 !important;
+        max-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+        visibility: hidden !important;
+      }
+
+      #printReport {
+        display: block !important;
+        position: static !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
+        break-after: avoid !important;
+        page-break-after: avoid !important;
+      }
+
+      #printReport::after,
+      body::after,
+      main::after,
+      .wrap::after {
+        content: none !important;
+        display: none !important;
+      }
+
+      .print-report h1 {
+        margin-bottom: 2px !important;
+        padding-bottom: 3px !important;
+      }
+
+      .print-section {
+        margin: 0 0 4px 0 !important;
+        break-before: auto !important;
+        page-break-before: auto !important;
+        break-after: auto !important;
+        page-break-after: auto !important;
+      }
+
+      .print-section-body {
+        padding: 4px 5px !important;
+      }
+
+      .print-note-box,
+      .print-student-card,
+      .print-rubric-item {
+        margin-bottom: 4px !important;
+      }
+
+      .print-write-space {
+        min-height: 18mm !important;
+        border-top: 1px solid #ddd !important;
+        margin-top: 2px !important;
+        padding-top: 2px !important;
+        white-space: pre-wrap !important;
+      }
+
+      .print-write-space-large {
+        min-height: 28mm !important;
+      }
+
+      .print-handwrite-box {
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+      }
+
+      .print-signature-box {
+        min-height: 12mm !important;
+      }
+
+      .print-signature-line {
+        margin-top: 6mm !important;
+      }
+
+      #printReport > *:last-child,
+      #printReport .print-section:last-child,
+      #printReport .print-section:last-child *:last-child {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+        break-after: avoid !important;
+        page-break-after: avoid !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -2351,30 +2463,19 @@
         var teacherReflection = getValueForPrint("teacherReflection");
         var observerComments = getValueForPrint("observerComments");
         var futureDirections = getValueForPrint("futureDirections");
-        if (teacherReflection || observerComments || futureDirections) {
-          var reflectionBody = addPrintSection(report, "Reflection and future directions");
-          if (teacherReflection) {
-            var teacherBox = document.createElement("div");
-            teacherBox.className = "print-note-box";
-            printText(teacherBox, "h3", "", "Reflection on lesson (Teacher)");
-            printText(teacherBox, "div", "print-write-space print-write-space-large", teacherReflection);
-            reflectionBody.appendChild(teacherBox);
-          }
-          if (observerComments) {
-            var observerBox = document.createElement("div");
-            observerBox.className = "print-note-box";
-            printText(observerBox, "h3", "", "Observer comments");
-            printText(observerBox, "div", "print-write-space", observerComments);
-            reflectionBody.appendChild(observerBox);
-          }
-          if (futureDirections) {
-            var futureBox = document.createElement("div");
-            futureBox.className = "print-note-box";
-            printText(futureBox, "h3", "", "Future directions (To be co-constructed)");
-            printText(futureBox, "div", "print-write-space", futureDirections);
-            reflectionBody.appendChild(futureBox);
-          }
+        var reflectionBody = addPrintSection(report, "Reflection and future directions");
+
+        function addReflectionPrintBox(title, value, large) {
+          var box = document.createElement("div");
+          box.className = "print-note-box print-handwrite-box";
+          printText(box, "h3", "", title);
+          printText(box, "div", large ? "print-write-space print-write-space-large" : "print-write-space", value || "");
+          reflectionBody.appendChild(box);
         }
+
+        addReflectionPrintBox("Reflection on lesson (Teacher)", teacherReflection, true);
+        addReflectionPrintBox("Observer comments", observerComments, false);
+        addReflectionPrintBox("Future directions / next steps (To be co-constructed)", futureDirections, false);
 
         var signatureBody = addPrintSection(report, "Sign off");
         var sigGrid = document.createElement("div");
@@ -2678,7 +2779,6 @@
         buildStudentRatings();
         loadState();
         setupOptionalSections();
-        populateSavedObservationSelect();
         populateSavedObservationSelect();
         document.querySelectorAll("[data-save]").forEach(function (field) {
           field.addEventListener("input", function () { updateAll(); saveState(); });
