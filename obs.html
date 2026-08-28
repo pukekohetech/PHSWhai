@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-NZ">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,6 +21,34 @@
     }
 
     * { box-sizing: border-box; }
+
+    .skip-link {
+      position: fixed;
+      left: 12px;
+      top: -70px;
+      z-index: 1000;
+      width: auto;
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: white;
+      color: var(--maroon-dark);
+      font-weight: bold;
+      box-shadow: var(--shadow);
+    }
+
+    .skip-link:focus { top: 12px; }
+
+    .visually-hidden {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
 
     body {
       margin: 0;
@@ -68,6 +96,24 @@
     .intro { border-left: 10px solid var(--maroon); line-height: 1.45; }
     .intro p { margin: 0; }
 
+    .notice-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .notice-card {
+      border: 1px solid #d7c5a8;
+      border-left: 5px solid #9a6718;
+      border-radius: 10px;
+      background: #fff9ec;
+      padding: 10px 12px;
+      font-size: 0.9rem;
+    }
+
+    .notice-card strong { display: block; margin-bottom: 3px; color: #5c3e12; }
+
     .controls {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -85,6 +131,15 @@
       background: white;
     }
 
+    button:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible,
+    select:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid #ffbf47;
+      outline-offset: 2px;
+    }
+
     textarea { min-height: 92px; resize: vertical; line-height: 1.35; }
 
     button {
@@ -97,7 +152,9 @@
     }
 
     button:hover { filter: brightness(1.08); }
+    button:disabled { cursor: not-allowed; opacity: 0.55; filter: none; }
     .secondary-button { background: #555; }
+    .danger-button { background: #8b2727; }
 
     .button-row {
       display: grid;
@@ -184,7 +241,7 @@
       flex-wrap: wrap;
     }
 
-    .section-title h2 { margin: 0; font-size: 1.25rem; letter-spacing: 0.03em; }
+    .section-title h2, .section-title h3 { margin: 0; font-size: 1.25rem; letter-spacing: 0.03em; }
     .section-body { padding: 16px; }
 
     .section-collapse-button {
@@ -233,12 +290,15 @@
       background: var(--soft);
     }
 
-    .field-card h3, .student-card h3, .summary-box h3, .feedback-card h3, .final-score-card h3 {
+    .field-card h3, .field-card .field-heading, .student-card h3, .summary-box h3, .feedback-card h3, .final-score-card h3 {
       margin: 0 0 10px;
       color: var(--maroon-dark);
     }
 
+    .field-card .field-heading { font-size: 1.17em; }
+
     .help-text { color: var(--muted); font-size: 0.9rem; line-height: 1.35; margin: 8px 0 12px; }
+    .analysis-instruction { padding: 0 16px; }
 
     .running-record-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
     .running-record-table th, .running-record-table td { border: 1px solid var(--line); padding: 8px; vertical-align: top; }
@@ -247,6 +307,7 @@
     .record-note { min-height: 54px; }
 
     .activity-code-tools { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin-bottom: 6px; }
+    .activity-code-tools-title { grid-column: 1 / -1; margin: 0; color: var(--maroon-dark); font-weight: bold; }
     .activity-code-group { border: 1px solid var(--line); border-radius: 10px; padding: 6px; background: #fafafa; }
     .activity-code-group-title { margin: 0 0 4px; font-weight: bold; color: var(--maroon-dark); font-size: 0.8rem; }
     .activity-code-buttons { display: flex; flex-wrap: wrap; gap: 4px; }
@@ -326,6 +387,15 @@
     }
 
     .student-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+    .student-card-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+    .student-card-head h3 { margin: 0; }
+    .remove-student-button { width: auto; min-height: 30px; padding: 5px 9px; background: #777; font-size: 0.82rem; }
+    .student-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 12px; }
+    .student-actions button { width: auto; }
+    .student-card-count { color: var(--muted); font-size: 0.88rem; }
+    .student-profile { margin-top: 12px; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; background: #fff; }
+    .student-profile h3 { margin: 0 0 6px; color: var(--maroon-dark); }
+    .student-profile ul { margin: 0; padding-left: 20px; columns: 2; column-gap: 28px; }
     .rating-row { display: grid; grid-template-columns: 110px 1fr; gap: 8px; align-items: center; margin: 8px 0; }
     .rating-label { font-weight: bold; font-size: 0.92rem; }
     .rating-group { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
@@ -449,6 +519,9 @@
     .feedback-card ul { margin: 8px 0 0 20px; padding: 0; }
     .feedback-card li { margin-bottom: 6px; line-height: 1.35; }
     .footer-note { color: var(--muted); font-size: 0.9rem; margin-top: 12px; }
+    .score-method-note { margin: -7px auto 18px; padding: 0 14px; color: var(--muted); font-size: 0.86rem; line-height: 1.35; }
+    .save-status { grid-column: 1 / -1; margin: 0; padding: 9px 11px; border-radius: 9px; background: #f3f6f7; color: #44515a; font-size: 0.86rem; }
+    .save-status.is-error { background: #fff0f0; color: #8b2727; border: 1px solid #e2b7b7; }
     .file-actions {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -476,336 +549,9 @@
     @media (max-width: 760px) {
       .rubric-grid, .final-score-card, .rating-row { grid-template-columns: 1fr; }
       .panel, .section, .summary-panel, .scoreboard { margin-left: 10px; margin-right: 10px; }
-      .activity-code-tools { grid-template-columns: 1fr; }
       header { padding: 18px 12px; }
-    }
-
-    @media print {
-      @page {
-        size: A4;
-        margin: 10mm 11mm 14mm 11mm;
-        @bottom-right {
-          content: "Page " counter(page) " of " counter(pages);
-          font-size: 8pt;
-          color: #555;
-        }
-      }
-      * { box-shadow: none !important; }
-      body { background: white; color: #111; font-size: 9pt; line-height: 1.18; }
-      .print-only { display: block; }
-      .wrap { max-width: none; margin: 0; }
-      main.wrap { display: flex; flex-direction: column; }
-      header { background: white; color: #111; border: 0; border-bottom: 2px solid #111; padding: 0 0 5px 0; margin: 0 0 6px 0; }
-      header .wrap::after { content: "Professional observation review document"; display: block; margin-top: 3px; font-size: 8.5pt; letter-spacing: 0.08em; text-transform: uppercase; color: #555; }
-      h1 { font-size: 18pt; letter-spacing: 0.03em; line-height: 1.05; }
-      .subtitle { color: #333; font-size: 9pt; margin-top: 2px; }
-
-      .intro, .help-text, button, label, select, .scoreboard, .footer-note, .rating-group, .activity-code-tools, .hint, .file-actions,
-      .statement-picker, .count-pill, .section:not(.has-print-content), .student-card:not(.has-print-content),
-      .rubric-item:not(.is-complete), .record-row:not(.has-print-content), .field-card:not(.has-print-content) { display: none !important; }
-
-      .panel, .section, .summary-panel { margin: 0 0 6px 0; border: 1px solid #999; border-radius: 0; background: white; break-inside: avoid; overflow: visible; }
-      .panel { padding: 6px 8px; }
-      #detailsPanel { order: 1; border: 0; padding: 0; }
-      #reviewDetails { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid #999; border-bottom: 0; }
-      .controls > div { padding: 4px 6px; border-right: 1px solid #999; border-bottom: 1px solid #999; }
-      .controls > div:nth-child(4n) { border-right: 0; }
-      .controls > .button-row { display: none; }
-      .controls > div::before { display: block; font-size: 7.5pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: #555; margin-bottom: 2px; }
-      .controls > div:nth-child(1)::before { content: "Teacher"; }
-      .controls > div:nth-child(2)::before { content: "Observer"; }
-      .controls > div:nth-child(3)::before { content: "Date"; }
-      .controls > div:nth-child(4)::before { content: "Period"; }
-      .controls > div:nth-child(5)::before { content: "Class"; }
-      .controls > div:nth-child(6)::before { content: "Room"; }
-      .controls > div:nth-child(7)::before { content: "No. of students"; }
-
-      input, textarea { border: 0; border-radius: 0; padding: 0; background: white; min-height: 0; color: #111; resize: none; }
-      input::placeholder, textarea::placeholder { color: transparent; }
-      #finalReview { order: 2; border: 2px solid #111; padding: 6px 8px; }
-      #preObservation { order: 3; }
-      #runningRecord { order: 4; }
-      #studentVoice { order: 5; }
-      #postAnalysis { order: 6; }
-      #reflectionSection {
-        order: 7;
-        display: block !important;
-        break-inside: avoid;
-      }
-
-      #signatureSection {
-        order: 8;
-        display: block !important;
-      }
-
-      .section-title { background: #f0f0f0; color: #111; padding: 4px 6px; border-bottom: 1px solid #999; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
-      .section-title h2, .summary-panel h2 { font-size: 10.5pt; margin: 0; letter-spacing: 0.02em; }
-      .section-body { padding: 6px 8px; }
-      .grid-2, .feedback-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 10px; }
-
-      #reflectionSection .grid-2 {
-        grid-template-columns: 1fr;
-        gap: 5px;
-      }
-
-      #reflectionSection .field-card {
-        display: block !important;
-        border: 1px solid #aaa;
-        padding: 6px 8px;
-        min-height: 34mm;
-      }
-
-      #reflectionSection textarea {
-        min-height: 26mm;
-        border-top: 1px solid #ddd;
-        margin-top: 3px;
-        padding-top: 3px;
-      }
-
-      .signature-panel {
-        border: 1px solid #999;
-        border-radius: 0;
-        padding: 8px;
-        margin: 0 0 6px 0;
-        background: white;
-        break-inside: avoid;
-      }
-
-      .signature-panel h2 {
-        font-size: 10.5pt;
-        margin: 0 0 6px 0;
-      }
-
-      .signature-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-      }
-
-      .signature-box {
-        border-top: 1px solid #999;
-        padding-top: 4px;
-        min-height: 18mm;
-        font-size: 8.5pt;
-      }
-
-      .signature-line {
-        margin-top: 12mm;
-        border-top: 1px solid #111;
-        padding-top: 2px;
-      }
-      .student-grid { display: grid; grid-template-columns: 1fr; gap: 5px; }
-      .field-card, .student-card, .summary-box, .feedback-card, .final-score-card { background: white !important; border: 0; border-top: 1px solid #ccc; border-radius: 0; padding: 4px 0; min-height: 0; break-inside: avoid; }
-      .field-card h3, .student-card h3, .summary-box h3, .feedback-card h3, .final-score-card h3 { font-size: 9pt; margin: 0 0 2px 0; color: #111; }
-      .field-card p, .student-card p, .summary-box p, .feedback-card p, .feedback-card li { margin: 2px 0; font-size: 8.2pt; }
-      .running-record-table th, .running-record-table td { padding: 3px 4px; font-size: 8.2pt; }
-      .record-note { min-height: 0; }
-      .student-card {
-        border: 1px solid #aaa;
-        padding: 6px 8px;
-        margin-bottom: 6px;
-        background: white !important;
-      }
-
-      .student-card h3 {
-        background: #f0f0f0;
-        border-bottom: 1px solid #bbb;
-        margin: -6px -8px 5px -8px;
-        padding: 4px 6px;
-        font-size: 10pt;
-        color: #111;
-      }
-
-      .rating-row {
-        display: block;
-        margin: 0;
-        break-inside: avoid;
-      }
-
-      .rating-label {
-        display: none !important;
-      }
-
-      .rating-print-value {
-        display: grid;
-        grid-template-columns: 34mm 12mm 1fr;
-        gap: 4px;
-        align-items: start;
-        padding: 2px 0;
-        border-bottom: 1px solid #e5e5e5;
-        font-size: 8.3pt;
-        line-height: 1.22;
-        word-break: normal;
-        overflow-wrap: normal;
-        white-space: normal;
-      }
-
-      .rating-row:last-of-type .rating-print-value {
-        border-bottom: 0;
-      }
-
-      .rating-score-label {
-        font-weight: bold;
-        color: #111;
-      }
-
-      .rating-score-value {
-        font-weight: bold;
-        text-align: center;
-        border: 1px solid #aaa;
-        border-radius: 8px;
-        padding: 0 3px;
-        white-space: nowrap;
-      }
-
-      .rating-score-text {
-        color: #222;
-      }
-      .compact-question {
-        margin-top: 3px;
-      }
-
-      .compact-question textarea {
-        min-height: 18px;
-        font-size: 8.2pt;
-        line-height: 1.2;
-      }
-
-      .compact-question textarea:placeholder-shown {
-        display: none;
-      }
-
-      .rubric-item { background: white !important; padding: 4px 6px; border-top: 1px solid #ddd; break-inside: avoid; }
-      .rubric-grid { display: block; }
-      .rubric-title { margin: 0 0 2px 0; font-size: 9pt; }
-      .selected-output { border: 0; background: white; border-radius: 0; padding: 0; min-height: 0; line-height: 1.2; }
-      .selected-output p { margin: 1px 0 0 0; white-space: normal; }
-      .level-badge { display: block; background: white; color: #111; border-radius: 0; padding: 0; margin: 0 0 1px 0; font-size: 8.5pt; font-weight: bold; }
-      details { margin-top: 2px; break-inside: avoid; }
-      details summary { font-size: 8.5pt; color: #444; font-weight: bold; }
-      details.evidence:not(.has-notes) { display: none; }
-
-      .area-rank { display: inline; font-size: 8.5pt; font-weight: bold; }
-      .final-score-card { display: grid; grid-template-columns: 70px 1fr; gap: 8px; align-items: start; border-top: 0; }
-      .final-score-number { font-size: 22pt; color: #111; }
-      .final-score-label { font-size: 8pt; margin-top: 0; color: #555; text-transform: uppercase; letter-spacing: 0.04em; }
-      .feedback-card ul { margin: 2px 0 0 16px; }
-      a, a:visited { color: #111; text-decoration: none; }
-    }
-
-    @media print {
-      @page {
-        size: A4;
-        margin: 8mm 10mm 10mm 10mm;
-      }
-
-      html,
-      body {
-        height: auto !important;
-        min-height: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        overflow: visible !important;
-      }
-
-      body {
-        background: white !important;
-      }
-
-      main,
-      main.wrap {
-        display: block !important;
-        height: auto !important;
-        min-height: 0 !important;
-        margin-bottom: 0 !important;
-        padding-bottom: 0 !important;
-        overflow: visible !important;
-      }
-
-      header {
-        margin-bottom: 4px !important;
-      }
-
-      .panel,
-      .section,
-      .summary-panel {
-        margin: 0 0 3px 0 !important;
-        padding-bottom: 0 !important;
-        break-inside: auto !important;
-        page-break-inside: auto !important;
-        page-break-after: auto !important;
-      }
-
-      .section-body {
-        padding: 3px 5px !important;
-      }
-
-      .field-card,
-      .student-card,
-      .summary-box,
-      .feedback-card,
-      .final-score-card,
-      .rubric-item {
-        padding-top: 2px !important;
-        padding-bottom: 2px !important;
-        margin-bottom: 2px !important;
-      }
-
-      .running-record-table {
-        margin-bottom: 2px !important;
-      }
-
-      #finalReview,
-      .student-card,
-      .rubric-item,
-      .field-card {
-        break-inside: avoid;
-        page-break-inside: avoid;
-      }
-
-      #reflectionSection {
-        margin-bottom: 3px !important;
-      }
-
-      #reflectionSection .field-card {
-        min-height: 18mm !important;
-      }
-
-      #reflectionSection textarea {
-        min-height: 10mm !important;
-      }
-
-      .signature-panel {
-        margin: 0 !important;
-        padding: 4px 5px !important;
-        break-inside: avoid;
-        page-break-inside: avoid;
-        page-break-after: avoid !important;
-      }
-
-      .signature-box {
-        min-height: 9mm !important;
-      }
-
-      .signature-line {
-        margin-top: 5mm !important;
-      }
-
-      body::after,
-      main::after,
-      .wrap::after {
-        content: none !important;
-        display: none !important;
-      }
-
-      body > *:last-child,
-      main > *:last-child,
-      .wrap > *:last-child {
-        margin-bottom: 0 !important;
-        padding-bottom: 0 !important;
-        page-break-after: avoid !important;
-        break-after: avoid !important;
-      }
+      .running-record-table { display: block; overflow-x: auto; }
+      .student-profile ul { columns: 1; }
     }
 
     .print-report {
@@ -813,6 +559,7 @@
     }
 
     @media print {
+      body > .skip-link,
       body > header,
       body > main.wrap {
         display: none !important;
@@ -1061,9 +808,7 @@
         color: #777;
         font-style: italic;
       }
-    }
 
-    @media print {
       html, body {
         width: auto !important;
         height: auto !important;
@@ -1074,6 +819,7 @@
         background: white !important;
       }
 
+      body > .skip-link,
       body > header,
       body > main.wrap,
       body > script,
@@ -1130,13 +876,16 @@
       .print-section-body:empty {
         display: none !important;
       }
-    }
 
-    /* Final print cleanup: print only the generated report and keep handwriting boxes visible. */
-    @media print {
+      /* Final print cleanup: keep handwriting boxes visible and prevent trailing blank pages. */
       @page {
         size: A4;
         margin: 8mm 10mm 9mm 10mm;
+        @bottom-right {
+          content: "Page " counter(page) " of " counter(pages);
+          font-size: 8pt;
+          color: #555;
+        }
       }
 
       html,
@@ -1150,6 +899,7 @@
         background: white !important;
       }
 
+      body > .skip-link,
       body > header,
       body > main.wrap,
       body > script,
@@ -1208,6 +958,23 @@
         margin-bottom: 4px !important;
       }
 
+      .print-adaptive-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4px 6px;
+      }
+
+      .print-adaptive-grid .print-rubric-item { margin-bottom: 0 !important; }
+      .print-adaptive-grid .print-wide { grid-column: 1 / -1; }
+
+      .print-confidentiality {
+        margin: 4px 0 0 !important;
+        padding-top: 3px;
+        border-top: 1px solid #aaa;
+        color: #555;
+        font-size: 7.5pt;
+      }
+
       .print-write-space {
         min-height: 18mm !important;
         border-top: 1px solid #ddd !important;
@@ -1246,6 +1013,7 @@
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#detailsPanel">Skip to observation details</a>
   <header>
     <div class="wrap">
       <h1>OBSERVATION TOOL - AROTAKE WHAIARO</h1>
@@ -1256,6 +1024,10 @@
   <main class="wrap">
     <section class="panel intro">
       <p>This observation tool supports tuakana-teina observation, student voice, post-observation analysis of evidence, teacher reflection, and co-constructed future directions.</p>
+      <div class="notice-grid">
+        <div class="notice-card"><strong>Developmental use</strong>This is a formative professional-learning snapshot. It must not be used by itself as a competence, conduct or employment judgement.</div>
+        <div class="notice-card"><strong>Privacy and storage</strong>This page stores identifiable staff and class information in this browser and in downloaded JSON files. Use an approved school device and secure storage, avoid student names, and use Clear browser data before leaving a shared device.</div>
+      </div>
     </section>
 
     <section class="panel" id="detailsPanel">
@@ -1270,25 +1042,29 @@
         <div class="button-row"><button id="printBtn" type="button">Print / Save PDF</button><button id="clearSavedBtn" class="secondary-button" type="button">Clear Current</button></div>
       </div>
       <div class="file-actions">
-        <div><label for="savedObservationSelect">Observations in file</label><select id="savedObservationSelect"><option value="">Open a file or save this observation</option></select></div>
+        <div><label for="savedObservationSelect">Saved observations</label><select id="savedObservationSelect"><option value="">Open a file or save this observation</option></select></div>
         <button id="openMasterFileBtn" class="secondary-button" type="button">Open file</button>
         <button id="newObservationBtn" class="secondary-button" type="button">Add new observation</button>
         <button id="saveMasterFileBtn" type="button">Save current</button>
         <button id="loadObservationBtn" class="secondary-button" type="button">Load selected</button>
         <button id="deleteObservationBtn" class="secondary-button" type="button">Delete selected</button>
+        <button id="clearAllBrowserBtn" class="danger-button" type="button">Clear browser data</button>
         <input id="importMasterFileInput" type="file" accept="application/json,.json" style="display:none">
-        <p class="file-help">One observation file can hold many observations. Open the file, choose a saved observation to load, then use Save current to add or update the current observation in that same file.</p>
+        <p class="file-help">The browser keeps a working copy and one observation JSON file can hold many observations. Opening a file loads its saved list into this browser. Use Save current to add or update the current observation in the open file, or to download a new file.</p>
+        <p class="save-status" id="saveStatus" role="status" aria-live="polite">Current work is stored in this browser. Choose Save current to write or download the observation file.</p>
       </div>
     </section>
 
-    <section class="scoreboard" aria-label="Live scores">
+    <section class="scoreboard" aria-labelledby="liveScoresHeading" aria-live="polite">
+      <h2 class="visually-hidden" id="liveScoresHeading">Live observation scores</h2>
       <div class="score-card"><h3>Overall ETP</h3><div class="score" id="overallEtpScore">-</div><div class="level" id="overallEtpLevel">Select statements</div></div>
-      <div class="score-card"><h3>Student Voice Avg</h3><div class="score" id="studentVoiceAverage">-</div><div class="level" id="studentVoiceCount">No ratings yet</div></div>
+      <div class="score-card"><h3>Student Sample</h3><div class="score" id="studentVoiceAverage">-</div><div class="level" id="studentVoiceCount">No students sampled</div></div>
       <div class="score-card"><h3>Manaakitanga</h3><div class="score" id="score-manaakitanga">-</div><div class="level" id="level-manaakitanga">-</div></div>
       <div class="score-card"><h3>Kotahitanga</h3><div class="score" id="score-kotahitanga">-</div><div class="level" id="level-kotahitanga">-</div></div>
       <div class="score-card"><h3>Aarahitanga</h3><div class="score" id="score-aarahitanga">-</div><div class="level" id="level-aarahitanga">-</div></div>
       <div class="score-card"><h3>Puumautanga</h3><div class="score" id="score-puumautanga">-</div><div class="level" id="level-puumautanga">-</div></div>
     </section>
+    <p class="score-method-note">The overall ETP result appears only when all 11 indicators are completed or marked Not observed / N/A. Each ETP area contributes equally; N/A indicators are excluded from averages.</p>
 
     <section class="summary-panel" id="finalReview" aria-label="Observation review summary">
       <h2>Observation review summary</h2>
@@ -1305,8 +1081,8 @@
     <section class="section" id="preObservation">
       <div class="section-title"><h2>Agreed Observation Focus</h2></div>
       <div class="section-body grid-2">
-        <div class="field-card"><h3>Agreed Observation Focus</h3><textarea id="observationFocus" data-save placeholder="Align to PGC goals and Arotake Whaiaro"></textarea></div>
-        <div class="field-card"><h3>First 5 minutes - observation context</h3><textarea id="firstFiveContext" data-save placeholder="Lesson context, space, learning intentions, priority students"></textarea></div>
+        <div class="field-card"><label class="field-heading" for="observationFocus">Agreed Observation Focus</label><textarea id="observationFocus" data-save placeholder="Align to PGC goals and Arotake Whaiaro"></textarea></div>
+        <div class="field-card"><label class="field-heading" for="firstFiveContext">First 5 minutes - observation context</label><textarea id="firstFiveContext" data-save placeholder="Lesson context, space, learning intentions, priority students"></textarea></div>
       </div>
     </section>
 
@@ -1314,31 +1090,37 @@
       <div class="section-title"><h2>10-minute observation - running record</h2></div>
       <div class="section-body">
         <p class="help-text">Record what you see and what you hear. Quick codes automatically add evidence to the relevant post-observation areas.</p>
-        <table class="running-record-table"><thead><tr><th style="width:120px;">Time</th><th>Teacher/Student Activity</th></tr></thead><tbody id="recordRows"></tbody></table>
+        <table class="running-record-table"><caption class="visually-hidden">Timed running record of teacher and student activity</caption><thead><tr><th style="width:120px;">Time</th><th>Teacher/Student Activity</th></tr></thead><tbody id="recordRows"></tbody></table>
         <button id="addRecordRowBtn" type="button">Add running record row</button>
       </div>
     </section>
 
     <section class="section" id="studentVoice" data-collapse-when-empty>
       <div class="section-title"><h2>Student Voice Sample</h2><span class="print-only area-rank" id="studentVoicePrintSummary"></span></div>
-      <div class="section-body">
-        <p class="help-text">Ask the student voice questions, then score how clearly the student can articulate their response. A brief optional note can be added if there is a useful quote or pattern.</p>
+      <div class="section-body" id="studentVoiceBody">
+        <p class="help-text"><strong>Use the same prompts with each student:</strong> What are you learning? Why does it matter? How will you know you are successful, and what is your next step? Articulation ratings record the student response; engagement, productive challenge, work progress and enjoyment are observer judgements. Add a brief anonymous quote or pattern where useful.</p>
         <div class="student-grid" id="studentGrid"></div>
-        <div class="field-card" style="margin-top:14px;"><h3>Additional student voice notes</h3><textarea id="additionalNotes" data-save></textarea></div>
+        <div class="student-actions">
+          <button id="addStudentVoiceBtn" type="button">Add another student voice</button>
+          <span class="student-card-count" id="studentCardCount" role="status" aria-live="polite"></span>
+        </div>
+        <div class="student-profile" id="studentProfile" hidden></div>
+        <div class="field-card" style="margin-top:14px;"><label class="field-heading" for="additionalNotes">Additional student voice notes</label><textarea id="additionalNotes" data-save></textarea></div>
       </div>
     </section>
 
     <section class="section" id="postAnalysis">
       <div class="section-title"><h2>Post observation - analysis of evidence</h2></div>
+      <p class="help-text analysis-instruction">Select the statement best supported by specific observed evidence. Choose Not observed / N/A when an indicator was not applicable or could not reasonably be seen; do not use rank 1 merely because evidence was absent.</p>
       <div id="rubricContainer"></div>
     </section>
 
     <section class="section" id="reflectionSection" data-collapse-when-empty>
       <div class="section-title"><h2>Reflection and future directions</h2></div>
-      <div class="section-body grid-2">
-        <div class="field-card teacher-reflection-card"><h3>Reflection on lesson (Teacher)</h3><textarea id="teacherReflection" data-save placeholder="Teacher reflection on the lesson, learner response and possible changes"></textarea></div>
-        <div class="field-card"><h3>Observer comments</h3><textarea id="observerComments" data-save placeholder="Observer feedback, questions or comments"></textarea></div>
-        <div class="field-card"><h3>Future directions (To be co-constructed)</h3><textarea id="futureDirections" data-save></textarea></div>
+      <div class="section-body grid-2" id="reflectionBody">
+        <div class="field-card teacher-reflection-card"><label class="field-heading" for="teacherReflection">Reflection on lesson (Teacher)</label><textarea id="teacherReflection" data-save placeholder="Teacher reflection on the lesson, learner response and possible changes"></textarea></div>
+        <div class="field-card"><label class="field-heading" for="observerComments">Observer comments</label><textarea id="observerComments" data-save placeholder="Observer feedback, questions or comments"></textarea></div>
+        <div class="field-card"><label class="field-heading" for="futureDirections">Future directions (To be co-constructed)</label><textarea id="futureDirections" data-save></textarea></div>
       </div>
     </section>
 
@@ -1365,6 +1147,9 @@
       var storageKey = "observation-tool-etp-rubric-v1";
       var savedListKey = "observation-tool-etp-rubric-saved-list-v1";
       var masterFileHandle = null;
+      var activeObservationName = "";
+      var defaultStudentCount = 4;
+      var maxStudentCount = 20;
       var levels = [
         { value: 1, label: "HE KAAKANO - The Seed" },
         { value: 2, label: "KIA TUPU - To Grow" },
@@ -1376,22 +1161,22 @@
       var rubrics = [
         { key: "manaakitanga", title: "MANAAKITANGA", items: [
           { key: "teReo", title: "Te Reo Maaori", statements: [
-            "Te Reo Maaori not evident during observation",
-            "Some attempts at using Te Reo Maaori",
+            "Relevant and reasonable opportunities to use Te Reo Maaori were present, but none was used.",
+            "Some attempts at using Te Reo Maaori.",
             "Some Te Reo Maaori words or phrases used in lessons with correct pronunciation.",
             "Regular use of Te Reo Maaori throughout lesson. Explains words and phrases.",
-            "Consistent and authentic use see and heard every lesson. Students are supported to use Te Reo Maaori in lessons."
+            "Consistent and authentic use is seen and heard throughout learning. Aakonga are supported to use Te Reo Maaori in lessons."
           ]},
           { key: "culture", title: "Culture, language and identity", statements: [
             "Kaiako and/or aakonga may feel unsafe in the environment.",
-            "Little evidence or only surface-level acknowledgement of culture.",
+            "Relevant cultural connections were limited or acknowledged only at a surface level.",
             "Some evidence of aakonga culture and work is on the walls or incorporated in learning resources.",
-            "Safe and supportive learning environment where aakonga can see their culture reflected. Knowing your aakonga as culturally located individuals.",
-            "Kaiako establishes a caring, uplifting, secure, inclusive, environment that supports the culture, language and identity of aakonga."
+            "The learning environment is safe and supportive, and aakonga can see their culture reflected. The kaiako knows aakonga as culturally located individuals.",
+            "The kaiako establishes a caring, uplifting, secure and inclusive environment that supports the culture, language and identity of aakonga."
           ]},
           { key: "routines", title: "Routines", statements: [
-            "Routines not observed",
-            "Routines are inconsistent",
+            "Learning routines were absent or ineffective during an observed transition or task.",
+            "Routines are inconsistent.",
             "Routines to support learning are consistent.",
             "Routines to support learning are effective.",
             "Routines for learning are restorative and embedded, promoting cognitive engagement."
@@ -1399,64 +1184,64 @@
         ]},
         { key: "kotahitanga", title: "KOTAHITANGA", items: [
           { key: "learningIntentions", title: "Learning intentions and / or success criteria", statements: [
-            "Learning intentions and /or success criteria not observed",
-            "Learning intention and success criteria are present but not referred to.",
-            "Relevant learning intentions are presented and discussed. Learning activities align to Learning intentions.",
+            "The learning purpose was unclear to aakonga during the observed learning.",
+            "Learning intentions and success criteria are present but not referred to.",
+            "Relevant learning intentions are presented and discussed. Learning activities align with the learning intentions.",
             "Learning intentions and success criteria are relevant, explained and referred to through the lesson. Aakonga can articulate why they are learning content.",
             "Kaiako actively use clear learning intentions and co-construct relevant success criteria. Aakonga can articulate why they are learning content and how it links to the real world."
           ]},
           { key: "learningConversations", title: "Learning conversations / Tuakana-Teina", statements: [
-            "Few interactions between aakonga related to learning",
-            "Limited opportunities for students to work together and help each other.",
-            "Learning conversations are evident, including aakonga asking questions. Kaiako facilitates Tuakana-Teina interactions.",
-            "Co-operative learning strategies used, and learning conversation take place between aakonga. Emerging tuakana-teina learning is evident.",
-            "Cooperative learning strategies and Tuakana-Teina interactions are led by learners. Learning focussed classroom."
+            "Few purposeful learning interactions between aakonga were evident.",
+            "Aakonga had limited opportunities to work together and help each other.",
+            "Learning conversations are evident, including aakonga asking questions. The kaiako facilitates tuakana-teina interactions.",
+            "Cooperative learning strategies are used, and learning conversations take place between aakonga. Emerging tuakana-teina learning is evident.",
+            "Cooperative learning strategies and tuakana-teina interactions are led by learners in a learning-focused classroom."
           ]},
           { key: "interactions", title: "Interactions / relationships", statements: [
-            "Kaiako only addresses the class as a whole, does not interact with individual aakonga. May not know student names.",
+            "Observed interactions were predominantly whole-class, with little individual connection when it was needed.",
             "A few positive interactions with aakonga.",
-            "Has multiple positive interactions and relationships are evident.",
-            "Interactions demonstrate strong relationships. Engages positively with aakonga, including aakonga Maaori .",
-            "Effective learning interactions and use of aakonga voice. Interactions demonstrate high trust relationships - the mana of aakonga is always maintained."
+            "Multiple positive interactions are evident, and relationships support learning.",
+            "Interactions demonstrate strong relationships. The kaiako engages positively with aakonga, including aakonga Maaori.",
+            "Effective learning interactions and aakonga voice are evident. Interactions demonstrate high-trust relationships, and the mana of aakonga is consistently maintained."
           ]},
           { key: "maatauranga", title: "Maatauranga Maaori", statements: [
-            "Maatauranga Maaori Is not yet observed",
-            "Maatauranga Maaori content is present. Some surface level Maaori concepts are used.",
+            "Relevant opportunities to connect learning with maatauranga Maaori were present but not used.",
+            "Maatauranga Maaori content is present. Some surface-level Maaori concepts are used.",
             "Maatauranga Maaori content is included in curriculum context. Some discussions are seen through a Maaori lens.",
             "Maatauranga Maaori is included and applied in curriculum context. Connections are made between curriculum context and maatauranga Maaori for understanding.",
             "Maatauranga Maaori is authentically integrated in curriculum context."
           ]}
         ]},
         { key: "aarahitanga", title: "AARAHITANGA", items: [
-          { key: "agency", title: "Student agency / engagement", statements: [
-            "Kaiako directed learning only. Students are off task.",
-            "Teacher-led learning. Mixture of engagement. Some moments of student agency",
+          { key: "agency", title: "Learner agency / engagement", statements: [
+            "Learning was entirely kaiako-directed and substantial disengagement was evident.",
+            "Learning was mainly kaiako-led, with mixed engagement and some moments of learner agency.",
             "Kaiako supports learning. Most aakonga are engaged.",
-            "Kaiako facilitates student-led learning. Students are actively engaged and demonstrate independence in their learning",
+            "Kaiako facilitates learner-led learning. Aakonga are actively engaged and demonstrate independence in their learning.",
             "Kaiako has effectively fostered learner agency. Aakonga are actively engaged and have agency in their learning."
           ]},
           { key: "learningExperiences", title: "Learning experiences", statements: [
             "Lesson structure limits aakonga learning opportunities and outcomes.",
-            "Structured lesson and whole class learning activities happening.",
-            "Aakonga have some choice in learning experiences. Allow for varied participation for some aakonga. Some flexible grouping, sharing and contextual discussion.",
-            "Kaiako design learning experiences that allow for varied participation and expression",
-            "Kaiako design learning experiences that allow for varied participation and expression to ensure that all students can access and contribute to their learning."
+            "The lesson is structured and relies mainly on whole-class learning activities.",
+            "Aakonga have some choice in learning experiences, with some flexible grouping, sharing and contextual discussion.",
+            "The kaiako designs learning experiences that allow for varied participation and expression.",
+            "The kaiako designs learning experiences that allow for varied participation and expression so all aakonga can access and contribute to their learning."
           ]}
         ]},
         { key: "puumautanga", title: "PUUMAUTANGA", items: [
           { key: "feedback", title: "Feedback / feedforward", statements: [
-            "No Feedback Evident. No evidence of feedback given",
-            "Vague feedback / feedforward related only to behaviour. Some students received task related feedback",
-            "Inconsistent academic feedback and feedforward. Most aakonga receive task related feedback",
-            "Specific academic feedback and feedforward. Specific praise used. All aakonga expect and have the ability to receive and act upon feedback/feedforward in a constructive way",
-            "Multiple methods of academic feedback and feedforward provided regularly. Authentic praise. All aakonga independently seek feedback//feedforward and self-reflect"
+            "Relevant opportunities for feedback occurred, but useful feedback was not evident.",
+            "Feedback or feedforward was vague or mainly behaviour-related. Some aakonga received task-related feedback.",
+            "Academic feedback and feedforward were inconsistent. Most aakonga received task-related feedback.",
+            "Specific academic feedback and feedforward were evident. Aakonga were supported to receive and act on feedback constructively.",
+            "Multiple methods of academic feedback and feedforward were provided regularly. Aakonga independently sought feedback/feedforward and reflected on their learning."
           ]},
           { key: "challenges", title: "Learning challenges", statements: [
-            "Students disengage when learning tasks are perceived as challenging",
-            "Students are encouraged to persevere with challenging tasks.",
-            "Aakonga are encouraged to navigate learning challenges together",
-            "ManaAko routines and relationships support and encourage aakonga to navigate learning challenges together",
-            "Consistent ManaAko learning routines and relationships support students to navigate challenges together. Students are confident to take risks and seek support with next learning steps."
+            "Aakonga disengage when learning tasks are perceived as challenging.",
+            "Aakonga are encouraged to persevere with challenging tasks.",
+            "Aakonga are encouraged to navigate learning challenges together.",
+            "ManaAko routines and relationships support and encourage aakonga to navigate learning challenges together.",
+            "Consistent ManaAko learning routines and relationships support aakonga to navigate challenges together. Aakonga are confident to take risks and seek support with next learning steps."
           ]}
         ]}
       ];
@@ -1466,14 +1251,12 @@
         LI: [{ area: "kotahitanga", item: "learningIntentions" }],
         SC: [{ area: "kotahitanga", item: "learningIntentions" }],
         CFU: [{ area: "kotahitanga", item: "learningIntentions" }, { area: "puumautanga", item: "feedback" }],
-        Q: [{ area: "kotahitanga", item: "learningConversations" }],
         PK: [{ area: "kotahitanga", item: "learningIntentions" }, { area: "kotahitanga", item: "maatauranga" }],
         Co: [{ area: "kotahitanga", item: "learningIntentions" }, { area: "aarahitanga", item: "learningExperiences" }],
         Mod: [{ area: "kotahitanga", item: "learningIntentions" }],
         In: [{ area: "kotahitanga", item: "interactions" }, { area: "aarahitanga", item: "agency" }],
         GP: [{ area: "kotahitanga", item: "learningConversations" }, { area: "aarahitanga", item: "learningExperiences" }],
         WC: [{ area: "kotahitanga", item: "interactions" }],
-        Pr: [{ area: "kotahitanga", item: "learningConversations" }, { area: "aarahitanga", item: "learningExperiences" }],
         TT: [{ area: "kotahitanga", item: "learningConversations" }],
         SS: [{ area: "kotahitanga", item: "learningConversations" }],
         SV: [{ area: "kotahitanga", item: "interactions" }, { area: "aarahitanga", item: "agency" }],
@@ -1490,7 +1273,6 @@
         "FBA+": [{ area: "puumautanga", item: "feedback" }],
         FFB: [{ area: "puumautanga", item: "challenges" }],
         FFA: [{ area: "puumautanga", item: "feedback" }],
-        Prs: [{ area: "puumautanga", item: "feedback" }, { area: "manaakitanga", item: "culture" }],
         TR: [{ area: "manaakitanga", item: "teReo" }],
         CUL: [{ area: "manaakitanga", item: "culture" }, { area: "kotahitanga", item: "maatauranga" }],
         MM: [{ area: "kotahitanga", item: "maatauranga" }]
@@ -1508,7 +1290,19 @@
       function addText(parent, tag, className, text) { var el = document.createElement(tag); if (className) el.className = className; el.textContent = text; parent.appendChild(el); return el; }
       function addListItem(list, text) { addText(list, "li", "", text); }
       function average(values) { if (!values.length) return 0; var total = 0; values.forEach(function (v) { total += Number(v); }); return total / values.length; }
+      function median(values) {
+        if (!values.length) return 0;
+        var ordered = values.map(Number).sort(function (a, b) { return a - b; });
+        var middle = Math.floor(ordered.length / 2);
+        return ordered.length % 2 ? ordered[middle] : (ordered[middle - 1] + ordered[middle]) / 2;
+      }
       function setText(id, text) { var el = byId(id); if (el) el.textContent = text; }
+      function setSaveStatus(message, isError) {
+        var status = byId("saveStatus");
+        if (!status) return;
+        status.textContent = message;
+        status.classList.toggle("is-error", Boolean(isError));
+      }
       function getLevelLabel(value) { var found = levels.filter(function (level) { return String(level.value) === String(value); })[0]; return found ? found.label : "-"; }
       function hasValue(el) { return el && String(el.value || "").trim().length > 0; }
       function getItemId(areaKey, itemKey) { return areaKey + "-" + itemKey; }
@@ -1517,24 +1311,114 @@
       function getArea(areaKey) { return rubrics.filter(function (area) { return area.key === areaKey; })[0]; }
       function getItem(areaKey, itemKey) { var area = getArea(areaKey); return area ? area.items.filter(function (item) { return item.key === itemKey; })[0] : null; }
 
-      function buildStudentCards() {
+      function getStudentCards() {
+        return Array.prototype.slice.call(document.querySelectorAll(".student-card"));
+      }
+
+      function addStudentCard(studentIndex) {
         var grid = byId("studentGrid");
-        if (grid.children.length) return;
-        for (var s = 1; s <= 4; s += 1) {
-          var card = document.createElement("div");
-          card.className = "student-card";
-          card.setAttribute("data-student", String(s));
-          addText(card, "h3", "", "Student " + s);
-          addRatingRow(card, "student" + s + "Engagement", "Engagement");
-          addRatingRow(card, "student" + s + "Cognitive", "Cognitive Level");
-          addRatingRow(card, "student" + s + "LearningArticulation", "Can explain what they are learning");
-          addRatingRow(card, "student" + s + "WhyArticulation", "Can explain why they are learning it");
-          addRatingRow(card, "student" + s + "SuccessArticulation", "Can explain success / next step");
-          addRatingRow(card, "student" + s + "Work", "Work completed");
-          addRatingRow(card, "student" + s + "Enjoyment", "Enjoyment");
-          addQuestion(card, "student" + s + "VoiceNote", "Optional student voice note / useful quote");
-          grid.appendChild(card);
+        if (!grid || byId("student" + studentIndex + "VoiceNote")) return;
+        var card = document.createElement("div");
+        card.className = "student-card";
+        card.setAttribute("data-student", String(studentIndex));
+        var head = document.createElement("div");
+        head.className = "student-card-head";
+        addText(head, "h3", "student-card-title", "Student voice");
+        var removeButton = document.createElement("button");
+        removeButton.type = "button";
+        removeButton.className = "remove-student-button";
+        removeButton.textContent = "Remove";
+        head.appendChild(removeButton);
+        card.appendChild(head);
+        addRatingRow(card, "student" + studentIndex + "Engagement", "Engagement");
+        addRatingRow(card, "student" + studentIndex + "Cognitive", "Productive cognitive challenge");
+        addRatingRow(card, "student" + studentIndex + "LearningArticulation", "Can explain what they are learning");
+        addRatingRow(card, "student" + studentIndex + "WhyArticulation", "Can explain why they are learning it");
+        addRatingRow(card, "student" + studentIndex + "SuccessArticulation", "Can explain success / next step");
+        addRatingRow(card, "student" + studentIndex + "Work", "Work completed");
+        addRatingRow(card, "student" + studentIndex + "Enjoyment", "Enjoyment");
+        addQuestion(card, "student" + studentIndex + "VoiceNote", "Optional student voice note / useful quote");
+        grid.appendChild(card);
+      }
+
+      function updateStudentCardControls() {
+        var cards = getStudentCards();
+        cards.forEach(function (card, index) {
+          var title = card.querySelector(".student-card-title");
+          var removeButton = card.querySelector(".remove-student-button");
+          if (title) title.textContent = "Student " + (index + 1);
+          if (removeButton) {
+            removeButton.disabled = cards.length <= 1;
+            removeButton.setAttribute("aria-label", "Remove student " + (index + 1) + " voice card");
+          }
+        });
+        var addButton = byId("addStudentVoiceBtn");
+        if (addButton) addButton.disabled = cards.length >= maxStudentCount;
+        setText("studentCardCount", cards.length + " student voice card" + (cards.length === 1 ? "" : "s") + " shown · maximum " + maxStudentCount);
+      }
+
+      function buildStudentCards(indexes) {
+        var grid = byId("studentGrid");
+        if (!grid) return;
+        clearElement(grid);
+        var requested = Array.isArray(indexes) && indexes.length ? indexes : [];
+        if (!requested.length) {
+          for (var i = 1; i <= defaultStudentCount; i += 1) requested.push(i);
         }
+        requested.slice(0, maxStudentCount).forEach(addStudentCard);
+        if (!getStudentCards().length) addStudentCard(1);
+        updateStudentCardControls();
+      }
+
+      function getStudentIndexesFromState(saved) {
+        var indexes = [];
+        var hasExplicitOrder = Boolean(saved && Array.isArray(saved.studentIndexes) && saved.studentIndexes.length);
+        function addIndex(value) {
+          var index = Number(value);
+          if (Number.isInteger(index) && index >= 1 && index <= maxStudentCount && indexes.indexOf(index) === -1) indexes.push(index);
+        }
+        if (hasExplicitOrder) saved.studentIndexes.forEach(addIndex);
+        if (!indexes.length && saved) {
+          Object.keys(saved.fields || {}).concat(Object.keys(saved.ratings || {})).forEach(function (key) {
+            var match = /^student(\d+)/.exec(key);
+            if (match) addIndex(match[1]);
+          });
+        }
+        if (!hasExplicitOrder) indexes.sort(function (a, b) { return a - b; });
+        return indexes;
+      }
+
+      function addNextStudentCard() {
+        var used = {};
+        getStudentCards().forEach(function (card) { used[card.getAttribute("data-student")] = true; });
+        var nextIndex = 0;
+        for (var i = 1; i <= maxStudentCount; i += 1) {
+          if (!used[String(i)]) { nextIndex = i; break; }
+        }
+        if (!nextIndex) return;
+        addStudentCard(nextIndex);
+        updateStudentCardControls();
+        updateAll();
+        saveState();
+        var newest = byId("student" + nextIndex + "VoiceNote");
+        if (newest) newest.focus();
+      }
+
+      function studentCardHasContent(card) {
+        if (!card) return false;
+        if (card.querySelector(".rating-button.is-selected")) return true;
+        var note = card.querySelector("textarea");
+        return Boolean(note && note.value.trim());
+      }
+
+      function removeStudentCard(card) {
+        var cards = getStudentCards();
+        if (!card || cards.length <= 1) return;
+        if (studentCardHasContent(card) && !confirm("Remove this student voice card and its ratings or note?")) return;
+        card.remove();
+        updateStudentCardControls();
+        updateAll();
+        saveState();
       }
 
       function addRatingRow(parent, key, label) {
@@ -1544,12 +1428,16 @@
         var group = document.createElement("div");
         group.className = "rating-group";
         group.setAttribute("data-rating", key);
+        group.setAttribute("role", "group");
+        group.setAttribute("aria-label", label);
         for (var i = 1; i <= 5; i += 1) {
           var button = document.createElement("button");
           button.type = "button";
           button.className = "rating-button";
           button.textContent = String(i);
           button.setAttribute("data-value", String(i));
+          button.setAttribute("aria-pressed", "false");
+          button.setAttribute("aria-label", label + " rating " + i + " of 5");
           group.appendChild(button);
         }
         row.appendChild(group);
@@ -1583,7 +1471,7 @@
           section.setAttribute("data-area", area.key);
           var title = document.createElement("div");
           title.className = "section-title";
-          addText(title, "h2", "", area.title);
+          addText(title, "h3", "", area.title);
           addText(title, "span", "count-pill", area.items.length + (area.items.length === 1 ? " area" : " areas"));
           var rankSpan = addText(title, "span", "print-only area-rank", "");
           rankSpan.id = "area-rank-" + area.key;
@@ -1607,7 +1495,7 @@
         addText(left, "p", "rubric-title", item.title);
         var label = document.createElement("label");
         label.textContent = "Statement";
-        label.setAttribute("for", "picker-" + id);
+        label.id = "picker-label-" + id;
         left.appendChild(label);
         var picker = document.createElement("div");
         picker.className = "statement-picker";
@@ -1616,24 +1504,45 @@
         pickerButton.type = "button";
         pickerButton.className = "statement-picker-button";
         pickerButton.textContent = "Select statement";
+        pickerButton.setAttribute("aria-labelledby", label.id);
+        pickerButton.setAttribute("aria-haspopup", "true");
+        pickerButton.setAttribute("aria-expanded", "false");
         var options = document.createElement("div");
         options.className = "statement-options";
+        options.id = "picker-options-" + id;
+        pickerButton.setAttribute("aria-controls", options.id);
         item.statements.forEach(function (statement, index) {
           var option = document.createElement("button");
           option.type = "button";
           option.className = "statement-option";
           option.textContent = getLevelLabel(index + 1) + " - " + statement;
           option.setAttribute("data-value", String(index + 1));
+          option.setAttribute("aria-pressed", "false");
           option.addEventListener("click", function () {
             setRubricSelection(area.key, item.key, index + 1);
             picker.classList.remove("is-open");
+            pickerButton.setAttribute("aria-expanded", "false");
             saveState();
           });
           options.appendChild(option);
         });
+        var notObservedOption = document.createElement("button");
+        notObservedOption.type = "button";
+        notObservedOption.className = "statement-option";
+        notObservedOption.textContent = "Not observed / N/A - exclude this indicator from scoring";
+        notObservedOption.setAttribute("data-value", "na");
+        notObservedOption.setAttribute("aria-pressed", "false");
+        notObservedOption.addEventListener("click", function () {
+          setRubricSelection(area.key, item.key, "na");
+          picker.classList.remove("is-open");
+          pickerButton.setAttribute("aria-expanded", "false");
+          saveState();
+        });
+        options.appendChild(notObservedOption);
         pickerButton.addEventListener("click", function () {
           closeOtherPickers(picker);
           picker.classList.toggle("is-open");
+          pickerButton.setAttribute("aria-expanded", picker.classList.contains("is-open") ? "true" : "false");
         });
         picker.appendChild(pickerButton);
         picker.appendChild(options);
@@ -1647,8 +1556,13 @@
         textarea.id = "notes-" + id;
         textarea.setAttribute("data-save", "true");
         textarea.placeholder = "Evidence / notes";
+        var evidenceLabel = document.createElement("label");
+        evidenceLabel.className = "visually-hidden";
+        evidenceLabel.setAttribute("for", textarea.id);
+        evidenceLabel.textContent = "Evidence and notes for " + item.title;
         textarea.addEventListener("input", function () { updateAll(); saveState(); });
         details.appendChild(summary);
+        details.appendChild(evidenceLabel);
         details.appendChild(textarea);
         left.appendChild(details);
         var output = document.createElement("div");
@@ -1664,32 +1578,41 @@
 
       function closeOtherPickers(activePicker) {
         document.querySelectorAll(".statement-picker.is-open").forEach(function (picker) {
-          if (picker !== activePicker) picker.classList.remove("is-open");
+          if (picker !== activePicker) {
+            picker.classList.remove("is-open");
+            var button = picker.querySelector(".statement-picker-button");
+            if (button) button.setAttribute("aria-expanded", "false");
+          }
         });
       }
 
       function getRubricSelection(areaKey, itemKey) {
         var article = document.querySelector(".rubric-item[data-area='" + areaKey + "'][data-item='" + itemKey + "']");
-        return article ? Number(article.getAttribute("data-rank") || 0) : 0;
+        if (!article) return 0;
+        var value = article.getAttribute("data-rank") || "";
+        return value === "na" ? "na" : Number(value || 0);
       }
 
       function setRubricSelection(areaKey, itemKey, rank) {
         var item = getItem(areaKey, itemKey);
         var article = document.querySelector(".rubric-item[data-area='" + areaKey + "'][data-item='" + itemKey + "']");
         if (!item || !article) return;
+        var isNotObserved = rank === "na";
         article.setAttribute("data-rank", String(rank));
         article.classList.add("is-complete");
         var id = getItemId(areaKey, itemKey);
-        var statement = item.statements[rank - 1];
+        var statement = isNotObserved ? "This indicator was not applicable or could not reasonably be observed. It is excluded from averages." : item.statements[rank - 1];
         var pickerButton = article.querySelector(".statement-picker-button");
-        if (pickerButton) pickerButton.textContent = getStatementButtonLabel(statement);
+        if (pickerButton) pickerButton.textContent = isNotObserved ? "Not observed / N/A" : getStatementButtonLabel(statement);
         article.querySelectorAll(".statement-option").forEach(function (button) {
-          button.classList.toggle("is-selected", button.getAttribute("data-value") === String(rank));
+          var selected = button.getAttribute("data-value") === String(rank);
+          button.classList.toggle("is-selected", selected);
+          button.setAttribute("aria-pressed", selected ? "true" : "false");
         });
         var output = byId("output-" + id);
         if (output) {
           clearElement(output);
-          addText(output, "span", "level-badge", "Assigned rank: " + getLevelLabel(rank));
+          addText(output, "span", "level-badge", isNotObserved ? "Not observed / N/A" : "Assigned rank: " + getLevelLabel(rank));
           addText(output, "p", "", statement);
         }
         updateAll();
@@ -1708,19 +1631,45 @@
       }
 
       function buildDefaultRubricEvidence(areaKey, itemKey, code, meaning) {
-        return "Observed in lesson: [" + code + "] " + meaning + ".";
+        return "Running-record prompt: [" + code + "] " + meaning + ". Add a specific observed action or quote before using this to justify a rank.";
+      }
+
+      function hasSpecificEvidence(notes) {
+        return String(notes || "").split(/\n+/).some(function (line) {
+          var trimmed = line.replace(/^\s*-\s*/, "").trim();
+          return trimmed && trimmed.indexOf("Running-record prompt:") !== 0;
+        });
       }
 
       function buildStudentRatings() {
-        document.querySelectorAll(".rating-button").forEach(function (button) {
-          button.addEventListener("click", function () {
-            var group = button.parentElement;
-            var wasSelected = button.classList.contains("is-selected");
-            group.querySelectorAll(".rating-button").forEach(function (btn) { btn.classList.remove("is-selected"); });
-            if (!wasSelected) button.classList.add("is-selected");
-            updateAll();
-            saveState();
+        var grid = byId("studentGrid");
+        if (!grid || grid.getAttribute("data-events-ready") === "true") return;
+        grid.setAttribute("data-events-ready", "true");
+        grid.addEventListener("click", function (event) {
+          var removeButton = event.target.closest(".remove-student-button");
+          if (removeButton) {
+            removeStudentCard(removeButton.closest(".student-card"));
+            return;
+          }
+          var button = event.target.closest(".rating-button");
+          if (!button) return;
+          var group = button.parentElement;
+          var wasSelected = button.classList.contains("is-selected");
+          group.querySelectorAll(".rating-button").forEach(function (btn) {
+            btn.classList.remove("is-selected");
+            btn.setAttribute("aria-pressed", "false");
           });
+          if (!wasSelected) {
+            button.classList.add("is-selected");
+            button.setAttribute("aria-pressed", "true");
+          }
+          updateAll();
+          saveState();
+        });
+        grid.addEventListener("input", function (event) {
+          if (!event.target.matches("[data-save]")) return;
+          updateAll();
+          saveState();
         });
       }
 
@@ -1759,6 +1708,11 @@
         }).join(", ");
       }
 
+      function hiddenPositionValue(row) {
+        var field = row ? row.querySelector(".record-position") : null;
+        return field ? String(field.value || "").trim() : "";
+      }
+
       function closeOtherPositionMaps(activeControl) {
         document.querySelectorAll(".teacher-position-control.is-open").forEach(function (control) {
           if (control !== activeControl) control.classList.remove("is-open");
@@ -1773,13 +1727,17 @@
         if (status) status.textContent = formatTeacherPosition(value);
         control.querySelectorAll(".teacher-position-cell").forEach(function (cell) {
           var position = cell.getAttribute("data-position");
-          cell.classList.toggle("is-selected", selectedValues.indexOf(position) !== -1);
+          var selected = selectedValues.indexOf(position) !== -1;
+          cell.classList.toggle("is-selected", selected);
+          cell.setAttribute("aria-pressed", selected ? "true" : "false");
         });
       }
 
       function createTeacherPositionControl(selectedValue) {
         var control = document.createElement("div");
         control.className = "teacher-position-control";
+        control.setAttribute("role", "group");
+        control.setAttribute("aria-label", "Teacher positions during this running-record interval");
 
         var hidden = document.createElement("input");
         hidden.type = "hidden";
@@ -1813,6 +1771,8 @@
           button.className = "teacher-position-cell";
           button.textContent = position[1];
           button.title = formatTeacherPosition(position[0]);
+          button.setAttribute("aria-label", "Teacher position: " + formatTeacherPosition(position[0]));
+          button.setAttribute("aria-pressed", "false");
           button.setAttribute("data-position", position[0]);
           button.addEventListener("click", function () {
             var selectedValues = getTeacherPositionValues(hidden.value);
@@ -1862,7 +1822,7 @@
         return String(now.getHours()).padStart(2, "0") + ":" + String(now.getMinutes()).padStart(2, "0");
       }
 
-      function addRecordRow(data) {
+      function addRecordRow(data, useCurrentTime) {
         var row = document.createElement("tr");
         row.className = "record-row";
         var timeCell = document.createElement("td");
@@ -1871,17 +1831,20 @@
         timeInput.type = "text";
         timeInput.className = "time-input record-time";
         timeInput.placeholder = "Time";
+        timeInput.setAttribute("aria-label", "Running-record time");
         timeInput.value = data && Object.prototype.hasOwnProperty.call(data, "time")
           ? data.time
-          : getCurrentLocalTime();
+          : (useCurrentTime ? getCurrentLocalTime() : "");
         var deleteButton = document.createElement("button");
         deleteButton.type = "button";
         deleteButton.className = "delete-record-button";
         deleteButton.textContent = "Delete row";
         deleteButton.addEventListener("click", function () {
+          var hasRecordedContent = noteTextarea.value.trim() || hiddenPositionValue(row);
+          if (hasRecordedContent && !confirm("Delete this running-record row?")) return;
           row.remove();
           if (!document.querySelector(".record-row")) {
-            addRecordRow();
+            addRecordRow(null, false);
           }
           updatePrintVisibility();
           saveState();
@@ -1889,9 +1852,11 @@
         var noteTextarea = document.createElement("textarea");
         noteTextarea.className = "record-note";
         noteTextarea.placeholder = "Teacher/Student Activity";
+        noteTextarea.setAttribute("aria-label", "Observed teacher and student activity");
         noteTextarea.value = data && data.note ? data.note : "";
         var tools = document.createElement("div");
         tools.className = "activity-code-tools";
+        addText(tools, "p", "activity-code-tools-title", "Quick observation codes");
         var codeGroups = [
           {
             title: "Interaction scale",
@@ -1930,6 +1895,7 @@
             button.className = "activity-code-button";
             button.textContent = item[0];
             button.title = item[1];
+            button.setAttribute("aria-label", item[1] + " observation code " + item[0]);
             button.addEventListener("click", function () { addActivityCode(noteTextarea, item[0], item[1]); });
             buttonWrap.appendChild(button);
           });
@@ -1960,11 +1926,11 @@
             "Student was highly engaged and motivated in the learning."
           ],
           Cognitive: [
-            "Student found the work very easy or did not need much thinking.",
-            "Student found the work low challenge with some thinking required.",
-            "Student found the thinking level manageable and appropriate.",
-            "Student found the work challenging and needed sustained thinking.",
-            "Student found the work to be very challenging."
+            "Student appeared under-challenged or disengaged by the thinking demand.",
+            "Student completed mostly low-demand thinking.",
+            "The thinking demand was appropriate and manageable.",
+            "Student experienced productive challenge and sustained their thinking.",
+            "Student managed substantial productive challenge using effective strategies or support."
           ],
           LearningArticulation: [
             "Student could not explain what they were learning.",
@@ -2004,7 +1970,7 @@
         };
         var labels = {
           Engagement: "Engagement",
-          Cognitive: "Cognitive challenge",
+          Cognitive: "Productive challenge",
           LearningArticulation: "Explains learning",
           WhyArticulation: "Explains purpose",
           SuccessArticulation: "Explains success / next step",
@@ -2032,65 +1998,112 @@
 
       function updateStudentVoice() {
         var values = [];
-        for (var s = 1; s <= 4; s += 1) {
+        var sampledStudents = 0;
+        var cards = getStudentCards();
+        cards.forEach(function (card) {
+          var s = card.getAttribute("data-student");
+          var studentHasContent = false;
           ["Engagement", "Cognitive", "LearningArticulation", "WhyArticulation", "SuccessArticulation", "Work", "Enjoyment"].forEach(function (metric) {
             var key = "student" + s + metric;
             var value = getRatingValue(key);
-            if (value) values.push(value);
+            if (value) {
+              values.push(value);
+              studentHasContent = true;
+            }
             setStudentVoicePrintValue("print-" + key, metric, value);
           });
+          if (hasValue(byId("student" + s + "VoiceNote"))) studentHasContent = true;
+          if (studentHasContent) sampledStudents += 1;
+        });
+        setText("studentVoiceAverage", sampledStudents ? String(sampledStudents) : "-");
+        setText("studentVoiceCount", sampledStudents ? sampledStudents + " of " + cards.length + " students · " + values.length + " ratings" : "No students sampled");
+        setText("studentVoicePrintSummary", sampledStudents ? sampledStudents + " students sampled · " + values.length + " ratings" : "");
+        var profile = byId("studentProfile");
+        if (profile) {
+          var lines = getStudentVoiceAverageLines();
+          clearElement(profile);
+          profile.hidden = !lines.length;
+          if (lines.length) {
+            addText(profile, "h3", "", "Student sample profile - median, range and sample size");
+            var list = document.createElement("ul");
+            lines.forEach(function (line) { addListItem(list, line); });
+            profile.appendChild(list);
+          }
         }
-        var avg = average(values);
-        setText("studentVoiceAverage", avg ? avg.toFixed(1) : "-");
-        setText("studentVoiceCount", values.length ? values.length + " ratings entered" : "No ratings yet");
-        setText("studentVoicePrintSummary", avg ? "Student voice average: " + avg.toFixed(1) + "/5" : "");
       }
 
-      function getOverallFeedback(overall) {
-        if (!overall) return "Complete the post-observation analysis to generate a useful observation summary and next steps.";
-        if (overall < 2) return "The evidence suggests foundations are still developing. Focus the koorero on one or two high-leverage actions that can be repeated consistently in the next observed lessons.";
-        if (overall < 3) return "The evidence suggests emerging practice. Next steps should make effective actions more deliberate, visible and consistent for aakonga.";
-        if (overall < 4) return "The evidence suggests developing and increasingly consistent practice. Next steps should strengthen student voice, learner agency and evidence of impact on priority students.";
-        if (overall < 4.5) return "The evidence suggests strong practice. Next steps should focus on embedding learner-led routines, co-construction, feedback/feedforward and culturally responsive evidence.";
+      function getOverallFeedback(overall, ready, completedCount, totalIndicators) {
+        if (!ready) {
+          var remaining = Math.max(0, totalIndicators - completedCount);
+          return remaining
+            ? "Provisional evidence only. Complete the remaining " + remaining + " indicator" + (remaining === 1 ? "" : "s") + " or mark them Not observed / N/A. At least one scored indicator is required in every ETP area."
+            : "Provisional evidence only. At least one scored indicator is required in every ETP area before an overall result is calculated.";
+        }
+        var stage = Math.round(overall);
+        if (stage === 1) return "The evidence suggests foundations are still developing. Focus the koorero on one or two high-leverage actions that can be repeated consistently in the next observed lessons.";
+        if (stage === 2) return "The evidence suggests emerging practice. Next steps should make effective actions more deliberate, visible and consistent for aakonga.";
+        if (stage === 3) return "The evidence suggests developing and increasingly consistent practice. Next steps should strengthen student voice, learner agency and evidence of impact on priority students.";
+        if (stage === 4) return "The evidence suggests strong practice. Next steps should focus on embedding learner-led routines, co-construction, feedback/feedforward and culturally responsive evidence.";
         return "The evidence suggests highly developed practice. Next steps should focus on sustaining impact, sharing effective practice and gathering evidence across a wider range of contexts.";
       }
 
       function updateAnalysis() {
-        var allScores = [];
+        var totalIndicators = rubrics.reduce(function (total, area) { return total + area.items.length; }, 0);
+        var completedCount = 0;
+        var areaAverages = [];
         var strengths = [];
         var priorities = [];
+        var evidenceGaps = [];
+        var resultOrder = 0;
         rubrics.forEach(function (area) {
           var areaScores = [];
           area.items.forEach(function (item) {
             var score = getRubricSelection(area.key, item.key);
-            if (score) {
+            if (score === "na") {
+              completedCount += 1;
+              return;
+            }
+            if (Number.isInteger(score) && score >= 1 && score <= 5) {
+              completedCount += 1;
               areaScores.push(score);
-              allScores.push(score);
-              if (score >= 4) strengths.push(area.title + " - " + item.title + ": " + getLevelLabel(score) + ".");
-              if (score < 4) priorities.push(area.title + " - " + item.title + ": " + areaAdvice[area.key]);
+              var notes = getValueForPrint("notes-" + getItemId(area.key, item.key));
+              var evidenceConfirmed = hasSpecificEvidence(notes);
+              var base = area.title + " - " + item.title;
+              if (score >= 4 && evidenceConfirmed) strengths.push({ score: score, evidence: notes.length, order: resultOrder, text: base + ": " + getLevelLabel(score) + "." });
+              if (score >= 4 && !evidenceConfirmed) evidenceGaps.push({ score: score, order: resultOrder, text: base + ": add a specific observed action or quote before treating this high rank as confirmed evidence." });
+              if (score <= 3) priorities.push({ score: score, evidence: evidenceConfirmed ? notes.length : 0, order: resultOrder, text: base + ": " + areaAdvice[area.key] });
+              resultOrder += 1;
             }
           });
           var areaAvg = average(areaScores);
+          if (areaAvg) areaAverages.push(areaAvg);
+          var areaComplete = area.items.filter(function (item) { return Boolean(getRubricSelection(area.key, item.key)); }).length;
           setText("score-" + area.key, areaAvg ? areaAvg.toFixed(1) : "-");
-          setText("level-" + area.key, areaAvg ? getLevelLabel(Math.round(areaAvg)) : "-");
-          setText("area-rank-" + area.key, areaAvg ? "Area average: " + areaAvg.toFixed(1) + " - " + getLevelLabel(Math.round(areaAvg)) : "");
+          setText("level-" + area.key, areaAvg ? getLevelLabel(Math.round(areaAvg)) + " · " + areaComplete + "/" + area.items.length + " complete" : areaComplete + "/" + area.items.length + " complete");
+          setText("area-rank-" + area.key, areaAvg ? "Area average: " + areaAvg.toFixed(1) + " - " + getLevelLabel(Math.round(areaAvg)) + " (" + areaComplete + "/" + area.items.length + " complete)" : areaComplete ? "No scored indicators · " + areaComplete + "/" + area.items.length + " complete" : "");
           var section = document.querySelector(".section[data-area='" + area.key + "']");
-          if (section) section.classList.toggle("has-print-content", areaScores.length > 0);
+          if (section) section.classList.toggle("has-print-content", areaComplete > 0);
         });
-        var overall = average(allScores);
-        setText("overallEtpScore", overall ? overall.toFixed(1) : "-");
-        setText("overallEtpLevel", overall ? getLevelLabel(Math.round(overall)) : "Select statements");
-        setText("finalEtpAverage", overall ? overall.toFixed(1) : "-");
-        setText("finalEtpLevel", overall ? getLevelLabel(Math.round(overall)) : "Select statements");
-        setText("overallFeedback", getOverallFeedback(overall));
+        var ready = completedCount === totalIndicators && areaAverages.length === rubrics.length;
+        var overall = ready ? average(areaAverages) : 0;
+        var coverage = completedCount + "/" + totalIndicators + " indicators complete";
+        setText("overallEtpScore", ready ? overall.toFixed(1) : "-");
+        setText("overallEtpLevel", ready ? getLevelLabel(Math.round(overall)) : coverage);
+        setText("finalEtpAverage", ready ? overall.toFixed(1) : "-");
+        setText("finalEtpLevel", ready ? getLevelLabel(Math.round(overall)) : "Provisional · " + coverage);
+        setText("overallFeedback", getOverallFeedback(overall, ready, completedCount, totalIndicators));
         var strengthsList = byId("strengthsList");
         var nextStepsList = byId("nextStepsList");
         clearElement(strengthsList);
         clearElement(nextStepsList);
-        if (strengths.length) strengths.slice(0, 3).forEach(function (text) { addListItem(strengthsList, text); });
-        else addListItem(strengthsList, overall ? "Use the selected statements and evidence notes to affirm the strongest observed practice." : "Select statements and add evidence to identify strengths.");
-        if (priorities.length) priorities.slice(0, 3).forEach(function (text) { addListItem(nextStepsList, text); });
-        else addListItem(nextStepsList, overall ? "Co-construct one next step that extends an existing strength and identifies how impact on priority students will be measured." : "Select statements and add evidence to generate next steps.");
+        strengths.sort(function (a, b) { return b.score - a.score || b.evidence - a.evidence || a.order - b.order; });
+        priorities.sort(function (a, b) { return a.score - b.score || b.evidence - a.evidence || a.order - b.order; });
+        evidenceGaps.sort(function (a, b) { return b.score - a.score || a.order - b.order; });
+        if (strengths.length) strengths.slice(0, 3).forEach(function (entry) { addListItem(strengthsList, entry.text); });
+        else addListItem(strengthsList, completedCount ? "No evidence-backed high-ranking indicator has been confirmed yet. Add a specific action or quote to substantiate strengths." : "Select statements and add evidence to identify strengths.");
+        var combinedPriorities = priorities.concat(evidenceGaps);
+        if (combinedPriorities.length) combinedPriorities.slice(0, 3).forEach(function (entry) { addListItem(nextStepsList, entry.text); });
+        else addListItem(nextStepsList, ready ? "Co-construct one next step that extends an existing strength and identifies how impact on priority students will be measured." : "Complete the remaining indicators to generate prioritised next steps.");
       }
 
       function updatePrintVisibility() {
@@ -2100,8 +2113,8 @@
           card.classList.toggle("has-print-content", visible);
         });
         document.querySelectorAll(".record-row").forEach(function (row) {
-          var visible = false;
-          row.querySelectorAll("input, textarea").forEach(function (field) { if (hasValue(field)) visible = true; });
+          var noteField = row.querySelector(".record-note");
+          var visible = hasValue(noteField);
           var positionField = row.querySelector(".record-position");
           if (positionField && positionField.value) visible = true;
           row.classList.toggle("has-print-content", visible);
@@ -2159,6 +2172,11 @@
           var button = document.createElement("button");
           button.type = "button";
           button.className = "section-collapse-button";
+          var body = section.querySelector(".section-body") || section.querySelector("#rubricContainer");
+          if (body) {
+            if (!body.id) body.id = section.id + "Body";
+            button.setAttribute("aria-controls", body.id);
+          }
           button.addEventListener("click", function () {
             setOptionalSectionCollapsed(section, !section.classList.contains("is-collapsed"));
           });
@@ -2214,7 +2232,7 @@
       function getStudentVoiceAverageLines() {
         var metrics = [
           ["Engagement", "Engagement"],
-          ["Cognitive", "Cognitive challenge"],
+          ["Cognitive", "Productive challenge"],
           ["LearningArticulation", "Explains learning"],
           ["WhyArticulation", "Explains purpose"],
           ["SuccessArticulation", "Explains success / next step"],
@@ -2224,12 +2242,17 @@
         var lines = [];
         metrics.forEach(function (metric) {
           var values = [];
-          for (var s = 1; s <= 4; s += 1) {
+          getStudentCards().forEach(function (card) {
+            var s = card.getAttribute("data-student");
             var value = getRatingValue("student" + s + metric[0]);
             if (value) values.push(value);
+          });
+          var middle = median(values);
+          if (middle) {
+            var minimum = Math.min.apply(null, values);
+            var maximum = Math.max.apply(null, values);
+            lines.push(metric[1] + ": median " + middle.toFixed(1) + "/5 · range " + minimum + "–" + maximum + " (n=" + values.length + ")");
           }
-          var avg = average(values);
-          if (avg) lines.push(metric[1] + ": " + avg.toFixed(1) + "/5 (n=" + values.length + ")");
         });
         return lines;
       }
@@ -2319,7 +2342,7 @@
         if (studentAverages.length) {
           var studentScoreBox = document.createElement("div");
           studentScoreBox.className = "print-summary-box";
-          printText(studentScoreBox, "h3", "", "Average student voice scores");
+          printText(studentScoreBox, "h3", "", "Student sample profile (median and range)");
           var studentAverageList = document.createElement("ul");
           studentAverageList.className = "print-compact-list";
           studentAverages.forEach(function (line) { addListItem(studentAverageList, line); });
@@ -2365,7 +2388,7 @@
           var note = row.querySelector(".record-note").value.trim();
           var positionField = row.querySelector(".record-position");
           var position = positionField ? positionField.value : "";
-          if (time || note || position) recordRows.push({ time: time, note: note, position: position });
+          if (note || position) recordRows.push({ time: time, note: note, position: position });
         });
         if (recordRows.length) {
           var recordBody = addPrintSection(report, "10-minute observation - running record");
@@ -2391,7 +2414,8 @@
         }
 
         var studentCards = [];
-        for (var s = 1; s <= 4; s += 1) {
+        getStudentCards().forEach(function (studentCard, studentPosition) {
+          var s = studentCard.getAttribute("data-student");
           var lines = [];
           ["Engagement", "Cognitive", "LearningArticulation", "WhyArticulation", "SuccessArticulation", "Work", "Enjoyment"].forEach(function (metric) {
             var key = "student" + s + metric;
@@ -2399,8 +2423,8 @@
             if (value) lines.push(getStudentVoiceParts(metric, value));
           });
           var note = getValueForPrint("student" + s + "VoiceNote");
-          if (lines.length || note) studentCards.push({ number: s, lines: lines, note: note });
-        }
+          if (lines.length || note) studentCards.push({ number: studentPosition + 1, lines: lines, note: note });
+        });
         var additionalStudentVoiceNotes = getValueForPrint("additionalNotes");
         if (studentCards.length || additionalStudentVoiceNotes) {
           var studentBody = addPrintSection(report, "Student Voice Sample");
@@ -2441,22 +2465,28 @@
             var rank = getRubricSelection(area.key, item.key);
             var notes = getValueForPrint("notes-" + getItemId(area.key, item.key));
             if (rank || notes) {
-              areaItems.push({ title: item.title, rank: rank, statement: rank ? item.statements[rank - 1] : "", notes: notes });
+              areaItems.push({ title: item.title, rank: rank, statement: rank && rank !== "na" ? item.statements[rank - 1] : "", notes: notes });
             }
           });
           if (areaItems.length) {
             var areaBody = addPrintSection(report, area.title);
+            var areaGrid = document.createElement("div");
+            areaGrid.className = "print-adaptive-grid";
             areaItems.forEach(function (entry) {
               var card = document.createElement("div");
               card.className = "print-rubric-item";
+              if ((entry.notes || "").length > 180) card.classList.add("print-wide");
               printText(card, "h3", "", entry.title);
-              if (entry.rank) {
+              if (entry.rank === "na") {
+                printText(card, "p", "", "Not observed / N/A - excluded from scores and averages.");
+              } else if (entry.rank) {
                 printText(card, "p", "", "Assigned rank: " + getLevelLabel(entry.rank));
                 printText(card, "p", "", entry.statement);
               }
               if (entry.notes) printText(card, "p", "", "Evidence / notes: " + entry.notes);
-              areaBody.appendChild(card);
+              areaGrid.appendChild(card);
             });
+            areaBody.appendChild(areaGrid);
           }
         });
 
@@ -2491,10 +2521,12 @@
         sigGrid.appendChild(teacherSig);
         sigGrid.appendChild(observerSig);
         signatureBody.appendChild(sigGrid);
+        printText(report, "p", "print-confidentiality", "Confidential developmental professional-learning snapshot. This report is not a standalone competence, conduct or employment judgement. Store it through approved school processes.");
       }
 
       function collectState() {
-        var data = { fields: {}, ratings: {}, rubric: {}, records: [] };
+        var data = { fields: {}, ratings: {}, rubric: {}, records: [], studentIndexes: [] };
+        getStudentCards().forEach(function (card) { data.studentIndexes.push(Number(card.getAttribute("data-student"))); });
         document.querySelectorAll("[data-save]").forEach(function (field) { data.fields[field.id] = field.value; });
         document.querySelectorAll(".rating-group").forEach(function (group) { data.ratings[group.getAttribute("data-rating")] = getRatingValue(group.getAttribute("data-rating")); });
         rubrics.forEach(function (area) {
@@ -2505,7 +2537,7 @@
           var note = row.querySelector(".record-note").value;
           var positionField = row.querySelector(".record-position");
           var position = positionField ? positionField.value : "";
-          if (String(time).trim() || String(note).trim() || String(position).trim()) {
+          if (String(note).trim() || String(position).trim()) {
             data.records.push({ time: time, note: note, position: position });
           }
         });
@@ -2513,33 +2545,43 @@
       }
 
       function saveState() {
-        try { localStorage.setItem(storageKey, JSON.stringify(collectState())); } catch (error) {}
+        try {
+          localStorage.setItem(storageKey, JSON.stringify(collectState()));
+          setSaveStatus("Changes are stored in this browser. Choose Save current to update the observation file.", false);
+          return true;
+        } catch (error) {
+          setSaveStatus("Browser storage is unavailable. Save or download the observation file before closing this page.", true);
+          return false;
+        }
       }
 
       function resetCurrentForm() {
         document.querySelectorAll("input, textarea").forEach(function (field) { field.value = ""; });
         byId("dateInput").value = getCurrentLocalDate();
-        document.querySelectorAll(".rating-button").forEach(function (button) { button.classList.remove("is-selected"); });
+        document.querySelectorAll(".rating-button").forEach(function (button) { button.classList.remove("is-selected"); button.setAttribute("aria-pressed", "false"); });
         document.querySelectorAll(".rubric-item").forEach(function (item) { item.removeAttribute("data-rank"); item.classList.remove("is-complete"); });
-        document.querySelectorAll(".statement-picker-button").forEach(function (button) { button.textContent = "Select statement"; });
-        document.querySelectorAll(".statement-option").forEach(function (button) { button.classList.remove("is-selected"); });
+        document.querySelectorAll(".statement-picker-button").forEach(function (button) { button.textContent = "Select statement"; button.setAttribute("aria-expanded", "false"); });
+        document.querySelectorAll(".statement-option").forEach(function (button) { button.classList.remove("is-selected"); button.setAttribute("aria-pressed", "false"); });
         document.querySelectorAll(".selected-output").forEach(function (output) {
           clearElement(output);
           addText(output, "span", "level-badge", "Select statement");
           addText(output, "p", "", "Select the statement that best matches the evidence. The rank will be assigned automatically.");
         });
         clearElement(byId("recordRows"));
+        buildStudentCards();
         refreshOptionalSections();
       }
 
       function applyState(saved) {
         resetCurrentForm();
         if (!saved) {
-          addRecordRow();
+          addRecordRow(null, false);
           updateAll();
           refreshOptionalSections();
           return;
         }
+        var savedStudentIndexes = getStudentIndexesFromState(saved);
+        if (savedStudentIndexes.length) buildStudentCards(savedStudentIndexes);
         Object.keys(saved.fields || {}).forEach(function (id) {
           var field = byId(id);
           if (field) field.value = saved.fields[id];
@@ -2548,7 +2590,7 @@
         Object.keys(saved.ratings || {}).forEach(function (key) {
           var value = saved.ratings[key];
           var button = document.querySelector(".rating-group[data-rating='" + key + "'] .rating-button[data-value='" + value + "']");
-          if (button) button.classList.add("is-selected");
+          if (button) { button.classList.add("is-selected"); button.setAttribute("aria-pressed", "true"); }
         });
         Object.keys(saved.rubric || {}).forEach(function (id) {
           var rank = saved.rubric[id];
@@ -2557,26 +2599,34 @@
           setRubricSelection(parts[0], parts.slice(1).join("-"), rank);
         });
         var savedRecords = (saved.records || []).filter(function (record) {
-          return (record.time && String(record.time).trim()) || (record.note && String(record.note).trim()) || (record.position && String(record.position).trim());
+          return (record.note && String(record.note).trim()) || (record.position && String(record.position).trim());
         });
-        if (savedRecords.length) savedRecords.forEach(function (record) { addRecordRow(record); });
-        else addRecordRow();
+        if (savedRecords.length) savedRecords.forEach(function (record) { addRecordRow(record, false); });
+        else addRecordRow(null, false);
         updateAll();
         refreshOptionalSections();
       }
 
       function loadState() {
         var saved = null;
-        try { saved = JSON.parse(localStorage.getItem(storageKey)); } catch (error) { saved = null; }
+        try { saved = JSON.parse(localStorage.getItem(storageKey)); }
+        catch (error) { saved = null; setSaveStatus("The browser draft could not be read. Open a valid observation file to restore your work.", true); }
         applyState(saved);
       }
 
       function getSavedObservationList() {
-        try { return JSON.parse(localStorage.getItem(savedListKey)) || {}; } catch (error) { return {}; }
+        try {
+          var value = JSON.parse(localStorage.getItem(savedListKey)) || {};
+          return value && typeof value === "object" && !Array.isArray(value) ? value : {};
+        } catch (error) {
+          setSaveStatus("The saved observation list could not be read. Open a valid observation file to restore it.", true);
+          return {};
+        }
       }
 
       function setSavedObservationList(list) {
-        try { localStorage.setItem(savedListKey, JSON.stringify(list)); } catch (error) {}
+        try { localStorage.setItem(savedListKey, JSON.stringify(list)); return true; }
+        catch (error) { setSaveStatus("The observation list could not be stored in this browser. Download the file now to avoid losing work.", true); return false; }
       }
 
       function populateSavedObservationSelect() {
@@ -2595,6 +2645,16 @@
           option.textContent = name;
           select.appendChild(option);
         });
+        updateSavedObservationButtons();
+      }
+
+      function updateSavedObservationButtons() {
+        var select = byId("savedObservationSelect");
+        var hasSelection = Boolean(select && select.value);
+        var loadButton = byId("loadObservationBtn");
+        var deleteButton = byId("deleteObservationBtn");
+        if (loadButton) loadButton.disabled = !hasSelection;
+        if (deleteButton) deleteButton.disabled = !hasSelection;
       }
 
       function getObservationNameParts() {
@@ -2602,13 +2662,15 @@
           teacher: byId("teacherName").value.trim() || "Teacher not entered",
           observer: byId("observerName").value.trim() || "Observer not entered",
           className: byId("classInput").value.trim() || "Class not entered",
+          period: byId("periodInput").value.trim() || "Period not entered",
+          room: byId("roomInput").value.trim() || "Room not entered",
           date: byId("dateInput").value || getCurrentLocalDate()
         };
       }
 
       function getAutomaticObservationName() {
         var parts = getObservationNameParts();
-        return parts.teacher + " - " + parts.className + " - " + parts.date + " - Observer " + parts.observer;
+        return parts.teacher + " - " + parts.className + " - " + parts.date + " - " + parts.period + " - " + parts.room + " - Observer " + parts.observer;
       }
 
       function cleanFilenamePart(value, fallback) {
@@ -2623,18 +2685,22 @@
 
       function getSuggestedDocumentTitle() {
         var parts = getObservationNameParts();
-        return "Arotake - " + parts.teacher + " - " + parts.className + " - " + parts.date + " - Observer " + parts.observer;
+        return "Arotake - " + parts.teacher + " - " + parts.className + " - " + parts.date + " - " + parts.period + " - Observer " + parts.observer;
       }
 
       function saveNamedObservation() {
         var name = getAutomaticObservationName();
         var list = getSavedObservationList();
+        if (list[name] && activeObservationName !== name && !confirm("An observation with this teacher, class, date, period, room and observer already exists. Replace it?")) return false;
         list[name] = { savedAt: new Date().toISOString(), data: collectState() };
-        setSavedObservationList(list);
+        if (!setSavedObservationList(list)) return false;
+        activeObservationName = name;
         populateSavedObservationSelect();
         var select = byId("savedObservationSelect");
         if (select) select.value = name;
+        updateSavedObservationButtons();
         saveState();
+        return true;
       }
 
       function loadNamedObservation() {
@@ -2644,7 +2710,9 @@
         var entry = list[select.value];
         if (!entry || !entry.data) return;
         applyState(entry.data);
+        activeObservationName = select.value;
         saveState();
+        setSaveStatus("Loaded “" + activeObservationName + "”. Changes are stored in this browser until Save current is used.", false);
       }
 
       function deleteNamedObservation() {
@@ -2655,22 +2723,35 @@
         var list = getSavedObservationList();
         delete list[name];
         setSavedObservationList(list);
+        if (activeObservationName === name) activeObservationName = "";
         populateSavedObservationSelect();
+        setSaveStatus("Deleted the selected saved observation from this browser. Save current to update the observation file.", false);
       }
 
       function buildMasterFileData() {
-        saveNamedObservation();
+        if (!saveNamedObservation()) return null;
         return {
           app: "Observation Tool - Arotake Whaiaro",
-          version: 1,
+          version: 2,
           exportedAt: new Date().toISOString(),
           currentObservation: collectState(),
           savedObservations: getSavedObservationList()
         };
       }
 
+      function validateMasterFileData(data) {
+        if (!data || typeof data !== "object" || Array.isArray(data)) throw new Error("The file does not contain an observation object.");
+        if (data.app && data.app !== "Observation Tool - Arotake Whaiaro") throw new Error("The file belongs to a different application.");
+        if (Number(data.version || 1) > 2) throw new Error("This observation file was created by a newer version of the tool.");
+        var hasCurrent = data.currentObservation && typeof data.currentObservation === "object";
+        var hasSaved = data.savedObservations && typeof data.savedObservations === "object" && !Array.isArray(data.savedObservations);
+        if (!hasCurrent && !hasSaved) throw new Error("The file does not contain observation records.");
+        if (hasSaved && Object.keys(data.savedObservations).length > 500) throw new Error("The file contains too many observation records.");
+        return true;
+      }
+
       function applyMasterFileData(data) {
-        if (!data) return;
+        validateMasterFileData(data);
         if (data.savedObservations && typeof data.savedObservations === "object") {
           setSavedObservationList(data.savedObservations);
         }
@@ -2678,10 +2759,15 @@
           applyState(data.currentObservation);
           saveState();
         }
+        activeObservationName = getAutomaticObservationName();
         populateSavedObservationSelect();
+        var select = byId("savedObservationSelect");
+        if (select && getSavedObservationList()[activeObservationName]) select.value = activeObservationName;
+        updateSavedObservationButtons();
       }
 
       function downloadJsonFile(filename, data) {
+        if (!data) return false;
         var blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
         var url = URL.createObjectURL(blob);
         var link = document.createElement("a");
@@ -2691,6 +2777,8 @@
         link.click();
         document.body.removeChild(link);
         URL.revokeObjectURL(url);
+        setSaveStatus("Observation file downloaded. Store it in an approved secure location.", false);
+        return true;
       }
 
       function getDefaultMasterFilename() {
@@ -2698,17 +2786,21 @@
         return "Arotake - "
           + cleanFilenamePart(parts.teacher, "Teacher not entered") + " - "
           + cleanFilenamePart(parts.className, "Class not entered") + " - "
-          + cleanFilenamePart(parts.date, getCurrentLocalDate()) + " - Observer "
+          + cleanFilenamePart(parts.date, getCurrentLocalDate()) + " - "
+          + cleanFilenamePart(parts.period, "Period not entered") + " - "
+          + cleanFilenamePart(parts.room, "Room not entered") + " - Observer "
           + cleanFilenamePart(parts.observer, "Observer not entered") + ".json";
       }
 
       async function saveMasterFile() {
         var data = buildMasterFileData();
+        if (!data) return false;
         if (masterFileHandle && masterFileHandle.createWritable) {
           var writable = await masterFileHandle.createWritable();
           await writable.write(JSON.stringify(data, null, 2));
           await writable.close();
-          return;
+          setSaveStatus("Observation file saved successfully.", false);
+          return true;
         }
         if (window.showSaveFilePicker) {
           masterFileHandle = await window.showSaveFilePicker({
@@ -2718,9 +2810,10 @@
           var fileWritable = await masterFileHandle.createWritable();
           await fileWritable.write(JSON.stringify(data, null, 2));
           await fileWritable.close();
-          return;
+          setSaveStatus("Observation file saved successfully.", false);
+          return true;
         }
-        downloadJsonFile(getDefaultMasterFilename(), data);
+        return downloadJsonFile(getDefaultMasterFilename(), data);
       }
 
       async function openMasterFile() {
@@ -2731,46 +2824,78 @@
           });
           masterFileHandle = handles[0];
           var file = await masterFileHandle.getFile();
+          if (file.size > 10 * 1024 * 1024) throw new Error("The observation file is larger than 10 MB.");
           var text = await file.text();
           applyMasterFileData(JSON.parse(text));
-          return;
+          setSaveStatus("Observation file opened. Changes remain in this browser until Save current is used.", false);
+          return true;
         }
         byId("importMasterFileInput").click();
       }
 
       function importMasterFileFromInput(file) {
         if (!file) return;
+        if (file.size > 10 * 1024 * 1024) {
+          alert("That file is too large. Choose an observation JSON file smaller than 10 MB.");
+          setSaveStatus("The selected file was too large to open.", true);
+          return;
+        }
         var reader = new FileReader();
         reader.onload = function () {
           try {
             applyMasterFileData(JSON.parse(String(reader.result || "{}")));
+            setSaveStatus("Observation file opened. Changes remain in this browser until Save current is used.", false);
           } catch (error) {
             alert("That file could not be loaded. Please choose a valid observation master JSON file.");
+            setSaveStatus("The selected file was not a valid observation file.", true);
           }
         };
         reader.readAsText(file);
       }
 
       function exportMasterFileBackup() {
-        downloadJsonFile(getDefaultMasterFilename(), buildMasterFileData());
+        var data = buildMasterFileData();
+        if (data) downloadJsonFile(getDefaultMasterFilename(), data);
       }
 
       function addNewObservation() {
         var proceed = confirm("Start a new blank observation? Save current first if you want to keep it.");
         if (!proceed) return;
         resetCurrentForm();
-        addRecordRow();
+        activeObservationName = "";
+        addRecordRow(null, false);
         populateSavedObservationSelect();
         saveState();
         updateAll();
+        setSaveStatus("New blank observation started. Changes are stored in this browser until Save current is used.", false);
       }
 
       function clearSaved() {
         if (!confirm("Clear the current observation on this device? Saved named observations will not be deleted.")) return;
         try { localStorage.removeItem(storageKey); } catch (error) {}
         resetCurrentForm();
-        addRecordRow();
+        activeObservationName = "";
+        addRecordRow(null, false);
         updateAll();
+        setSaveStatus("Current observation cleared from this browser. Saved observations were retained.", false);
+      }
+
+      function clearAllBrowserData() {
+        if (!confirm("Clear the current observation and every saved observation from this browser? Download a backup first if you need to keep them.")) return;
+        try {
+          localStorage.removeItem(storageKey);
+          localStorage.removeItem(savedListKey);
+        } catch (error) {
+          setSaveStatus("Browser data could not be cleared.", true);
+          return;
+        }
+        masterFileHandle = null;
+        activeObservationName = "";
+        resetCurrentForm();
+        addRecordRow(null, false);
+        populateSavedObservationSelect();
+        updateAll();
+        setSaveStatus("All observation data was cleared from this browser. Previously downloaded files were not changed.", false);
       }
 
       function initialise() {
@@ -2781,26 +2906,44 @@
         setupOptionalSections();
         populateSavedObservationSelect();
         document.querySelectorAll("[data-save]").forEach(function (field) {
+          if (field.closest("#studentGrid")) return;
           field.addEventListener("input", function () { updateAll(); saveState(); });
         });
         document.addEventListener("click", function (event) {
           if (!event.target.closest(".statement-picker")) closeOtherPickers(null);
         });
-        byId("addRecordRowBtn").addEventListener("click", function () { addRecordRow(); saveState(); });
+        byId("addRecordRowBtn").addEventListener("click", function () { addRecordRow(null, true); saveState(); });
+        byId("addStudentVoiceBtn").addEventListener("click", addNextStudentCard);
         byId("printBtn").addEventListener("click", function () {
           document.title = getSuggestedDocumentTitle();
           buildPrintableReport();
           window.print();
         });
         byId("clearSavedBtn").addEventListener("click", clearSaved);
+        byId("clearAllBrowserBtn").addEventListener("click", clearAllBrowserData);
         byId("newObservationBtn").addEventListener("click", addNewObservation);
         byId("saveMasterFileBtn").addEventListener("click", function () {
-          saveMasterFile().catch(function () { exportMasterFileBackup(); });
+          saveMasterFile().catch(function (error) {
+            if (error && error.name === "AbortError") {
+              setSaveStatus("Save cancelled. Current work remains stored in this browser.", false);
+              return;
+            }
+            setSaveStatus("The selected file could not be updated. A download will be attempted instead.", true);
+            exportMasterFileBackup();
+          });
         });
         byId("loadObservationBtn").addEventListener("click", loadNamedObservation);
         byId("deleteObservationBtn").addEventListener("click", deleteNamedObservation);
+        byId("savedObservationSelect").addEventListener("change", updateSavedObservationButtons);
         byId("openMasterFileBtn").addEventListener("click", function () {
-          openMasterFile().catch(function () { byId("importMasterFileInput").click(); });
+          openMasterFile().catch(function (error) {
+            if (error && error.name === "AbortError") {
+              setSaveStatus("Open cancelled. Current work was not changed.", false);
+              return;
+            }
+            setSaveStatus("The observation file could not be opened.", true);
+            alert(error && error.message ? error.message : "The observation file could not be opened.");
+          });
         });
         byId("importMasterFileInput").addEventListener("change", function () {
           importMasterFileFromInput(this.files && this.files[0]);
