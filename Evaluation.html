@@ -102,14 +102,14 @@ button:disabled{cursor:not-allowed;opacity:.6}
 
   /* Supported improvement plan — dedicated shared print record */
   body.print-improvement #improvementView{display:block!important}
-  body.print-improvement #evaluateView,body.print-improvement #paperView,body.print-improvement #historyView,body.print-improvement #dataView,body.print-improvement #roleMapView{display:none!important}
+  body.print-improvement #evaluateView,body.print-improvement #quickReviewView,body.print-improvement #paperView,body.print-improvement #historyView,body.print-improvement #dataView,body.print-improvement #roleMapView{display:none!important}
   body.print-improvement #improvementView .improvement-screen{display:none!important}
   body.print-improvement #improvementPrintArea{display:block!important}
   body.print-improvement .imp-print-copy{display:block!important}
   body.print-improvement .imp-print-copy+.imp-print-copy{break-before:page!important;page-break-before:always!important}
 
   /* Blank paper responsibility forms */
-  body.print-paper #paperView{display:block!important}body.print-paper #evaluateView{display:none!important}body.print-paper .paper-controls-panel{display:none!important}body.print-paper .paper-preview-shell{display:block!important;margin:0!important;padding:0!important;background:#fff!important;border:0!important;border-radius:0!important;overflow:visible!important}body.print-paper .paper-document{width:auto!important;min-height:0!important;margin:0!important;padding:0!important;box-shadow:none!important;break-after:page;page-break-after:always}body.print-paper .paper-document:last-child{break-after:auto;page-break-after:auto}body.print-paper .paper-document-start{break-before:page;page-break-before:always}body.print-paper .paper-document:first-child{break-before:auto;page-break-before:auto}
+  body.print-paper #paperView{display:block!important}body.print-paper #evaluateView,body.print-paper #quickReviewView,body.print-paper #improvementView{display:none!important}body.print-paper .paper-controls-panel{display:none!important}body.print-paper .paper-preview-shell{display:block!important;margin:0!important;padding:0!important;background:#fff!important;border:0!important;border-radius:0!important;overflow:visible!important}body.print-paper .paper-document{width:auto!important;min-height:0!important;margin:0!important;padding:0!important;box-shadow:none!important;break-after:page;page-break-after:always}body.print-paper .paper-document:last-child{break-after:auto;page-break-after:auto}body.print-paper .paper-document-start{break-before:page;page-break-before:always}body.print-paper .paper-document:first-child{break-before:auto;page-break-before:auto}
   body.print-paper .paper-columns.columns-1{display:block!important}body.print-paper .paper-columns.columns-2{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:0!important;align-items:start!important}body.print-paper .paper-columns.columns-2 .paper-column:first-child{padding-right:3.5mm!important}body.print-paper .paper-columns.columns-2 .paper-column:last-child{padding-left:3.5mm!important;border-left:.25mm solid #cbd3d8!important}body.print-paper .paper-header,body.print-paper .paper-page-compact-head,body.print-paper .paper-overview-grid,body.print-paper .paper-scale-strip,body.print-paper .paper-calculation-note{break-inside:avoid;page-break-inside:avoid}body.print-paper .paper-section,body.print-paper .paper-overall{display:block!important;width:100%!important;break-inside:avoid!important;page-break-inside:avoid!important}body.print-paper .paper-section-head{break-after:avoid!important;page-break-after:avoid!important}body.print-paper .paper-item,body.print-paper .paper-section-result,body.print-paper .paper-note-area,body.print-paper .paper-print-footer{break-inside:avoid!important;page-break-inside:avoid!important}
 }
 
@@ -134,14 +134,34 @@ button:disabled{cursor:not-allowed;opacity:.6}
 @media(max-width:1180px){.focus-bank-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.compact-edit{grid-template-columns:1fr 1fr}.compact-edit .wide{grid-column:1/-1}}
 @media(max-width:720px){.focus-bank-grid{grid-template-columns:1fr}.compact-edit{grid-template-columns:1fr}.compact-edit .wide{grid-column:auto}.focus-count{float:none;margin-left:6px}.compact-meta{grid-template-columns:1fr}.review-grid{grid-template-columns:1fr}.review-grid .wide{grid-column:auto}}
 
+
+
+/* ===== Quick Review dashboard ===== */
+.quick-review-screen{min-height:520px}.quick-review-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}.quick-review-head h2{margin:0;color:var(--navy);font-size:22px}.quick-review-head p{margin:3px 0 0;color:var(--muted);font-size:12px}.quick-entry{margin:12px 0;padding:12px;border:1px solid #b8d2d3;border-radius:12px;background:#f7fbfb}.quick-entry-grid{display:grid;grid-template-columns:150px minmax(220px,1fr) minmax(260px,2fr) auto;gap:8px;align-items:end}.quick-entry .field{min-width:0}.quick-entry input[type="text"]{width:100%}.quick-save-actions{display:flex;gap:7px;align-items:stretch;flex-wrap:wrap}.quick-positive-btn,.quick-negative-btn{border-radius:9px;padding:9px 12px;font-weight:850;border:1px solid}.quick-positive-btn{background:#edf8f3;color:var(--green);border-color:#add2bf}.quick-positive-btn:hover{background:#e2f3ea}.quick-negative-btn{background:#fff4f4;color:var(--red);border-color:#e4bcbc}.quick-negative-btn:hover{background:#feeaea}.quick-hint{margin-top:6px;color:var(--muted);font-size:10.5px}
+.quick-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}.quick-stat{border:1px solid var(--line);border-radius:10px;background:#fff;padding:10px}.quick-stat .label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:800}.quick-stat strong{display:block;margin-top:2px;font-size:21px;line-height:1.1}.quick-stat small{display:block;color:var(--muted);font-size:10.5px;margin-top:2px}.quick-stat.pos strong{color:var(--green)}.quick-stat.neg strong{color:var(--red)}
+.quick-overview-grid{display:grid;grid-template-columns:minmax(300px,.8fr) minmax(400px,1.2fr);gap:10px;margin:10px 0}.quick-chart-card{border:1px solid var(--line);border-radius:11px;background:#fff;padding:11px}.quick-chart-card h3{font-size:13px;color:var(--navy);margin:0 0 8px}.quick-split{height:28px;border-radius:999px;overflow:hidden;background:#eef2f4;display:flex;border:1px solid #d6dfe4}.quick-split-pos,.quick-split-neg{height:100%;display:flex;align-items:center;justify-content:center;min-width:0;font-size:10px;font-weight:850;white-space:nowrap;overflow:hidden}.quick-split-pos{background:#dff0e7;color:#245f44}.quick-split-neg{background:#f8dfdf;color:#8b3030}.quick-split-empty{height:28px;border-radius:999px;background:#f3f5f6;border:1px dashed #c8d1d6;display:grid;place-items:center;color:var(--muted);font-size:10.5px}.quick-legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:7px;font-size:10.5px;color:var(--muted)}.quick-dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px;vertical-align:-1px}.quick-dot.pos{background:#8dbfa5}.quick-dot.neg{background:#d79a9a}
+.quick-focus-chart{display:grid;gap:7px}.quick-focus-row{display:grid;grid-template-columns:minmax(120px,1fr) minmax(170px,1.5fr) auto;gap:8px;align-items:center;font-size:11px}.quick-focus-label{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.quick-bar-pair{display:grid;gap:3px}.quick-bar-track{height:7px;border-radius:999px;background:#edf1f3;overflow:hidden}.quick-bar{height:100%;border-radius:999px;min-width:0}.quick-bar.pos{background:#8dbfa5}.quick-bar.neg{background:#d79a9a}.quick-focus-counts{font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--muted);font-size:10.5px}.quick-focus-counts b.pos{color:var(--green)}.quick-focus-counts b.neg{color:var(--red)}
+.quick-review-toolbar{display:flex;align-items:end;gap:8px;flex-wrap:wrap;margin:9px 0}.quick-review-toolbar .toolbar-actions{margin-left:auto}.quick-history .sentiment-badge{display:inline-flex;border-radius:999px;padding:3px 7px;font-size:10px;font-weight:850;white-space:nowrap}.sentiment-badge.positive{background:#edf8f3;color:var(--green);border:1px solid #b8d8c7}.sentiment-badge.negative{background:#fff2f2;color:var(--red);border:1px solid #e6c2c2}.quick-note-cell{white-space:pre-wrap;min-width:240px}.quick-record-note{font-size:10.5px;color:var(--muted);margin:7px 0 0}.quick-print-only{display:none}.quick-print-copy+.quick-print-copy{break-before:page;page-break-before:always}.quick-print-copy{font-family:"Segoe UI",Arial,sans-serif;color:#172027}.quick-print-head{display:flex;justify-content:space-between;gap:8mm;border-bottom:2px solid var(--navy);padding-bottom:3mm;margin-bottom:3mm}.quick-print-head h1{font-size:16pt;color:var(--navy);margin:0}.quick-print-head p{font-size:7.5pt;color:#63707a;margin:1mm 0 0}.quick-print-label{border:1px solid #91a8b5;border-radius:999px;padding:1.2mm 3mm;height:max-content;font-size:7pt;color:var(--teal);font-weight:850;text-transform:uppercase}.quick-print-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:2mm;margin:3mm 0}.quick-print-stat{border:.25mm solid #bdc8ce;border-radius:1.5mm;padding:2mm}.quick-print-stat b{display:block;font-size:6pt;text-transform:uppercase;color:#68757d}.quick-print-stat span{font-size:13pt;font-weight:850}.quick-print-chart{margin:3mm 0;padding:2.5mm;border:.25mm solid #bdc8ce;border-radius:1.5mm}.quick-print-chart h2{font-size:9pt;color:var(--navy);margin:0 0 2mm}.quick-print-table{width:100%;font-size:7pt;border-collapse:collapse}.quick-print-table th,.quick-print-table td{padding:1.6mm;border-bottom:.2mm solid #d3dadd;vertical-align:top}.quick-print-table th{font-size:6pt;background:#f3f6f7;color:#5e6b74}.quick-print-signatures{display:grid;grid-template-columns:1fr 1fr;gap:10mm;margin-top:8mm}.quick-print-signatures div{border-top:.3mm solid #5c6870;padding-top:1mm;font-size:7pt}.quick-print-footer{margin-top:4mm;padding-top:1.5mm;border-top:.2mm solid #cbd3d8;font-size:6pt;color:#6a757d}.quick-print-disclaimer{font-size:6.3pt;color:#69757d;margin-top:2mm}
+@media(max-width:1050px){.quick-entry-grid{grid-template-columns:1fr 1fr}.quick-entry-grid .quick-note-field{grid-column:1/-1}.quick-save-actions{grid-column:1/-1}.quick-overview-grid{grid-template-columns:1fr}.quick-summary{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){.quick-entry-grid{grid-template-columns:1fr}.quick-entry-grid .quick-note-field,.quick-save-actions{grid-column:auto}.quick-summary{grid-template-columns:1fr 1fr}.quick-focus-row{grid-template-columns:1fr}.quick-focus-counts{justify-self:start}}
+@media print{
+  body.print-quick-review #quickReviewView{display:block!important}
+  body.print-quick-review #evaluateView,body.print-quick-review #paperView,body.print-quick-review #improvementView,body.print-quick-review #historyView,body.print-quick-review #dataView,body.print-quick-review #roleMapView{display:none!important}
+  body.print-quick-review #quickReviewView .quick-review-screen{display:none!important}
+  body.print-quick-review #quickReviewPrintArea{display:block!important}
+  body.print-quick-review .quick-print-copy{display:block!important}
+  body.print-quick-review .quick-print-copy+.quick-print-copy{break-before:page!important;page-break-before:always!important}
+}
+
 </style>
 </head>
 <body>
 <a class="skip-link" href="#mainContent">Skip to main content</a>
 <header class="topbar"><div class="topbar-inner">
-  <div class="brand"><div class="brand-mark" aria-hidden="true">PHS</div><div><h1>Staff Progress Evaluation</h1><small>Digital evaluation · supported improvement plans · paper responsibility forms</small></div></div>
+  <div class="brand"><div class="brand-mark" aria-hidden="true">PHS</div><div><h1>Staff Progress Evaluation</h1><small>Digital evaluation · quick review dashboard · supported improvement plans</small></div></div>
   <nav class="tabs" role="tablist" aria-label="Evaluation tool sections">
     <button type="button" class="tab" role="tab" id="tab-evaluateView" aria-controls="evaluateView" data-action="switch-view" data-view="evaluateView">Evaluate</button>
+    <button type="button" class="tab" role="tab" id="tab-quickReviewView" aria-controls="quickReviewView" data-action="switch-view" data-view="quickReviewView">Quick Review</button>
     <button type="button" class="tab" role="tab" id="tab-paperView" aria-controls="paperView" data-action="switch-view" data-view="paperView">Paper Forms</button>
     <button type="button" class="tab" role="tab" id="tab-improvementView" aria-controls="improvementView" data-action="switch-view" data-view="improvementView">Improvement Plan</button>
     <button type="button" class="tab" role="tab" id="tab-historyView" aria-controls="historyView" data-action="switch-view" data-view="historyView">History</button>
@@ -159,6 +179,7 @@ button:disabled{cursor:not-allowed;opacity:.6}
   </aside>
   <main class="main" id="mainContent" tabindex="-1">
     <section id="evaluateView" class="view" role="tabpanel" aria-labelledby="tab-evaluateView"></section>
+    <section id="quickReviewView" class="view" role="tabpanel" aria-labelledby="tab-quickReviewView"></section>
     <section id="paperView" class="view" role="tabpanel" aria-labelledby="tab-paperView"></section>
     <section id="improvementView" class="view" role="tabpanel" aria-labelledby="tab-improvementView"></section>
     <section id="historyView" class="view" role="tabpanel" aria-labelledby="tab-historyView"></section>
@@ -250,41 +271,15 @@ const IMPROVEMENT_AREA_TEMPLATES=[
   {
     "id": "timekeeping",
     "category": "Professional basics",
-    "title": "Timekeeping and readiness",
-    "expectation": "Be on time and ready for classes, duties and agreed commitments.",
-    "evidence": "Punctuality records; observation; duty/meeting attendance.",
-    "support": "Clarify times and expectations; calendar/check-in if needed.",
-    "phs": "PHS teacher duty: punctual, reliable and ready for classes, duties and commitments.",
-    "standards2017": "Professional relationships.",
-    "standards2026": "S8 Engage in productive professional relationships.",
-    "code": "Teaching Profession: professional behaviour and integrity.",
-    "basis": "PHS duty · 2026 S8"
-  },
-  {
-    "id": "meetings",
-    "category": "Professional basics",
-    "title": "Meetings, briefings and PLD attendance",
-    "expectation": "Attend required meetings, briefings, PLD/training and school activities on time.",
-    "evidence": "Attendance records; meeting/PLD participation.",
-    "support": "Clarify required commitments and calendar dates.",
-    "phs": "PHS teacher duty: attend required meetings, briefings, PLD/training and school activities.",
+    "title": "Punctuality, attendance and early communication",
+    "expectation": "Be on time and ready for classes, duties, meetings, briefings, PLD and agreed commitments. Notify the right person early if absent or delayed.",
+    "evidence": "Punctuality/attendance records; duty, meeting or PLD participation; relevant messages.",
+    "support": "Clarify required times and commitments, who to notify, and by when; calendar/check-in if needed.",
+    "phs": "PHS teacher duty: be punctual, reliable and ready; attend required commitments; communicate absences or delays early.",
     "standards2017": "Professional learning; Professional relationships.",
-    "standards2026": "S7 Engage in professional learning; S8 Professional relationships.",
-    "code": "Teaching Profession: professional behaviour.",
-    "basis": "PHS duty · 2026 S7/S8"
-  },
-  {
-    "id": "absence_communication",
-    "category": "Professional basics",
-    "title": "Absences, delays and early communication",
-    "expectation": "Communicate absences, delays, concerns and important information early and professionally.",
-    "evidence": "Emails/messages; absence records; meeting notes.",
-    "support": "Clarify who to notify, how and by when.",
-    "phs": "PHS teacher duty: communicate absences, delays, concerns and important information early.",
-    "standards2017": "Professional relationships.",
-    "standards2026": "S8 Engage in productive professional relationships.",
+    "standards2026": "S7 Engage in professional learning; S8 Engage in productive professional relationships.",
     "code": "Teaching Profession: professional behaviour and integrity.",
-    "basis": "PHS duty · 2026 S8"
+    "basis": "PHS duty · 2026 S7/S8"
   },
   {
     "id": "administration",
@@ -300,30 +295,17 @@ const IMPROVEMENT_AREA_TEMPLATES=[
     "basis": "PHS duty · 2026 S8"
   },
   {
-    "id": "feedback",
-    "category": "Professional basics",
-    "title": "Responding to professional feedback",
-    "expectation": "Listen to feedback, clarify next steps, try agreed actions and review the impact.",
-    "evidence": "Meeting notes; observation; examples of changed practice.",
-    "support": "One or two clear actions; modelling/coaching; short review cycle.",
-    "phs": "PHS teacher duty: seek feedback/support, act on it and contribute positively to professional culture.",
-    "standards2017": "Professional learning; Professional relationships.",
-    "standards2026": "S7 Engage in professional learning; S8 Professional relationships.",
-    "code": "Teaching Profession: collaborative professional practice.",
-    "basis": "PHS duty · 2026 S7/S8"
-  },
-  {
-    "id": "preparedness",
-    "category": "PHS BASICS / BR4L",
-    "title": "Prepared for learning",
-    "expectation": "Have required equipment/resources ready and purposeful work available at the start of learning.",
-    "evidence": "Lesson starts; observation; resources/planning.",
-    "support": "Simple start-of-lesson checklist; shared resources.",
-    "phs": "PHS BASICS: teachers have equipment available and work ready.",
+    "id": "planning",
+    "category": "Teaching and curriculum",
+    "title": "Planning, lesson structure and readiness",
+    "expectation": "Plan coherent lessons with clear learning expectations, suitable challenge and useful structure, with required resources/equipment and purposeful work ready.",
+    "evidence": "Plans; lesson starts; observation; learning intentions/success criteria; resources; student work.",
+    "support": "Joint planning; model lesson; simple readiness checklist; shared resources.",
+    "phs": "PHS teacher duty/BR4L/BASICS: purposeful, structured lessons with learning ready to begin.",
     "standards2017": "Design for learning; Teaching.",
     "standards2026": "S4 Plan for and implement effective teaching and learning.",
     "code": "Learners; Teaching Profession.",
-    "basis": "PHS BASICS · 2026 S4"
+    "basis": "PHS BASICS/duty · 2026 S4"
   },
   {
     "id": "classroom_routines",
@@ -341,28 +323,15 @@ const IMPROVEMENT_AREA_TEMPLATES=[
   {
     "id": "relationships",
     "category": "PHS BASICS / BR4L",
-    "title": "Respectful relationships and language",
-    "expectation": "Use calm, kind and respectful language; listen; protect student mana; avoid shouting or dismissive interactions.",
-    "evidence": "Observation; factual incident records; restorative follow-up.",
-    "support": "BR4L coaching; model/rehearse calm language; observe a colleague.",
-    "phs": "PHS BASICS/BR4L: be calm and respectful, use kind language, listen and value relationships.",
+    "title": "Respectful relationships and behaviour responses",
+    "expectation": "Use calm, kind and respectful language; correct behaviour briefly and appropriately; protect student mana; repair harm and rebuild a safe working relationship when needed.",
+    "evidence": "Observation; factual incident/referral records; restorative or re-entry follow-up.",
+    "support": "BR4L coaching; rehearse calm correction; restorative support; observe a colleague.",
+    "phs": "PHS BR4L: build, maintain and repair relationships; be calm and respectful; connect before correct.",
     "standards2017": "Professional relationships; Learning-focused culture.",
-    "standards2026": "S5 Supportive/safe environments; S8 Professional relationships.",
+    "standards2026": "S5 Supportive/safe environments and positive behaviour; S8 Professional relationships.",
     "code": "Learners: wellbeing, safety and professional relationships.",
     "basis": "PHS BR4L · 2026 S5/S8"
-  },
-  {
-    "id": "behaviour_response",
-    "category": "PHS BASICS / BR4L",
-    "title": "Calm behaviour correction",
-    "expectation": "Correct behaviour briefly and calmly, focus on the behaviour, and use private/restorative responses where appropriate.",
-    "evidence": "Observation; incident/restorative records.",
-    "support": "Rehearse BR4L scripts; coaching; observation feedback.",
-    "phs": "PHS BR4L: be brief, be calm, connect before correct; do not shout across the room.",
-    "standards2017": "Learning-focused culture; Professional relationships.",
-    "standards2026": "S5 Manage the learning setting and promote positive behaviour.",
-    "code": "Learners: wellbeing and protection from harm.",
-    "basis": "PHS BR4L · 2026 S5"
   },
   {
     "id": "behaviour_process",
@@ -375,19 +344,6 @@ const IMPROVEMENT_AREA_TEMPLATES=[
     "standards2017": "Professional relationships; Learning-focused culture.",
     "standards2026": "S5 Positive behaviour; S8 Cooperation/communication.",
     "code": "Learners; Teaching Profession.",
-    "basis": "PHS BR4L · 2026 S5/S8"
-  },
-  {
-    "id": "restorative_repair",
-    "category": "PHS BASICS / BR4L",
-    "title": "Repairing student relationships",
-    "expectation": "Use an appropriate restorative process to repair harm and rebuild a safe working relationship.",
-    "evidence": "Restorative record; agreed re-entry steps; follow-up observation.",
-    "support": "Facilitated restorative meeting; coaching; follow-up check.",
-    "phs": "PHS BR4L: build, maintain and repair relationships.",
-    "standards2017": "Professional relationships; Learning-focused culture.",
-    "standards2026": "S5 Supportive/safe environments; S8 Professional relationships.",
-    "code": "Learners: ethical and professional relationships.",
     "basis": "PHS BR4L · 2026 S5/S8"
   },
   {
@@ -419,67 +375,28 @@ const IMPROVEMENT_AREA_TEMPLATES=[
   {
     "id": "content_curriculum",
     "category": "Teaching and curriculum",
-    "title": "Subject knowledge and curriculum",
-    "expectation": "Maintain sound subject/content knowledge and teach the required curriculum effectively.",
-    "evidence": "Planning; observation; curriculum/course materials; student work.",
-    "support": "Subject mentoring; curriculum guidance; PLD/resources.",
-    "phs": "PHS teacher role: provide effective teaching for assigned classes.",
+    "title": "Subject knowledge and agreed programme",
+    "expectation": "Maintain sound subject/content knowledge and teach the required curriculum and agreed course programme effectively. Discuss significant changes to content, sequence or assessment with the curriculum leader.",
+    "evidence": "Planning; observation; work plan/course materials; student work; LMS/resources.",
+    "support": "Subject mentoring; curriculum guidance; joint planning; clarify non-negotiables and teacher flexibility.",
+    "phs": "PHS teacher role: provide effective teaching for assigned classes and use appropriate curriculum leadership processes.",
     "standards2017": "Design for learning; Teaching.",
-    "standards2026": "S2 Know the content and how to teach it.",
-    "code": "Teaching Profession: high-quality teaching.",
-    "basis": "PHS duty · 2026 S2"
-  },
-  {
-    "id": "programme",
-    "category": "Teaching and curriculum",
-    "title": "Agreed programme / work plan",
-    "expectation": "Teach the agreed course programme; discuss material changes to content, sequence or assessment with the curriculum leader.",
-    "evidence": "Work plan; planning; student work; LMS/resources.",
-    "support": "Joint planning; clarify non-negotiables and teacher flexibility.",
-    "phs": "PHS teacher role: purposeful teaching and appropriate curriculum leadership escalation.",
-    "standards2017": "Design for learning; Teaching.",
-    "standards2026": "S2 Curriculum knowledge; S4 Plan and implement effective teaching.",
-    "code": "Teaching Profession: effective teaching and integrity.",
+    "standards2026": "S2 Know the content and how to teach it; S4 Plan and implement effective teaching.",
+    "code": "Teaching Profession: high-quality teaching and integrity.",
     "basis": "PHS duty · 2026 S2/S4"
-  },
-  {
-    "id": "planning",
-    "category": "Teaching and curriculum",
-    "title": "Purposeful planning and lesson structure",
-    "expectation": "Plan coherent lessons with clear learning expectations, suitable challenge and useful structure.",
-    "evidence": "Plans; observation; learning intentions/success criteria; student work.",
-    "support": "Joint planning; model lesson; planning template.",
-    "phs": "PHS teacher duty/BR4L: purposeful lessons, structure, learning intentions and success criteria.",
-    "standards2017": "Design for learning; Teaching.",
-    "standards2026": "S4 Plan for and implement effective teaching and learning.",
-    "code": "Learners; Teaching Profession.",
-    "basis": "PHS duty · 2026 S4"
   },
   {
     "id": "adaptive_teaching",
     "category": "Teaching and curriculum",
-    "title": "Responsive and adaptive teaching",
-    "expectation": "Use a range of teaching strategies and adjust them when learners are not learning as intended.",
-    "evidence": "Observation; planning changes; student work/progress.",
-    "support": "Coaching; modelling; check-for-understanding strategies.",
-    "phs": "PHS teacher duty: use a range of strategies and adjust teaching to learner needs and evidence.",
-    "standards2017": "Teaching; Design for learning.",
-    "standards2026": "S4 Use and adapt teaching strategies.",
-    "code": "Learners: meet learning needs.",
-    "basis": "PHS duty · 2026 S4"
-  },
-  {
-    "id": "learner_needs",
-    "category": "Teaching and curriculum",
-    "title": "Know learners and meet diverse needs",
-    "expectation": "Know learners’ strengths, needs, cultures, identities and interests and plan appropriate support or extension.",
-    "evidence": "Planning; observation; learner information; support/referral records.",
-    "support": "Review learner information; specialist support; targeted planning.",
-    "phs": "PHS teacher duty: inclusive, culturally responsive teaching and adjustment to learner needs.",
+    "title": "Know learners and adapt teaching",
+    "expectation": "Know learners’ strengths, needs, cultures, identities and interests; use a range of strategies and adjust support or challenge when learners are not learning as intended.",
+    "evidence": "Observation; planning changes; learner information; student work/progress; support/referral records.",
+    "support": "Review learner information; targeted planning; modelling/coaching; specialist support where needed.",
+    "phs": "PHS teacher duty: inclusive, culturally responsive teaching that adjusts to learner needs and evidence.",
     "standards2017": "Design for learning; Teaching.",
-    "standards2026": "S3 Know the learner and the learning process.",
-    "code": "Learners: wellbeing and learning.",
-    "basis": "Teaching Council · 2026 S3"
+    "standards2026": "S3 Know the learner and the learning process; S4 Use and adapt teaching strategies.",
+    "code": "Learners: meet learning needs and promote learning.",
+    "basis": "PHS duty · 2026 S3/S4"
   },
   {
     "id": "learner_agency",
@@ -560,17 +477,17 @@ const IMPROVEMENT_AREA_TEMPLATES=[
     "basis": "PHS duty · 2026 S8"
   },
   {
-    "id": "professional_learning",
+    "id": "feedback",
     "category": "Professional engagement",
-    "title": "Professional learning and reflection",
-    "expectation": "Reflect on practice, use evidence, participate in relevant professional learning and apply useful learning in practice.",
-    "evidence": "Reflection; PGC/PLD records; observation; changed practice.",
-    "support": "Targeted PLD; coaching; agreed inquiry/action.",
-    "phs": "PHS teacher duty: reflect on impact, seek support and make practical improvements.",
-    "standards2017": "Professional learning.",
-    "standards2026": "S7 Engage in professional learning.",
-    "code": "Teaching Profession: ongoing professional learning.",
-    "basis": "PHS duty · 2026 S7"
+    "title": "Professional learning, reflection and feedback",
+    "expectation": "Participate in relevant professional learning, reflect on evidence and impact, respond constructively to feedback, and apply and review agreed actions.",
+    "evidence": "PGC/PLD records; meeting notes; observation; examples of changed practice.",
+    "support": "One or two clear actions; targeted PLD; coaching/modelling; short review cycle.",
+    "phs": "PHS teacher duty: reflect on impact, seek and act on feedback/support, and make practical improvements.",
+    "standards2017": "Professional learning; Professional relationships.",
+    "standards2026": "S7 Engage in professional learning; S8 Professional relationships.",
+    "code": "Teaching Profession: ongoing, collaborative professional learning.",
+    "basis": "PHS duty · 2026 S7/S8"
   },
   {
     "id": "wider_contribution",
@@ -588,28 +505,15 @@ const IMPROVEMENT_AREA_TEMPLATES=[
   {
     "id": "te_tiriti",
     "category": "Teaching Council specific",
-    "title": "Te Tiriti o Waitangi partnership",
-    "expectation": "Demonstrate commitment to tangata whenuatanga and Te Tiriti o Waitangi partnership in teaching practice.",
-    "evidence": "Planning; observation; learner/whānau engagement; reflection.",
-    "support": "Relevant PLD; curriculum support; local context/resources.",
-    "phs": "Supports PHS values and culturally responsive practice.",
+    "title": "Te Tiriti, te reo and tikanga Māori",
+    "expectation": "Demonstrate commitment to tangata whenuatanga and Te Tiriti o Waitangi partnership, including appropriate use and development of te reo and tikanga Māori to support learning and engagement.",
+    "evidence": "Planning/resources; observation; learner/whānau engagement; reflection.",
+    "support": "Relevant PLD; modelling; curriculum support; local context/resources; agreed small practice goals.",
+    "phs": "Supports PHS values, Ako and culturally responsive relationships and practice.",
     "standards2017": "Te Tiriti o Waitangi partnership.",
-    "standards2026": "S1 Te Tiriti o Waitangi partnership.",
+    "standards2026": "S1 Te Tiriti o Waitangi partnership, including focus area 1.4 te reo and tikanga Māori.",
     "code": "Learners; Families and Whānau; Society.",
-    "basis": "Teaching Council · 2026 S1"
-  },
-  {
-    "id": "te_reo_tikanga",
-    "category": "Teaching Council specific",
-    "title": "Te reo and tikanga Māori",
-    "expectation": "Practise and develop appropriate use of te reo and tikanga Māori to support learning and engagement.",
-    "evidence": "Observation; planning/resources; reflection; learner/whānau engagement.",
-    "support": "PLD; modelling; agreed small practice goals.",
-    "phs": "Supports PHS values, Ako and culturally responsive relationships.",
-    "standards2017": "Te Tiriti o Waitangi partnership.",
-    "standards2026": "S1 focus area 1.4: te reo and tikanga Māori.",
-    "code": "Learners; Families and Whānau.",
-    "basis": "Teaching Council · 2026 S1.4"
+    "basis": "Teaching Council · 2026 S1/S1.4"
   },
   {
     "id": "safety",
@@ -638,24 +542,41 @@ const IMPROVEMENT_AREA_TEMPLATES=[
     "basis": "Teaching Council · 2026 S5.4"
   }
 ];
+
+// Legacy focus IDs are mapped to the broader focus that now contains the same duty.
+// This keeps older browser data and JSON backups usable without reintroducing duplicate choices.
+const FOCUS_ID_ALIASES={
+  meetings:'timekeeping',
+  absence_communication:'timekeeping',
+  preparedness:'planning',
+  behaviour_response:'relationships',
+  restorative_repair:'relationships',
+  programme:'content_curriculum',
+  learner_needs:'adaptive_teaching',
+  professional_learning:'feedback',
+  te_reo_tikanga:'te_tiriti'
+};
+function canonicalFocusId(id){const key=safeText(id||'',180);return FOCUS_ID_ALIASES[key]||key}
+
 const FOCUS_BUNDLES={
-  relationships:{label:'Relationships & behaviour',ids:['relationships','classroom_routines','behaviour_response','behaviour_process','restorative_repair']},
-  assessment:{label:'Assessment & curriculum',ids:['assessment','programme','planning','learner_progress']},
-  professional:{label:'Professional practice',ids:['feedback','professional_communication','administration']},
-  mixed:{label:'Common mixed support set',ids:['relationships','behaviour_process','assessment','feedback','programme']}
+  relationships:{label:'Relationships & behaviour',ids:['relationships','classroom_routines','behaviour_process']},
+  assessment:{label:'Assessment & curriculum',ids:['assessment','content_curriculum','planning','learner_progress']},
+  professional:{label:'Professional practice',ids:['feedback','professional_communication','administration','timekeeping']},
+  mixed:{label:'Common mixed support set',ids:['relationships','behaviour_process','assessment','feedback','content_curriculum']}
 };
 
 const STORE_KEY='phsStaffProgressEvaluation_v1';
-const SCHEMA_VERSION=8;
-const APP_VERSION='2026.09-core-duties-v6-compact-focus-bank';
-const LIMITS={staff:2000,evaluations:20000,drafts:2000,plans:2000,reviews:20000,text:12000,importBytes:8*1024*1024};
-const VALID_VIEWS=new Set(['evaluateView','improvementView','paperView','historyView','dataView','roleMapView']);
-let storageOK=true,storageReadError='',state,selectedStaffId=null,activeEval=null,editingStaffId=null,openSectionIndex=0,activeView='evaluateView',modalReturnFocus=null,draftTimer=null,pendingFocus=null,paperPreviewTimer=null,activePrintMode='';
+const SCHEMA_VERSION=10;
+const APP_VERSION='2026.09-core-duties-v9-complete-backup';
+const BACKUP_VERSION=2;
+const LIMITS={staff:2000,evaluations:20000,drafts:2000,plans:2000,reviews:20000,quickReviews:50000,text:12000,importBytes:16*1024*1024};
+const VALID_VIEWS=new Set(['evaluateView','quickReviewView','improvementView','paperView','historyView','dataView','roleMapView']);
+let storageOK=true,storageReadError='',state,selectedStaffId=null,activeEval=null,editingStaffId=null,openSectionIndex=0,activeView='evaluateView',modalReturnFocus=null,draftTimer=null,pendingFocus=null,paperPreviewTimer=null,activePrintMode='',paperSettings=null;
 let historyFilters={staffId:'',roleId:''};
 
 function uid(prefix='id'){return prefix+'_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,9)}
 function cloneData(value){if(typeof structuredClone==='function')return structuredClone(value);return JSON.parse(JSON.stringify(value))}
-function today(){return new Date().toISOString().slice(0,10)}
+function today(){const d=new Date(),offset=d.getTimezoneOffset();return new Date(d.getTime()-offset*60000).toISOString().slice(0,10)}
 function safeText(value,max=LIMITS.text){return String(value??'').slice(0,max)}
 function escapeHtml(value){return safeText(value).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
 function escapeAttr(value){return escapeHtml(value)}
@@ -672,7 +593,9 @@ function scoreStageDisplay(mean){const s=stageByMean(mean);return s?`${Number(me
 function scoreStageCompact(mean){const s=stageByMean(mean);return s?`${Number(mean).toFixed(1)} ${s.label} ${s.emoji}`:'—'}
 function plural(count,one,many=one+'s'){return count===1?one:many}
 function validDate(value){return /^\d{4}-\d{2}-\d{2}$/.test(String(value||''))?String(value):today()}
-function emptyState(){return {schemaVersion:SCHEMA_VERSION,staff:[],evaluations:[],drafts:{},improvementPlans:[],settings:{autoAdvance:true,activeView:'evaluateView'}}}
+function defaultPaperSettings(){return {roleId:'03',staffId:'',type:'Self',evaluator:'',date:today(),layout:'auto',includeOverview:false,includeNotes:true,includeReflection:false}}
+function defaultHistoryFilters(){return {staffId:'',roleId:''}}
+function emptyState(){return {schemaVersion:SCHEMA_VERSION,staff:[],evaluations:[],drafts:{},improvementPlans:[],quickReviews:[],settings:{autoAdvance:true,activeView:'evaluateView',quickReviewRange:'90',quickReviewFocusId:'',paperSettings:defaultPaperSettings(),historyFilters:defaultHistoryFilters()}}}
 
 function sectionKeyVariants(roleId,sectionIndex){return [sectionIndex,String(sectionIndex),`${roleId}-section-${sectionIndex}`,`${roleId}::${sectionIndex}`]}
 function readLegacySectionValue(source,roleId,sectionIndex){if(!source)return null;for(const key of sectionKeyVariants(roleId,sectionIndex)){if(source[key]!=null)return source[key]}return null}
@@ -720,11 +643,11 @@ function normaliseEvaluation(raw,sourceVersion,staffIdMap,staffRecords,usedEvalI
   };
 }
 
-function templateById(id){return IMPROVEMENT_AREA_TEMPLATES.find(t=>t.id===id)||null}
+function templateById(id){const key=canonicalFocusId(id);return IMPROVEMENT_AREA_TEMPLATES.find(t=>t.id===key)||null}
 function normaliseImprovementPriority(raw,template=null){
   const source=template||raw||{},status=IMPROVEMENT_STATUS[raw?.status]?raw.status:'not_yet',fallbackId=template?.id||uid('focus'),id=safeId(raw?.id||fallbackId,'focus');
   return {
-    id,templateId:safeText(raw?.templateId||template?.id||'',100),category:safeText(raw?.category||source.category||'Custom',100),title:safeText(raw?.title||source.title||'Custom focus',180),
+    id,templateId:safeText(template?.id||raw?.templateId||'',100),category:safeText(raw?.category||source.category||'Custom',100),title:safeText(raw?.title||source.title||'Custom focus',180),
     expectation:safeText(raw?.expectation||source.expectation||''),evidence:safeText(raw?.evidence||source.evidence||''),support:safeText(raw?.support||source.support||''),
     phs:safeText(raw?.phs||source.phs||'Add the relevant PHS policy, role responsibility or local expectation.'),standards2017:safeText(raw?.standards2017||source.standards2017||'Identify the relevant 2017 Standard where applicable.'),standards2026:safeText(raw?.standards2026||source.standards2026||'Identify the relevant 2026 Standard/focus area where applicable.'),code:safeText(raw?.code||source.code||'Identify the relevant Code commitment where applicable.'),
     status,leaderEvidence:safeText(raw?.leaderEvidence||''),teacherResponse:safeText(raw?.teacherResponse||''),nextAction:safeText(raw?.nextAction||''),nextReviewDate:raw?.nextReviewDate?validDate(raw.nextReviewDate):''
@@ -738,6 +661,15 @@ function normaliseImprovementPlan(raw,staffIdMap,staffRecords,usedPlanIds){
   return {id,staffId:staff.id,leader:safeText(raw.leader||'',100),startDate:validDate(raw.startDate||today()),targetReviewDate:raw.targetReviewDate?validDate(raw.targetReviewDate):'',processStatus:IMPROVEMENT_PROCESS_STATUS[raw.processStatus]?raw.processStatus:'active',context:safeText(raw.context||''),purpose:safeText(raw.purpose||'Provide clear expectations, targeted support, evidence-based feedback and reasonable review points so the teacher has a fair opportunity to demonstrate sustained improvement.'),priorities,reviews,createdAt:safeText(raw.createdAt||new Date().toISOString(),50),updatedAt:safeText(raw.updatedAt||raw.createdAt||new Date().toISOString(),50)};
 }
 
+
+function normaliseQuickReview(raw,staffIdMap,staffRecords,usedIds){
+  if(!raw||typeof raw!=='object')return null;
+  const mappedStaffId=staffIdMap.get(String(raw.staffId??''))||String(raw.staffId??''),staff=staffRecords.find(s=>s.id===mappedStaffId);if(!staff)return null;
+  let id=safeId(raw.id,'quick');while(usedIds.has(id))id=uid('quick');usedIds.add(id);
+  const sentiment=raw.sentiment==='negative'?'negative':'positive',rawFocusId=safeText(raw.focusId||'',180),focusId=canonicalFocusId(rawFocusId),template=templateById(focusId),focusTitle=safeText((FOCUS_ID_ALIASES[rawFocusId]&&template?.title)||raw.focusTitle||template?.title||(focusId?'Focus area':'General / other'),180);
+  return {id,staffId:staff.id,date:validDate(raw.date||today()),sentiment,focusId,focusTitle,note:safeText(raw.note||''),createdAt:safeText(raw.createdAt||new Date().toISOString(),50)};
+}
+
 function migrateState(raw){
   const source=raw&&typeof raw==='object'?raw:{},sourceVersion=Math.max(1,Number(source.schemaVersion||1));
   const result=emptyState(),staffIdMap=new Map(),usedStaffIds=new Set();
@@ -749,7 +681,12 @@ function migrateState(raw){
   rawDrafts.forEach(item=>{const ev=normaliseEvaluation(item,sourceVersion,staffIdMap,result.staff,usedEvalIds);if(!ev)return;const key=draftKey(ev.staffId,ev.roleId),current=result.drafts[key];if(!current||(ev.updatedAt||'')>(current.updatedAt||''))result.drafts[key]=ev});
   const usedPlanIds=new Set(),rawPlans=Array.isArray(source.improvementPlans)?source.improvementPlans.slice(0,LIMITS.plans):[];
   rawPlans.forEach(item=>{const plan=normaliseImprovementPlan(item,staffIdMap,result.staff,usedPlanIds);if(plan)result.improvementPlans.push(plan)});
-  result.settings={autoAdvance:source.settings?.autoAdvance!==false,selectedStaffId:staffIdMap.get(String(source.settings?.selectedStaffId??''))||result.staff[0]?.id||null,activeView:VALID_VIEWS.has(source.settings?.activeView)?source.settings.activeView:'evaluateView',activeImprovementPlanId:safeText(source.settings?.activeImprovementPlanId||'',180)};
+  const usedQuickIds=new Set(),rawQuickReviews=Array.isArray(source.quickReviews)?source.quickReviews.slice(0,LIMITS.quickReviews):[];
+  rawQuickReviews.forEach(item=>{const review=normaliseQuickReview(item,staffIdMap,result.staff,usedQuickIds);if(review)result.quickReviews.push(review)});
+  const rawPaper=source.settings?.paperSettings&&typeof source.settings.paperSettings==='object'?source.settings.paperSettings:{},mappedPaperStaff=staffIdMap.get(String(rawPaper.staffId??''))||String(rawPaper.staffId??''),paperStaff=result.staff.find(s=>s.id===mappedPaperStaff)||null;
+  const paperRole=rawPaper.roleId==='all'?'all':(hasRole(rawPaper.roleId)?rawPaper.roleId:(paperStaff?.roleId||'03'));
+  const rawHistory=source.settings?.historyFilters&&typeof source.settings.historyFilters==='object'?source.settings.historyFilters:{},mappedHistoryStaff=staffIdMap.get(String(rawHistory.staffId??''))||String(rawHistory.staffId??'');
+  result.settings={autoAdvance:source.settings?.autoAdvance!==false,selectedStaffId:staffIdMap.get(String(source.settings?.selectedStaffId??''))||result.staff[0]?.id||null,activeView:VALID_VIEWS.has(source.settings?.activeView)?source.settings.activeView:'evaluateView',activeImprovementPlanId:safeText(source.settings?.activeImprovementPlanId||'',180),quickReviewRange:['30','90','all'].includes(source.settings?.quickReviewRange)?source.settings.quickReviewRange:'90',quickReviewFocusId:canonicalFocusId(safeText(source.settings?.quickReviewFocusId||'',180)),paperSettings:{roleId:paperRole,staffId:paperStaff?.id||'',type:safeText(rawPaper.type||'Self',60),evaluator:safeText(rawPaper.evaluator||'',100),date:validDate(rawPaper.date||today()),layout:['auto','one','two'].includes(rawPaper.layout)?rawPaper.layout:'auto',includeOverview:Boolean(rawPaper.includeOverview),includeNotes:rawPaper.includeNotes!==false,includeReflection:Boolean(rawPaper.includeReflection)},historyFilters:{staffId:result.staff.some(s=>s.id===mappedHistoryStaff)?mappedHistoryStaff:'',roleId:hasRole(rawHistory.roleId)?rawHistory.roleId:''}};
   result.schemaVersion=SCHEMA_VERSION;return result;
 }
 function loadState(){
@@ -757,15 +694,15 @@ function loadState(){
   catch(error){storageOK=false;storageReadError='Saved browser data could not be read. The page has opened with an empty in-memory workspace; restore a JSON backup before saving new data.';console.warn('PHS evaluation storage load failed:',error?.message||error);return emptyState()}
 }
 state=loadState();selectedStaffId=state.settings.selectedStaffId||state.staff[0]?.id||null;activeView=VALID_VIEWS.has(state.settings.activeView)?state.settings.activeView:'evaluateView';
-let paperSettings={roleId:staffById(selectedStaffId)?.roleId||'03',staffId:selectedStaffId||'',type:'Self',evaluator:'',date:today(),layout:'auto',includeOverview:false,includeNotes:true,includeReflection:false};
+paperSettings=cloneData(state.settings.paperSettings||defaultPaperSettings());historyFilters=cloneData(state.settings.historyFilters||defaultHistoryFilters());
 
 function toast(message,duration=2500){const element=document.getElementById('toast');element.textContent=message;element.classList.add('show');clearTimeout(element._timer);element._timer=setTimeout(()=>element.classList.remove('show'),duration)}
 function persist(){
-  state.schemaVersion=SCHEMA_VERSION;state.settings.selectedStaffId=selectedStaffId;state.settings.activeView=activeView;
+  state.schemaVersion=SCHEMA_VERSION;state.settings.selectedStaffId=selectedStaffId;state.settings.activeView=activeView;state.settings.paperSettings=cloneData(paperSettings||defaultPaperSettings());state.settings.historyFilters=cloneData(historyFilters||defaultHistoryFilters());
   try{localStorage.setItem(STORE_KEY,JSON.stringify(state));storageOK=true;storageReadError='';updateStorageMeter();return true}
   catch(error){storageOK=false;updateStorageMeter();toast('Browser storage is unavailable. Download a JSON backup before closing.',4200);console.warn('PHS evaluation storage save failed:',error?.message||error);return false}
 }
-function updateStorageMeter(){const element=document.getElementById('storageMeter');if(!element)return;let bytes=0;try{bytes=new Blob([localStorage.getItem(STORE_KEY)||'']).size}catch(_error){}element.innerHTML=storageOK?`${state.staff.length} staff · ${state.evaluations.length} ${plural(state.evaluations.length,'evaluation')} · ${state.improvementPlans.length} ${plural(state.improvementPlans.length,'improvement plan')} · ${(bytes/1024).toFixed(1)} KB local data`:`<span class="storage-warning">⚠ Browser storage unavailable</span>`}
+function updateStorageMeter(){const element=document.getElementById('storageMeter');if(!element)return;let bytes=0;try{bytes=new Blob([localStorage.getItem(STORE_KEY)||'']).size}catch(_error){}element.innerHTML=storageOK?`${state.staff.length} staff · ${state.evaluations.length} ${plural(state.evaluations.length,'evaluation')} · ${state.improvementPlans.length} ${plural(state.improvementPlans.length,'improvement plan')} · ${state.quickReviews.length} quick ${plural(state.quickReviews.length,'review')} · ${(bytes/1024).toFixed(1)} KB local data`:`<span class="storage-warning">⚠ Browser storage unavailable</span>`}
 function scheduleDraftSave(){clearTimeout(draftTimer);const label=document.getElementById('autosaveMsg');if(label)label.textContent='Saving draft…';draftTimer=setTimeout(()=>saveDraftNow(false),350)}
 function saveDraftNow(showToast=false){clearTimeout(draftTimer);if(!activeEval)return false;activeEval.updatedAt=new Date().toISOString();state.drafts[draftKey(activeEval.staffId,activeEval.roleId)]=cloneData(activeEval);const ok=persist();const label=document.getElementById('autosaveMsg');if(label)label.textContent=ok?'Draft saved in this browser':'Draft held in memory — export a backup';if(showToast)toast(ok?'Draft saved':'Draft held in memory; browser storage unavailable');return ok}
 
@@ -876,12 +813,46 @@ function evaluationPrintHeaderHtml(staff,role,stats){return `<header class="eval
 function renderPaperPreview(){const target=document.getElementById('paperPreview');if(!target)return;const roles=paperSettings.roleId==='all'?ROLE_DEFS:[roleById(paperSettings.roleId)],totalItems=roles.reduce((total,role)=>total+roleItemCount(role),0);target.innerHTML=roles.map((role,index)=>paperDocumentHtml(role,index)).join('');const summary=document.getElementById('paperPreviewSummary');if(summary)summary.textContent=`${roles.length} ${plural(roles.length,'role form')} · ${totalItems} responsibility ${plural(totalItems,'item')} · sections may continue across pages · ${paperSettings.layout==='auto'?'auto layout':paperSettings.layout==='two'?'two columns':'one column'}`}
 function schedulePaperPreview(){clearTimeout(paperPreviewTimer);paperPreviewTimer=setTimeout(renderPaperPreview,120)}
 function renderPaperView(){const root=document.getElementById('paperView');if(!hasRole(paperSettings.roleId)&&paperSettings.roleId!=='all')paperSettings.roleId=staffById(paperSettings.staffId)?.roleId||'03';if(paperSettings.staffId&&!staffById(paperSettings.staffId))paperSettings.staffId='';root.innerHTML=`<div class="panel paper-controls-panel"><div class="paper-builder-head"><div><h2>Printable staff responsibility forms</h2><p>Create a concise paper evaluation for one role, or print a complete review pack containing every role and all core responsibilities. Sections can flow across pages so the printout uses space efficiently.</p></div><button type="button" class="secondary" data-action="paper-use-current">Use current staff &amp; role</button></div><div class="paper-builder-grid"><label class="field"><span>Role form</span><select id="paperRole" data-field="paper-role"><option value="all">Complete review pack — all roles</option>${ROLE_DEFS.map(role=>`<option value="${role.id}">${escapeHtml(role.name)}</option>`).join('')}</select></label><label class="field"><span>Staff name on form</span><select id="paperStaff" data-field="paper-staff"><option value="">Blank — write by hand</option>${state.staff.map(staff=>`<option value="${escapeAttr(staff.id)}">${escapeHtml(staff.name)}</option>`).join('')}</select></label><label class="field"><span>Assessment type</span><select id="paperType" data-field="paper-type"><option>Self</option><option>Peer</option><option>Line manager / leader</option></select></label><label class="field"><span>Evaluator / peer</span><input id="paperEvaluator" data-field="paper-evaluator" maxlength="100" value="${escapeAttr(paperSettings.evaluator)}" placeholder="Blank or pre-fill"></label><label class="field"><span>Date</span><input type="date" id="paperDate" data-field="paper-date" value="${escapeAttr(paperSettings.date)}"></label><label class="field"><span>Page layout</span><select id="paperLayout" data-field="paper-layout"><option value="auto">Auto — use space efficiently</option><option value="one">One column</option><option value="two">Two columns</option></select></label></div><div class="paper-option-row"><label><input type="checkbox" data-field="paper-overview" ${paperSettings.includeOverview?'checked':''}> Add role purpose, oversight and boundary</label><label><input type="checkbox" data-field="paper-notes" ${paperSettings.includeNotes?'checked':''}> Include one notes area per section</label><label><input type="checkbox" data-field="paper-reflection" ${paperSettings.includeReflection?'checked':''}> Add a separate overall reflection page</label></div><div class="paper-actions"><button type="button" class="primary" data-action="print-paper">Print selected form / Save as PDF</button><button type="button" class="secondary" data-action="print-review-pack">Print complete review pack</button><span class="paper-preview-summary" id="paperPreviewSummary"></span></div><div class="paper-print-tip"><b>Recommended print settings:</b> A4 portrait, 100% scale and background graphics on. Responsibility rows stay together, but a section may continue onto the next page instead of leaving a large blank area. Each role in the complete review pack starts on a new page.</div></div><div class="paper-preview-shell" id="paperPreview" aria-label="Printable paper form preview"></div>`;document.getElementById('paperRole').value=paperSettings.roleId;document.getElementById('paperStaff').value=paperSettings.staffId;document.getElementById('paperType').value=paperSettings.type;document.getElementById('paperLayout').value=paperSettings.layout;renderPaperPreview()}
-function useCurrentForPaper(){const staff=staffById(selectedStaffId);if(staff){paperSettings.staffId=staff.id;paperSettings.roleId=activeEval?.roleId||staff.roleId;paperSettings.type=activeEval?.type||'Self';paperSettings.evaluator=activeEval?.evaluator||'';paperSettings.date=activeEval?.date||today()}switchView('paperView')}
-function clearPrintClasses(){document.body.classList.remove('print-paper','print-evaluation','print-evaluation-two-col','print-improvement');activePrintMode=''}
+function useCurrentForPaper(){const staff=staffById(selectedStaffId);if(staff){paperSettings.staffId=staff.id;paperSettings.roleId=activeEval?.roleId||staff.roleId;paperSettings.type=activeEval?.type||'Self';paperSettings.evaluator=activeEval?.evaluator||'';paperSettings.date=activeEval?.date||today();persist()}switchView('paperView')}
+function clearPrintClasses(){document.body.classList.remove('print-paper','print-evaluation','print-evaluation-two-col','print-improvement','print-quick-review');activePrintMode=''}
 function preparePaperPrint(){renderPaperPreview();clearPrintClasses();document.body.classList.add('print-paper');activePrintMode='paper';requestAnimationFrame(()=>setTimeout(()=>window.print(),30))}
-function prepareReviewPackPrint(){paperSettings.roleId='all';paperSettings.staffId='';paperSettings.includeOverview=true;paperSettings.includeNotes=true;paperSettings.includeReflection=false;paperSettings.layout='auto';renderPaperView();preparePaperPrint()}
+function prepareReviewPackPrint(){paperSettings.roleId='all';paperSettings.staffId='';paperSettings.includeOverview=true;paperSettings.includeNotes=true;paperSettings.includeReflection=false;paperSettings.layout='auto';persist();renderPaperView();preparePaperPrint()}
 function prepareEvaluationPrint(){if(!activeEval)return;clearPrintClasses();document.body.classList.add('print-evaluation');const role=roleById(activeEval.roleId);if(role.sections.length>=4&&roleItemCount(role)<=20)document.body.classList.add('print-evaluation-two-col');activePrintMode='evaluation';requestAnimationFrame(()=>setTimeout(()=>window.print(),30))}
 
+
+
+function quickReviewsForStaff(staffId,range=state.settings.quickReviewRange||'90'){
+  const rows=state.quickReviews.filter(r=>r.staffId===staffId);if(range==='all')return [...rows].sort((a,b)=>(b.date+(b.createdAt||'')).localeCompare(a.date+(a.createdAt||'')));
+  const days=range==='30'?30:90,cutoff=new Date();cutoff.setHours(0,0,0,0);cutoff.setDate(cutoff.getDate()-(days-1));const cutoffText=(()=>{const d=cutoff,offset=d.getTimezoneOffset();return new Date(d.getTime()-offset*60000).toISOString().slice(0,10)})();
+  return rows.filter(r=>r.date>=cutoffText).sort((a,b)=>(b.date+(b.createdAt||'')).localeCompare(a.date+(a.createdAt||'')));
+}
+function quickReviewRangeLabel(range){return range==='30'?'Last 30 days':range==='all'?'All records':'Last 90 days'}
+function quickReviewStats(rows){const positive=rows.filter(r=>r.sentiment==='positive').length,negative=rows.filter(r=>r.sentiment==='negative').length,total=rows.length;return {positive,negative,total,balance:positive-negative}}
+function quickReviewFocusTitle(focusId){if(!focusId)return 'General / other';const plan=currentImprovementPlan(),priority=plan?.priorities.find(p=>p.id===focusId||p.templateId===focusId),template=templateById(focusId);return priority?.title||template?.title||focusId}
+function quickReviewFocusOptionsHtml(){
+  const plan=currentImprovementPlan(),seen=new Set(),parts=['<option value="">General / other</option>'];
+  if(plan?.priorities?.length){parts.push('<optgroup label="Current improvement plan">');plan.priorities.forEach(p=>{const key=p.templateId||p.id;if(seen.has(key))return;seen.add(key);parts.push(`<option value="${escapeAttr(key)}">★ ${escapeHtml(p.title)}</option>`)});parts.push('</optgroup>')}
+  const categories=[...new Set(IMPROVEMENT_AREA_TEMPLATES.map(t=>t.category))];categories.forEach(category=>{parts.push(`<optgroup label="${escapeAttr(category)}">`);IMPROVEMENT_AREA_TEMPLATES.filter(t=>t.category===category).forEach(t=>{if(seen.has(t.id))return;seen.add(t.id);parts.push(`<option value="${escapeAttr(t.id)}">${escapeHtml(t.title)}</option>`)});parts.push('</optgroup>')});return parts.join('')
+}
+function quickReviewSplitHtml(stats){if(!stats.total)return '<div class="quick-split-empty">No reviews in this period</div>';const pp=Math.round((stats.positive/stats.total)*100),np=100-pp;return `<div class="quick-split" role="img" aria-label="${stats.positive} positive and ${stats.negative} concern reviews"><div class="quick-split-pos" style="width:${pp}%">${pp>=14?`${stats.positive} +`:''}</div><div class="quick-split-neg" style="width:${np}%">${np>=14?`${stats.negative} −`:''}</div></div><div class="quick-legend"><span><i class="quick-dot pos"></i>Positive ${stats.positive}</span><span><i class="quick-dot neg"></i>Concern ${stats.negative}</span></div>`}
+function quickReviewFocusChartHtml(rows){
+  if(!rows.length)return '<div class="subtle">Add a quick review to build the chart.</div>';const groups=new Map();rows.forEach(r=>{const key=r.focusTitle||quickReviewFocusTitle(r.focusId),g=groups.get(key)||{title:key,positive:0,negative:0,total:0};g[r.sentiment]++;g.total++;groups.set(key,g)});const list=[...groups.values()].sort((a,b)=>b.total-a.total||a.title.localeCompare(b.title)).slice(0,10),max=Math.max(1,...list.flatMap(g=>[g.positive,g.negative]));return `<div class="quick-focus-chart">${list.map(g=>`<div class="quick-focus-row" title="${escapeAttr(g.title)}"><div class="quick-focus-label">${escapeHtml(g.title)}</div><div class="quick-bar-pair"><div class="quick-bar-track"><div class="quick-bar pos" style="width:${(g.positive/max*100).toFixed(1)}%"></div></div><div class="quick-bar-track"><div class="quick-bar neg" style="width:${(g.negative/max*100).toFixed(1)}%"></div></div></div><div class="quick-focus-counts"><b class="pos">+${g.positive}</b> / <b class="neg">−${g.negative}</b></div></div>`).join('')}</div>`
+}
+function quickReviewHistoryHtml(rows){if(!rows.length)return '<div class="subtle" style="padding:8px 0">No quick reviews in this period.</div>';return `<div class="table-wrap quick-history"><table><caption>${rows.length} quick ${plural(rows.length,'review')}</caption><thead><tr><th>Date</th><th>Type</th><th>Focus</th><th>Note</th><th></th></tr></thead><tbody>${rows.map(r=>`<tr><td>${escapeHtml(r.date)}</td><td><span class="sentiment-badge ${r.sentiment}">${r.sentiment==='positive'?'Positive':'Concern'}</span></td><td>${escapeHtml(r.focusTitle||quickReviewFocusTitle(r.focusId))}</td><td class="quick-note-cell">${escapeHtml(r.note||'—')}</td><td><button type="button" class="action-link red" data-action="delete-quick-review" data-id="${escapeAttr(r.id)}">Delete</button></td></tr>`).join('')}</tbody></table></div>`}
+function addQuickReview(sentiment){
+  const staff=staffById(selectedStaffId);if(!staff){toast('Select a staff member first');return}if(!['positive','negative'].includes(sentiment))return;const note=safeText(document.getElementById('quickReviewNote')?.value||'').trim();if(!note){toast('Add a short note first');document.getElementById('quickReviewNote')?.focus();return}const date=validDate(document.getElementById('quickReviewDate')?.value||today()),focusId=safeText(document.getElementById('quickReviewFocus')?.value||'',180),focusTitle=quickReviewFocusTitle(focusId),entry={id:uid('quick'),staffId:staff.id,date,sentiment,focusId,focusTitle,note,createdAt:new Date().toISOString()};state.quickReviews.push(entry);state.settings.quickReviewFocusId=focusId;persist();renderQuickReview();requestAnimationFrame(()=>{const field=document.getElementById('quickReviewNote');if(field){field.value='';field.focus()}});toast(sentiment==='positive'?'Positive review added':'Concern review added')
+}
+function deleteQuickReview(id){const entry=state.quickReviews.find(r=>r.id===id);if(!entry)return;if(!confirm('Delete this quick review?'))return;state.quickReviews=state.quickReviews.filter(r=>r.id!==id);persist();renderQuickReview();toast('Quick review deleted')}
+function exportQuickReviewCSV(){const headers=['Date','Staff','Department','Type','Focus','Note'],lines=[headers.map(csvCell).join(',')];[...state.quickReviews].sort((a,b)=>(a.date+(a.createdAt||'')).localeCompare(b.date+(b.createdAt||''))).forEach(r=>{const staff=staffById(r.staffId)||{};lines.push([r.date,staff.name||'',staff.department||'',r.sentiment==='positive'?'Positive':'Concern',r.focusTitle||quickReviewFocusTitle(r.focusId),r.note||''].map(csvCell).join(','))});if(download(`PHS_quick_reviews_${today()}.csv`,'\ufeff'+lines.join('\r\n'),'text/csv;charset=utf-8'))toast('Quick review CSV downloaded')}
+function quickReviewPrintCopyHtml(staff,copyLabel,rows,range){const stats=quickReviewStats(rows),groups=new Map();rows.forEach(r=>{const title=r.focusTitle||quickReviewFocusTitle(r.focusId),g=groups.get(title)||{title,positive:0,negative:0,total:0};g[r.sentiment]++;g.total++;groups.set(title,g)});const focusRows=[...groups.values()].sort((a,b)=>b.total-a.total||a.title.localeCompare(b.title)).slice(0,10),max=Math.max(1,...focusRows.flatMap(g=>[g.positive,g.negative]));return `<article class="quick-print-copy"><header class="quick-print-head"><div><h1>Quick Review Running Record</h1><p>Pukekohe High School · ${escapeHtml(staff.name)}${staff.department?' · '+escapeHtml(staff.department):''} · ${escapeHtml(quickReviewRangeLabel(range))}</p></div><div class="quick-print-label">${escapeHtml(copyLabel)}</div></header><div class="quick-print-stats"><div class="quick-print-stat"><b>Positive</b><span>${stats.positive}</span></div><div class="quick-print-stat"><b>Concerns</b><span>${stats.negative}</span></div><div class="quick-print-stat"><b>Total records</b><span>${stats.total}</span></div></div><section class="quick-print-chart"><h2>At a glance</h2>${quickReviewSplitHtml(stats)}${focusRows.length?`<div style="margin-top:3mm">${focusRows.map(g=>`<div class="quick-focus-row"><div class="quick-focus-label">${escapeHtml(g.title)}</div><div class="quick-bar-pair"><div class="quick-bar-track"><div class="quick-bar pos" style="width:${(g.positive/max*100).toFixed(1)}%"></div></div><div class="quick-bar-track"><div class="quick-bar neg" style="width:${(g.negative/max*100).toFixed(1)}%"></div></div></div><div class="quick-focus-counts">+${g.positive} / −${g.negative}</div></div>`).join('')}</div>`:''}</section><section><table class="quick-print-table"><thead><tr><th>Date</th><th>Type</th><th>Focus</th><th>Note</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${escapeHtml(r.date)}</td><td>${r.sentiment==='positive'?'Positive':'Concern'}</td><td>${escapeHtml(r.focusTitle||quickReviewFocusTitle(r.focusId))}</td><td>${escapeHtml(r.note||'—')}</td></tr>`).join('')||'<tr><td colspan="4">No records in this period.</td></tr>'}</tbody></table></section><div class="quick-print-signatures"><div>Leader / reviewer · date</div><div>Teacher · date</div></div><div class="quick-print-disclaimer">This is a factual running record and pattern overview. Positive/concern counts are not a competence score and do not replace professional judgement, context, teacher response or the correct employment process.</div><footer class="quick-print-footer">Generated ${escapeHtml(today())} · Confidential staff record</footer></article>`}
+function buildQuickReviewPrintArea(){const staff=staffById(selectedStaffId),area=document.getElementById('quickReviewPrintArea');if(!staff||!area)return false;const range=state.settings.quickReviewRange||'90',rows=quickReviewsForStaff(staff.id,range);area.innerHTML=quickReviewPrintCopyHtml(staff,'Leader copy',rows,range)+quickReviewPrintCopyHtml(staff,'Teacher copy',rows,range);return true}
+function prepareQuickReviewPrint(){if(!buildQuickReviewPrintArea())return;clearPrintClasses();document.body.classList.add('print-quick-review');activePrintMode='quick-review';requestAnimationFrame(()=>setTimeout(()=>window.print(),30))}
+function renderQuickReview(){
+  const root=document.getElementById('quickReviewView'),staff=staffById(selectedStaffId);if(!root)return;if(!staff){root.innerHTML='<div class="panel empty quick-review-screen"><h2>Select a staff member</h2><p>Select or add a staff member, then add positive or concern notes as they occur.</p><button type="button" class="primary" data-action="add-staff">Add staff member</button></div><div id="quickReviewPrintArea" class="quick-print-only"></div>';return}
+  const range=state.settings.quickReviewRange||'90',rows=quickReviewsForStaff(staff.id,range),stats=quickReviewStats(rows),latest=rows[0]||null,plan=currentImprovementPlan(),savedFocus=state.settings.quickReviewFocusId||'';
+  root.innerHTML=`<div class="panel quick-review-screen"><div class="quick-review-head"><div><h2>Quick Review · ${escapeHtml(staff.name)}</h2><p>Log short positive or concern observations. Use the chart to spot patterns, not as a score.</p></div><div class="toolbar-actions"><button type="button" class="primary" data-action="print-quick-review">Print 2 copies</button><button type="button" class="secondary" data-action="export-quick-review">CSV</button>${plan?'<button type="button" class="secondary" data-action="switch-view" data-view="improvementView">Improvement plan</button>':''}</div></div><section class="quick-entry" aria-label="Add quick review"><div class="quick-entry-grid"><label class="field"><span>Date</span><input id="quickReviewDate" type="date" value="${today()}"></label><label class="field"><span>Focus</span><select id="quickReviewFocus">${quickReviewFocusOptionsHtml()}</select></label><label class="field quick-note-field"><span>Short factual note</span><input id="quickReviewNote" type="text" maxlength="12000" placeholder="e.g. Marking matched schedule; calm restorative response used..."></label><div class="quick-save-actions"><button type="button" class="quick-positive-btn" data-action="add-quick-positive">+ Positive</button><button type="button" class="quick-negative-btn" data-action="add-quick-negative">− Concern</button></div></div><div class="quick-hint">One sentence is enough. Record what was observed/reported, not a personality judgement.</div></section><div class="quick-review-toolbar"><label class="field"><span>Chart period</span><select id="quickReviewRange" data-field="quick-review-range"><option value="30">Last 30 days</option><option value="90">Last 90 days</option><option value="all">All records</option></select></label><div class="toolbar-actions"><span class="subtle">${escapeHtml(quickReviewRangeLabel(range))}</span></div></div><div class="quick-summary"><div class="quick-stat pos"><span class="label">Positive</span><strong>${stats.positive}</strong><small>${stats.total?Math.round(stats.positive/stats.total*100):0}% of records</small></div><div class="quick-stat neg"><span class="label">Concerns</span><strong>${stats.negative}</strong><small>${stats.total?Math.round(stats.negative/stats.total*100):0}% of records</small></div><div class="quick-stat"><span class="label">Total</span><strong>${stats.total}</strong><small>${escapeHtml(quickReviewRangeLabel(range))}</small></div><div class="quick-stat"><span class="label">Latest</span><strong style="font-size:14px">${latest?escapeHtml(latest.date):'—'}</strong><small>${latest?escapeHtml(latest.focusTitle||quickReviewFocusTitle(latest.focusId)):'No records yet'}</small></div></div><div class="quick-overview-grid"><section class="quick-chart-card"><h3>Positive vs concern</h3>${quickReviewSplitHtml(stats)}</section><section class="quick-chart-card"><h3>By focus</h3>${quickReviewFocusChartHtml(rows)}</section></div><h3 style="margin:14px 0 6px;color:var(--navy);font-size:15px">Running record</h3>${quickReviewHistoryHtml(rows)}<div class="quick-record-note">Quick reviews are deliberately lightweight. Formal improvement-plan status changes should still be made in the Improvement Plan using the fuller review process.</div></div><div id="quickReviewPrintArea" class="quick-print-only"></div>`;
+  const rangeEl=document.getElementById('quickReviewRange');if(rangeEl)rangeEl.value=range;const focusEl=document.getElementById('quickReviewFocus');if(focusEl&&[...focusEl.options].some(o=>o.value===savedFocus))focusEl.value=savedFocus;
+}
 
 function improvementPlansForStaff(staffId){return state.improvementPlans.filter(p=>p.staffId===staffId).sort((a,b)=>(b.updatedAt||b.createdAt||'').localeCompare(a.updatedAt||a.createdAt||''))}
 function currentImprovementPlan(){if(!selectedStaffId)return null;const preferred=state.settings?.activeImprovementPlanId?state.improvementPlans.find(p=>p.id===state.settings.activeImprovementPlanId&&p.staffId===selectedStaffId):null;return preferred||improvementPlansForStaff(selectedStaffId)[0]||null}
@@ -917,9 +888,9 @@ function renderImprovement(){const root=document.getElementById('improvementView
 
 function renderHistory(){const root=document.getElementById('historyView'),staffOptions=state.staff.map(s=>`<option value="${escapeAttr(s.id)}">${escapeHtml(s.name)}</option>`).join('');root.innerHTML=`<div class="panel"><h2>Saved evaluation history</h2><div class="subtle">Open a record to review or update it. Individual 1–5 scores, notes and reflections are retained.</div><div class="history-controls"><label class="field"><span>Staff</span><select id="histStaff" data-field="history-staff"><option value="">All staff</option>${staffOptions}</select></label><label class="field"><span>Role</span><select id="histRole" data-field="history-role"><option value="">All roles</option>${ROLE_DEFS.map(r=>`<option value="${r.id}">${escapeHtml(r.name)}</option>`).join('')}</select></label></div><div id="historyTable"></div></div>`;document.getElementById('histStaff').value=historyFilters.staffId;document.getElementById('histRole').value=historyFilters.roleId;renderHistoryTable()}
 function renderHistoryTable(){const target=document.getElementById('historyTable');if(!target)return;const rows=[...state.evaluations].filter(e=>(!historyFilters.staffId||e.staffId===historyFilters.staffId)&&(!historyFilters.roleId||e.roleId===historyFilters.roleId)).sort((a,b)=>(b.date+(b.updatedAt||'')).localeCompare(a.date+(a.updatedAt||'')));target.innerHTML=rows.length?`<div class="table-wrap"><table><caption>${rows.length} saved ${plural(rows.length,'evaluation')}</caption><thead><tr><th>Date</th><th>Staff</th><th>Role</th><th>Type</th><th>Overall rank</th><th>Questions</th><th>Actions</th></tr></thead><tbody>${rows.map(e=>{const staff=staffById(e.staffId)||{},stats=evaluationStats(e);return `<tr><td>${escapeHtml(e.date)}</td><td><b>${escapeHtml(staff.name||'Unknown')}</b></td><td>${escapeHtml(roleById(e.roleId).name)}</td><td>${escapeHtml(e.type||'')}</td><td><span class="score-badge">${escapeHtml(scoreStageDisplay(stats.mean))}</span></td><td>${stats.answeredItems}/${stats.totalItems}</td><td><button type="button" class="action-link" data-action="open-evaluation" data-id="${escapeAttr(e.id)}">Open</button><button type="button" class="action-link red" data-action="delete-evaluation" data-id="${escapeAttr(e.id)}">Delete</button></td></tr>`}).join('')}</tbody></table></div>`:'<div class="empty" style="padding:35px"><p>No saved evaluations match this view.</p></div>'}
-function renderData(){const root=document.getElementById('dataView');root.innerHTML=`<div class="panel"><h2>Staff records &amp; export</h2><div class="subtle">Keep records in this browser, export analysis files, or make a full backup for secure transfer.</div><div class="data-actions"><button type="button" class="primary" data-action="add-staff">Add staff member</button><button type="button" class="secondary" data-action="export-json">Full backup (.json)</button><button type="button" class="secondary" data-action="import-json">Import / restore</button><button type="button" class="secondary" data-action="export-summary">Summary CSV</button><button type="button" class="secondary" data-action="export-detail">Question detail CSV</button><button type="button" class="danger" data-action="clear-all">Clear all local data</button></div><div class="privacy" style="max-width:930px"><strong>Important privacy note</strong>This page has no server or login. Browser localStorage is convenient but is not an HR records system and is not encrypted by this page. Use a trusted school user profile/device and export backups to an approved secure location.</div><h3>Staff records</h3><div class="staff-cards">${state.staff.length?state.staff.map(staff=>{const evaluations=state.evaluations.filter(e=>e.staffId===staff.id),plans=state.improvementPlans.filter(p=>p.staffId===staff.id);return `<article class="staff-card"><h3>${escapeHtml(staff.name)}</h3><div class="meta">${escapeHtml(roleById(staff.roleId).name)}${staff.department?' · '+escapeHtml(staff.department):''}<br>${evaluations.length} saved ${plural(evaluations.length,'evaluation')} · ${plans.length} ${plural(plans.length,'improvement plan')}</div><div class="actions"><button type="button" class="small-btn" data-action="edit-staff" data-id="${escapeAttr(staff.id)}">Edit</button><button type="button" class="danger" data-action="delete-staff" data-id="${escapeAttr(staff.id)}">Delete</button></div></article>`}).join(''):'<div class="subtle">No staff added yet.</div>'}</div></div>`}
+function renderData(){const root=document.getElementById('dataView');root.innerHTML=`<div class="panel"><h2>Staff records &amp; export</h2><div class="subtle">Keep records in this browser, export analysis files, or make a complete backup for secure transfer.</div><div class="data-actions"><button type="button" class="primary" data-action="add-staff">Add staff member</button><button type="button" class="secondary" data-action="export-json">Complete backup (.json)</button><button type="button" class="secondary" data-action="import-json">Import / restore</button><button type="button" class="secondary" data-action="export-summary">Summary CSV</button><button type="button" class="secondary" data-action="export-detail">Question detail CSV</button><button type="button" class="danger" data-action="clear-all">Clear all local data</button></div><div class="privacy" style="max-width:930px"><strong>What the complete backup contains</strong>Staff records; saved evaluations; unsaved evaluation drafts; quick reviews; improvement plans and dated plan reviews; selected staff/view and dashboard preferences; paper-form setup and history filters; plus a snapshot of the role, focus and scoring definitions used by this version. Restore replaces the current browser workspace with the backed-up workspace.</div><div class="privacy" style="max-width:930px"><strong>Important privacy note</strong>This page has no server or login. Browser localStorage is convenient but is not an HR records system and is not encrypted by this page. Use a trusted school user profile/device and export backups to an approved secure location.</div><h3>Staff records</h3><div class="staff-cards">${state.staff.length?state.staff.map(staff=>{const evaluations=state.evaluations.filter(e=>e.staffId===staff.id),plans=state.improvementPlans.filter(p=>p.staffId===staff.id),quick=state.quickReviews.filter(r=>r.staffId===staff.id);return `<article class="staff-card"><h3>${escapeHtml(staff.name)}</h3><div class="meta">${escapeHtml(roleById(staff.roleId).name)}${staff.department?' · '+escapeHtml(staff.department):''}<br>${evaluations.length} saved ${plural(evaluations.length,'evaluation')} · ${plans.length} ${plural(plans.length,'improvement plan')} · ${quick.length} quick ${plural(quick.length,'review')}</div><div class="actions"><button type="button" class="small-btn" data-action="edit-staff" data-id="${escapeAttr(staff.id)}">Edit</button><button type="button" class="danger" data-action="delete-staff" data-id="${escapeAttr(staff.id)}">Delete</button></div></article>`}).join(''):'<div class="subtle">No staff added yet.</div>'}</div></div>`}
 function renderRoleMap(){const root=document.getElementById('roleMapView');root.innerHTML=`<div class="panel"><h2>Responsibility &amp; oversight role map</h2><div class="subtle">Reference view for keeping ownership, oversight and escalation aligned.</div><div class="principle">${escapeHtml(CORE_PRINCIPLE)}</div><div class="rolemap-grid"><div class="map-card"><h3>Suggested responsibility cascade</h3><ol class="map-list">${ROLE_CASCADE.map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ol></div><div class="map-card"><h3>Cross-role rules that prevent gaps</h3><ul class="map-list">${ROLE_RULES.map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ul></div></div><div class="map-card" style="margin-top:14px"><h3>Role boundaries at a glance</h3><div class="table-wrap"><table><thead><tr><th>Role</th><th>Oversight</th><th>First escalation</th><th>Key boundary</th></tr></thead><tbody>${ROLE_DEFS.map(r=>`<tr><td><b>${escapeHtml(r.name)}</b></td><td>${escapeHtml(r.oversight)}</td><td>${escapeHtml(r.escalation)}</td><td>${escapeHtml(r.boundary)}</td></tr>`).join('')}</tbody></table></div></div></div>`}
-function renderCurrentView(){if(activeView==='evaluateView')renderEvaluate();else if(activeView==='improvementView')renderImprovement();else if(activeView==='paperView')renderPaperView();else if(activeView==='historyView')renderHistory();else if(activeView==='dataView')renderData();else renderRoleMap()}
+function renderCurrentView(){if(activeView==='evaluateView')renderEvaluate();else if(activeView==='quickReviewView')renderQuickReview();else if(activeView==='improvementView')renderImprovement();else if(activeView==='paperView')renderPaperView();else if(activeView==='historyView')renderHistory();else if(activeView==='dataView')renderData();else renderRoleMap()}
 function renderAll(){renderStaffList();renderCurrentView();updateStorageMeter()}
 function switchView(view){if(!VALID_VIEWS.has(view))return;activeView=view;state.settings.activeView=view;document.querySelectorAll('.view').forEach(panel=>{const active=panel.id===view;panel.classList.toggle('active',active);panel.hidden=!active});document.querySelectorAll('.tab').forEach(tab=>{const active=tab.dataset.view===view;tab.setAttribute('aria-selected',String(active));tab.tabIndex=active?0:-1});persist();renderCurrentView()}
 
@@ -927,17 +898,18 @@ function applyPendingFocus(){if(!pendingFocus)return;const request=pendingFocus;
 function openStaffModal(id=null){editingStaffId=id;const staff=id?staffById(id):null;modalReturnFocus=document.activeElement;document.getElementById('staffModalTitle').textContent=staff?'Edit staff member':'Add staff member';document.getElementById('staffName').value=staff?.name||'';document.getElementById('staffRole').innerHTML=ROLE_DEFS.map(r=>`<option value="${r.id}">${escapeHtml(r.name)}</option>`).join('');document.getElementById('staffRole').value=staff?.roleId||'06';document.getElementById('staffDepartment').value=staff?.department||'';document.getElementById('staffFormError').hidden=true;document.getElementById('staffName').removeAttribute('aria-invalid');const modal=document.getElementById('staffModal');modal.hidden=false;document.body.style.overflow='hidden';setTimeout(()=>document.getElementById('staffName').focus(),20)}
 function closeStaffModal(){const modal=document.getElementById('staffModal');if(modal.hidden)return;modal.hidden=true;document.body.style.overflow='';editingStaffId=null;modalReturnFocus?.focus?.();modalReturnFocus=null}
 function saveStaffFromModal(){const name=document.getElementById('staffName').value.trim(),error=document.getElementById('staffFormError');if(!name){error.textContent='Enter the staff member’s name.';error.hidden=false;document.getElementById('staffName').setAttribute('aria-invalid','true');document.getElementById('staffName').focus();return}const roleId=document.getElementById('staffRole').value,department=document.getElementById('staffDepartment').value.trim();if(editingStaffId){const staff=staffById(editingStaffId);if(!staff)return;const oldRole=staff.roleId;staff.name=safeText(name,100);staff.roleId=hasRole(roleId)?roleId:'06';staff.department=safeText(department,100);if(selectedStaffId===staff.id&&oldRole!==staff.roleId)activeEval=null;toast('Staff record updated')}else{const staff={id:uid('staff'),name:safeText(name,100),roleId:hasRole(roleId)?roleId:'06',department:safeText(department,100),createdAt:new Date().toISOString()};state.staff.push(staff);selectedStaffId=staff.id;activeEval=null;toast('Staff member added')}persist();closeStaffModal();if(selectedStaffId&&!activeEval)ensureActiveEvaluation();renderAll()}
-function deleteStaff(id){const staff=staffById(id);if(!staff)return;const count=state.evaluations.filter(e=>e.staffId===id).length;if(!confirm(`Delete ${staff.name} and ${count} saved ${plural(count,'evaluation')} from this browser? Export a backup first if you may need them.`))return;state.staff=state.staff.filter(s=>s.id!==id);state.evaluations=state.evaluations.filter(e=>e.staffId!==id);state.improvementPlans=state.improvementPlans.filter(p=>p.staffId!==id);Object.keys(state.drafts).forEach(key=>{if(key.startsWith(id+'::'))delete state.drafts[key]});if(selectedStaffId===id)selectedStaffId=state.staff[0]?.id||null;activeEval=null;if(selectedStaffId)ensureActiveEvaluation();persist();renderAll();toast('Staff record deleted')}
+function deleteStaff(id){const staff=staffById(id);if(!staff)return;const count=state.evaluations.filter(e=>e.staffId===id).length;if(!confirm(`Delete ${staff.name} and ${count} saved ${plural(count,'evaluation')} from this browser? Export a backup first if you may need them.`))return;state.staff=state.staff.filter(s=>s.id!==id);state.evaluations=state.evaluations.filter(e=>e.staffId!==id);state.improvementPlans=state.improvementPlans.filter(p=>p.staffId!==id);state.quickReviews=state.quickReviews.filter(r=>r.staffId!==id);Object.keys(state.drafts).forEach(key=>{if(key.startsWith(id+'::'))delete state.drafts[key]});if(selectedStaffId===id)selectedStaffId=state.staff[0]?.id||null;activeEval=null;if(selectedStaffId)ensureActiveEvaluation();persist();renderAll();toast('Staff record deleted')}
 function deleteEvaluation(id){const evaluation=state.evaluations.find(e=>e.id===id);if(!evaluation||!confirm('Delete this saved evaluation?'))return;state.evaluations=state.evaluations.filter(e=>e.id!==id);const key=draftKey(evaluation.staffId,evaluation.roleId);if(state.drafts[key]?.id===id)delete state.drafts[key];if(activeEval?.id===id)activeEval=null;if(selectedStaffId===evaluation.staffId&&!activeEval)ensureActiveEvaluation();persist();renderStaffList();renderHistory();toast('Evaluation deleted')}
-function clearAllData(){if(!confirm('This permanently clears all staff, evaluations and drafts from this browser. Have you exported a backup?'))return;if(!confirm('Confirm again: clear ALL local evaluation data?'))return;state=emptyState();selectedStaffId=null;activeEval=null;persist();renderAll();toast('Local data cleared')}
+function clearAllData(){if(!confirm('This permanently clears all staff, evaluations, drafts, quick reviews, improvement plans and saved dashboard settings from this browser. Have you exported a complete backup?'))return;if(!confirm('Confirm again: clear ALL local dashboard data?'))return;state=emptyState();selectedStaffId=null;activeEval=null;activeView='evaluateView';paperSettings=defaultPaperSettings();historyFilters=defaultHistoryFilters();persist();renderAll();toast('Local data cleared')}
 
 function download(name,text,type='text/plain;charset=utf-8'){try{const blob=new Blob([text],{type}),url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=name;link.rel='noopener';document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);return true}catch(error){alert('The file could not be downloaded: '+(error?.message||error));return false}}
-function exportJSON(){saveDraftNow(false);const payload={...state,schemaVersion:SCHEMA_VERSION,exportedAt:new Date().toISOString(),app:'PHS Staff Progress Evaluation'};if(download(`PHS_staff_evaluation_backup_${today()}.json`,JSON.stringify(payload,null,2),'application/json;charset=utf-8'))toast('Full backup downloaded')}
+function backupManifest(){return {staff:state.staff.length,savedEvaluations:state.evaluations.length,evaluationDrafts:Object.keys(state.drafts||{}).length,improvementPlans:state.improvementPlans.length,improvementPlanReviews:state.improvementPlans.reduce((total,plan)=>total+(plan.reviews?.length||0),0),quickReviews:state.quickReviews.length}}
+function exportJSON(){saveDraftNow(false);persist();const payload={...cloneData(state),schemaVersion:SCHEMA_VERSION,backupVersion:BACKUP_VERSION,exportedAt:new Date().toISOString(),app:'PHS Staff Progress Evaluation',appVersion:APP_VERSION,backupContents:backupManifest(),referenceSnapshot:{stages:cloneData(STAGES),roles:cloneData(ROLE_DEFS),focusTemplates:cloneData(IMPROVEMENT_AREA_TEMPLATES),focusAliases:cloneData(FOCUS_ID_ALIASES)}};if(download(`PHS_staff_evaluation_complete_backup_${today()}.json`,JSON.stringify(payload,null,2),'application/json;charset=utf-8'))toast('Complete backup downloaded')}
 function csvCell(value){let text=String(value??'');if(/^[\t\r ]*[=+\-@]/.test(text))text="'"+text;return /[",\r\n]/.test(text)?'"'+text.replace(/"/g,'""')+'"':text}
 function exportSummaryCSV(){const headers=['Evaluation ID','Date','Staff','Department','Role','Type','Evaluator','Overall average','Overall Arotake rank','Questions scored','Total questions','Sections complete','Total sections','Generated feedback summary','Strongest responsibility sections','Priority responsibility sections','Strongest item evidence','Suggested item actions','Support / authority prompts','Conversation prompt','Strengths / evidence','Next focus','Support / authority needed'],lines=[headers.map(csvCell).join(',')];[...state.evaluations].sort((a,b)=>a.date.localeCompare(b.date)).forEach(e=>{const staff=staffById(e.staffId)||{},role=roleById(e.roleId),stats=evaluationStats(e),rank=stageByMean(stats.mean),feedback=overallFeedbackData(e,role);lines.push([e.id,e.date,staff.name||'',staff.department||'',role.name,e.type||'',e.evaluator||'',stats.mean==null?'':stats.mean.toFixed(2),rank?`${rank.label} ${rank.emoji}`:'',stats.answeredItems,stats.totalItems,stats.completedSections,stats.totalSections,feedback.summary,feedback.sectionStrengths.join(' | '),feedback.sectionPriorities.join(' | '),feedback.strengths.join(' | '),feedback.priorities.join(' | '),feedback.support.join(' | '),feedback.conversation,e.strengths||'',e.nextFocus||'',e.supportNeeded||''].map(csvCell).join(','))});if(download(`PHS_staff_evaluation_summary_${today()}.csv`,'\ufeff'+lines.join('\r\n'),'text/csv;charset=utf-8'))toast('Summary CSV downloaded')}
 function exportDetailedCSV(){const headers=['Evaluation ID','Date','Staff','Department','Role','Type','Evaluator','Responsibility section','Section average','Section Arotake rank','Responsibility item','Item score','Item Arotake rank','Suggested next step','Section note'],lines=[headers.map(csvCell).join(',')];[...state.evaluations].sort((a,b)=>a.date.localeCompare(b.date)).forEach(e=>{const staff=staffById(e.staffId)||{},role=roleById(e.roleId);role.sections.forEach((section,sectionIndex)=>{const stats=sectionStats(e,role,sectionIndex),rank=stageByMean(stats.mean);section.items.forEach((item,itemIndex)=>{const raw=e.ratings?.[questionKey(role.id,sectionIndex,itemIndex)],itemRank=stageByValue(raw);lines.push([e.id,e.date,staff.name||'',staff.department||'',role.name,e.type||'',e.evaluator||'',`${section.number}. ${section.title}`,stats.mean==null?'':stats.mean.toFixed(2),rank?`${rank.label} ${rank.emoji}`:(stats.complete?'Not applicable':''),item,Number.isInteger(raw)?raw:(raw==='na'?'N/A':''),itemRank?`${itemRank.label} ${itemRank.emoji}`:(raw==='na'?'N/A':''),itemRank?actionForItem(item,itemRank.value):'',e.sectionNotes?.[sectionIndex]||''].map(csvCell).join(','))})})});if(download(`PHS_staff_evaluation_questions_${today()}.csv`,'\ufeff'+lines.join('\r\n'),'text/csv;charset=utf-8'))toast('Question detail CSV downloaded')}
 function validateBackupFile(file){if(!file)throw new Error('No file selected.');if(file.size>LIMITS.importBytes)throw new Error('The backup is too large for this browser tool.');if(file.type&&file.type!=='application/json'&&!file.name.toLowerCase().endsWith('.json'))throw new Error('Choose a JSON backup file.');}
-function importBackup(file){try{validateBackupFile(file)}catch(error){alert(error.message);document.getElementById('importFile').value='';return}const reader=new FileReader();reader.onerror=()=>{alert('The file could not be read.');document.getElementById('importFile').value=''};reader.onload=()=>{try{const parsed=JSON.parse(reader.result);if(!parsed||typeof parsed!=='object'||!Array.isArray(parsed.staff)||!Array.isArray(parsed.evaluations))throw new Error('Backup structure not recognised.');if(parsed.staff.length>LIMITS.staff||parsed.evaluations.length>LIMITS.evaluations)throw new Error('The backup contains more records than this browser tool safely supports.');if(!confirm(`Restore this backup containing ${parsed.staff.length} staff and ${parsed.evaluations.length} saved ${plural(parsed.evaluations.length,'evaluation')}? This replaces the current browser data.`))return;state=migrateState(parsed);selectedStaffId=state.settings.selectedStaffId||state.staff[0]?.id||null;activeEval=null;if(selectedStaffId)ensureActiveEvaluation();persist();renderAll();toast('Backup restored')}catch(error){alert('Could not import this file: '+(error?.message||error))}finally{document.getElementById('importFile').value=''}};reader.readAsText(file)}
+function importBackup(file){try{validateBackupFile(file)}catch(error){alert(error.message);document.getElementById('importFile').value='';return}const reader=new FileReader();reader.onerror=()=>{alert('The file could not be read.');document.getElementById('importFile').value=''};reader.onload=()=>{try{const parsed=JSON.parse(reader.result);if(!parsed||typeof parsed!=='object'||!Array.isArray(parsed.staff)||!Array.isArray(parsed.evaluations))throw new Error('Backup structure not recognised.');if(parsed.staff.length>LIMITS.staff||parsed.evaluations.length>LIMITS.evaluations)throw new Error('The backup contains more records than this browser tool safely supports.');const planCount=Array.isArray(parsed.improvementPlans)?parsed.improvementPlans.length:0,planReviewCount=Array.isArray(parsed.improvementPlans)?parsed.improvementPlans.reduce((total,plan)=>total+(Array.isArray(plan?.reviews)?plan.reviews.length:0),0):0,quickCount=Array.isArray(parsed.quickReviews)?parsed.quickReviews.length:0,draftCount=parsed.drafts&&typeof parsed.drafts==='object'?Object.keys(parsed.drafts).length:0,sourceLabel=parsed.appVersion?`\nCreated by: ${parsed.appVersion}`:'';if(!confirm(`Restore this complete backup?\n\n${parsed.staff.length} staff\n${parsed.evaluations.length} saved evaluations\n${draftCount} evaluation drafts\n${planCount} improvement plans (${planReviewCount} dated reviews)\n${quickCount} quick reviews${sourceLabel}\n\nThis replaces the current browser workspace.`))return;state=migrateState(parsed);selectedStaffId=state.settings.selectedStaffId||state.staff[0]?.id||null;activeView=VALID_VIEWS.has(state.settings.activeView)?state.settings.activeView:'evaluateView';paperSettings=cloneData(state.settings.paperSettings||defaultPaperSettings());historyFilters=cloneData(state.settings.historyFilters||defaultHistoryFilters());activeEval=null;if(selectedStaffId)ensureActiveEvaluation();persist();renderAll();switchView(activeView);toast('Complete backup restored')}catch(error){alert('Could not import this file: '+(error?.message||error))}finally{document.getElementById('importFile').value=''}};reader.readAsText(file)}
 async function copyText(text,downloadName='PHS_feedback.txt'){try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text);toast('Feedback copied');return}const area=document.createElement('textarea');area.value=text;area.setAttribute('readonly','');area.style.position='fixed';area.style.opacity='0';document.body.appendChild(area);area.select();const ok=document.execCommand&&document.execCommand('copy');area.remove();if(ok){toast('Feedback copied');return}throw new Error('Clipboard unavailable')}catch(_error){download(downloadName,text,'text/plain;charset=utf-8');toast('Clipboard unavailable — feedback downloaded instead',3500)}}
 
 function useGeneratedFeedback(){if(!activeEval)return;const role=roleById(activeEval.roleId),data=overallFeedbackData(activeEval,role);if(!data.available){toast('Score some responsibilities first');return}if((activeEval.strengths||activeEval.nextFocus||activeEval.supportNeeded)&&!confirm('Replace the existing reflection text with the generated strengths, next focus and support prompts?'))return;const strengthLines=[...data.sectionStrengths,...data.strengths].slice(0,6),focusLines=[...data.sectionPriorities,...data.priorities,data.conversation?`Conversation prompt: ${data.conversation}`:''].filter(Boolean).slice(0,7);activeEval.strengths=strengthLines.map(x=>'• '+x).join('\n');activeEval.nextFocus=focusLines.map(x=>'• '+x).join('\n');activeEval.supportNeeded=data.support.map(x=>'• '+x).join('\n');saveDraftNow(false);renderEvaluate();const panel=document.getElementById('reflectionPanel');if(panel)panel.open=true;requestAnimationFrame(()=>document.getElementById('strengths')?.focus());toast('Reflection fields filled from scores')}
@@ -945,6 +917,11 @@ function clearSection(sectionIndex){if(!activeEval)return;const role=roleById(ac
 
 function handleActionClick(event){const button=event.target.closest('[data-action]');if(!button)return;const action=button.dataset.action;
   if(action==='switch-view'){switchView(button.dataset.view);return}
+  if(action==='add-quick-positive'){addQuickReview('positive');return}
+  if(action==='add-quick-negative'){addQuickReview('negative');return}
+  if(action==='delete-quick-review'){deleteQuickReview(button.dataset.id);return}
+  if(action==='print-quick-review'){prepareQuickReviewPrint();return}
+  if(action==='export-quick-review'){exportQuickReviewCSV();return}
   if(action==='add-staff'){openStaffModal();return}
   if(action==='cancel-staff'){closeStaffModal();return}
   if(action==='select-staff'){saveDraftNow(false);selectedStaffId=button.dataset.id;const staff=staffById(selectedStaffId),key=staff?draftKey(staff.id,staff.roleId):'';activeEval=key&&state.drafts[key]?cloneData(state.drafts[key]):null;if(staff&&!activeEval)ensureActiveEvaluation();if(activeEval){openSectionIndex=firstIncompleteSection(roleById(activeEval.roleId),activeEval);if(openSectionIndex<0)openSectionIndex=0}persist();renderStaffList();renderCurrentView();return}
@@ -994,15 +971,15 @@ function handleActionClick(event){const button=event.target.closest('[data-actio
   if(action==='export-detail'){exportDetailedCSV();return}
   if(action==='clear-all'){clearAllData();return}
 }
-function handleInput(event){const field=event.target.dataset.field;if(event.target.id==='staffSearch'){renderStaffList();return}if(event.target.id==='focusBankSearch'){filterFocusBank();return}if(field==='paper-evaluator'){paperSettings.evaluator=safeText(event.target.value,100);schedulePaperPreview();return}if(field==='improvement-plan-text'){const plan=state.improvementPlans.find(p=>p.id===event.target.dataset.plan);if(plan&&['leader','context','purpose'].includes(event.target.dataset.key)){plan[event.target.dataset.key]=safeText(event.target.value,event.target.dataset.key==='leader'?100:LIMITS.text);saveImprovementPlan(plan)}return}if(field==='improvement-priority-text'){const plan=state.improvementPlans.find(p=>p.id===event.target.dataset.plan),priority=plan?.priorities.find(p=>p.id===event.target.dataset.priority),key=event.target.dataset.key;if(priority&&['title','expectation','evidence','support','leaderEvidence','teacherResponse','nextAction'].includes(key)){priority[key]=safeText(event.target.value);saveImprovementPlan(plan)}return}if(!activeEval)return;if(field==='evaluator'){activeEval.evaluator=safeText(event.target.value,100);scheduleDraftSave()}else if(field==='section-note'){activeEval.sectionNotes[Number(event.target.dataset.section)]=safeText(event.target.value);scheduleDraftSave()}else if(field==='strengths'){activeEval.strengths=safeText(event.target.value);scheduleDraftSave()}else if(field==='next-focus'){activeEval.nextFocus=safeText(event.target.value);scheduleDraftSave()}else if(field==='support-needed'){activeEval.supportNeeded=safeText(event.target.value);scheduleDraftSave()}}
-function handleChange(event){const field=event.target.dataset.field;if(field==='focus-bank-toggle'){toggleFocusTemplate(event.target.dataset.plan,event.target.value,event.target.checked,event.target);return}else if(field==='focus-bank-category'){filterFocusBank();return}else if(field==='review-priority-select'){const plan=currentImprovementPlan(),priority=plan?.priorities.find(p=>p.id===event.target.value),status=document.getElementById('reviewStatus'),next=document.getElementById('reviewNextDate');if(priority&&status)status.value=priority.status;if(priority&&next)next.value=priority.nextReviewDate||'';return}else if(field==='improvement-plan-date'){const plan=state.improvementPlans.find(p=>p.id===event.target.dataset.plan),key=event.target.dataset.key;if(plan&&['startDate','targetReviewDate'].includes(key)){plan[key]=event.target.value?validDate(event.target.value):'';saveImprovementPlan(plan)}return}else if(field==='improvement-process-status'){const plan=state.improvementPlans.find(p=>p.id===event.target.dataset.plan);if(plan&&IMPROVEMENT_PROCESS_STATUS[event.target.value]){plan.processStatus=event.target.value;saveImprovementPlan(plan)}return}else if(field==='improvement-priority-status'){const plan=state.improvementPlans.find(p=>p.id===event.target.dataset.plan),priority=plan?.priorities.find(p=>p.id===event.target.dataset.priority);if(priority&&IMPROVEMENT_STATUS[event.target.value]){priority.status=event.target.value;saveImprovementPlan(plan);renderImprovement()}return}else if(field==='improvement-priority-date'){const plan=state.improvementPlans.find(p=>p.id===event.target.dataset.plan),priority=plan?.priorities.find(p=>p.id===event.target.dataset.priority);if(priority){priority.nextReviewDate=event.target.value?validDate(event.target.value):'';saveImprovementPlan(plan)}return}else if(field==='paper-role'){paperSettings.roleId=event.target.value==='all'?'all':(hasRole(event.target.value)?event.target.value:'03');renderPaperPreview();return}else if(field==='paper-staff'){paperSettings.staffId=staffById(event.target.value)?event.target.value:'';const staff=staffById(paperSettings.staffId);if(staff&&paperSettings.roleId!=='all'){paperSettings.roleId=staff.roleId;const roleControl=document.getElementById('paperRole');if(roleControl)roleControl.value=paperSettings.roleId}renderPaperPreview();return}else if(field==='paper-type'){paperSettings.type=event.target.value;renderPaperPreview();return}else if(field==='paper-date'){paperSettings.date=validDate(event.target.value);renderPaperPreview();return}else if(field==='paper-layout'){paperSettings.layout=['auto','one','two'].includes(event.target.value)?event.target.value:'auto';renderPaperPreview();return}else if(field==='paper-overview'){paperSettings.includeOverview=event.target.checked;renderPaperPreview();return}else if(field==='paper-notes'){paperSettings.includeNotes=event.target.checked;renderPaperPreview();return}else if(field==='paper-reflection'){paperSettings.includeReflection=event.target.checked;renderPaperPreview();return}else if(field==='eval-role'){saveDraftNow(false);const staff=staffById(selectedStaffId),roleId=event.target.value,key=draftKey(staff.id,roleId);activeEval=state.drafts[key]?cloneData(state.drafts[key]):null;if(!activeEval)ensureActiveEvaluation(false,roleId);openSectionIndex=firstIncompleteSection(roleById(roleId),activeEval);if(openSectionIndex<0)openSectionIndex=0;renderEvaluate()}else if(field==='eval-type'){activeEval.type=event.target.value;saveDraftNow(false)}else if(field==='date'){activeEval.date=validDate(event.target.value);saveDraftNow(false)}else if(field==='auto-advance'){state.settings.autoAdvance=event.target.checked;persist()}else if(field==='history-staff'){historyFilters.staffId=event.target.value;renderHistoryTable()}else if(field==='history-role'){historyFilters.roleId=event.target.value;renderHistoryTable()}else if(event.target.id==='importFile'&&event.target.files[0])importBackup(event.target.files[0])}
+function handleInput(event){const field=event.target.dataset.field;if(event.target.id==='staffSearch'){renderStaffList();return}if(event.target.id==='focusBankSearch'){filterFocusBank();return}if(field==='paper-evaluator'){paperSettings.evaluator=safeText(event.target.value,100);persist();schedulePaperPreview();return}if(field==='improvement-plan-text'){const plan=state.improvementPlans.find(p=>p.id===event.target.dataset.plan);if(plan&&['leader','context','purpose'].includes(event.target.dataset.key)){plan[event.target.dataset.key]=safeText(event.target.value,event.target.dataset.key==='leader'?100:LIMITS.text);saveImprovementPlan(plan)}return}if(field==='improvement-priority-text'){const plan=state.improvementPlans.find(p=>p.id===event.target.dataset.plan),priority=plan?.priorities.find(p=>p.id===event.target.dataset.priority),key=event.target.dataset.key;if(priority&&['title','expectation','evidence','support','leaderEvidence','teacherResponse','nextAction'].includes(key)){priority[key]=safeText(event.target.value);saveImprovementPlan(plan)}return}if(!activeEval)return;if(field==='evaluator'){activeEval.evaluator=safeText(event.target.value,100);scheduleDraftSave()}else if(field==='section-note'){activeEval.sectionNotes[Number(event.target.dataset.section)]=safeText(event.target.value);scheduleDraftSave()}else if(field==='strengths'){activeEval.strengths=safeText(event.target.value);scheduleDraftSave()}else if(field==='next-focus'){activeEval.nextFocus=safeText(event.target.value);scheduleDraftSave()}else if(field==='support-needed'){activeEval.supportNeeded=safeText(event.target.value);scheduleDraftSave()}}
+function handleChange(event){const field=event.target.dataset.field;if(field==='quick-review-range'){state.settings.quickReviewRange=['30','90','all'].includes(event.target.value)?event.target.value:'90';persist();renderQuickReview();return}if(field==='focus-bank-toggle'){toggleFocusTemplate(event.target.dataset.plan,event.target.value,event.target.checked,event.target);return}else if(field==='focus-bank-category'){filterFocusBank();return}else if(field==='review-priority-select'){const plan=currentImprovementPlan(),priority=plan?.priorities.find(p=>p.id===event.target.value),status=document.getElementById('reviewStatus'),next=document.getElementById('reviewNextDate');if(priority&&status)status.value=priority.status;if(priority&&next)next.value=priority.nextReviewDate||'';return}else if(field==='improvement-plan-date'){const plan=state.improvementPlans.find(p=>p.id===event.target.dataset.plan),key=event.target.dataset.key;if(plan&&['startDate','targetReviewDate'].includes(key)){plan[key]=event.target.value?validDate(event.target.value):'';saveImprovementPlan(plan)}return}else if(field==='improvement-process-status'){const plan=state.improvementPlans.find(p=>p.id===event.target.dataset.plan);if(plan&&IMPROVEMENT_PROCESS_STATUS[event.target.value]){plan.processStatus=event.target.value;saveImprovementPlan(plan)}return}else if(field==='improvement-priority-status'){const plan=state.improvementPlans.find(p=>p.id===event.target.dataset.plan),priority=plan?.priorities.find(p=>p.id===event.target.dataset.priority);if(priority&&IMPROVEMENT_STATUS[event.target.value]){priority.status=event.target.value;saveImprovementPlan(plan);renderImprovement()}return}else if(field==='improvement-priority-date'){const plan=state.improvementPlans.find(p=>p.id===event.target.dataset.plan),priority=plan?.priorities.find(p=>p.id===event.target.dataset.priority);if(priority){priority.nextReviewDate=event.target.value?validDate(event.target.value):'';saveImprovementPlan(plan)}return}else if(field==='paper-role'){paperSettings.roleId=event.target.value==='all'?'all':(hasRole(event.target.value)?event.target.value:'03');persist();renderPaperPreview();return}else if(field==='paper-staff'){paperSettings.staffId=staffById(event.target.value)?event.target.value:'';const staff=staffById(paperSettings.staffId);if(staff&&paperSettings.roleId!=='all'){paperSettings.roleId=staff.roleId;const roleControl=document.getElementById('paperRole');if(roleControl)roleControl.value=paperSettings.roleId}persist();renderPaperPreview();return}else if(field==='paper-type'){paperSettings.type=event.target.value;persist();renderPaperPreview();return}else if(field==='paper-date'){paperSettings.date=validDate(event.target.value);persist();renderPaperPreview();return}else if(field==='paper-layout'){paperSettings.layout=['auto','one','two'].includes(event.target.value)?event.target.value:'auto';persist();renderPaperPreview();return}else if(field==='paper-overview'){paperSettings.includeOverview=event.target.checked;persist();renderPaperPreview();return}else if(field==='paper-notes'){paperSettings.includeNotes=event.target.checked;persist();renderPaperPreview();return}else if(field==='paper-reflection'){paperSettings.includeReflection=event.target.checked;persist();renderPaperPreview();return}else if(field==='eval-role'){saveDraftNow(false);const staff=staffById(selectedStaffId),roleId=event.target.value,key=draftKey(staff.id,roleId);activeEval=state.drafts[key]?cloneData(state.drafts[key]):null;if(!activeEval)ensureActiveEvaluation(false,roleId);openSectionIndex=firstIncompleteSection(roleById(roleId),activeEval);if(openSectionIndex<0)openSectionIndex=0;renderEvaluate()}else if(field==='eval-type'){activeEval.type=event.target.value;saveDraftNow(false)}else if(field==='date'){activeEval.date=validDate(event.target.value);saveDraftNow(false)}else if(field==='auto-advance'){state.settings.autoAdvance=event.target.checked;persist()}else if(field==='history-staff'){historyFilters.staffId=event.target.value;persist();renderHistoryTable()}else if(field==='history-role'){historyFilters.roleId=event.target.value;persist();renderHistoryTable()}else if(event.target.id==='importFile'&&event.target.files[0])importBackup(event.target.files[0])}
 function handleKeydown(event){
   const modal=document.getElementById('staffModal');if(!modal.hidden){if(event.key==='Escape'){event.preventDefault();closeStaffModal();return}if(event.key==='Tab'){const focusable=[...modal.querySelectorAll('button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled])')].filter(el=>!el.hidden&&el.offsetParent!==null);if(focusable.length){const first=focusable[0],last=focusable[focusable.length-1];if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus()}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus()}}return}}
   const tab=event.target.closest('.tab');if(tab&&(event.key==='ArrowRight'||event.key==='ArrowLeft'||event.key==='Home'||event.key==='End')){event.preventDefault();const tabs=[...document.querySelectorAll('.tab')],index=tabs.indexOf(tab);let next=index;if(event.key==='ArrowRight')next=(index+1)%tabs.length;if(event.key==='ArrowLeft')next=(index-1+tabs.length)%tabs.length;if(event.key==='Home')next=0;if(event.key==='End')next=tabs.length-1;tabs[next].focus();switchView(tabs[next].dataset.view);return}
   const scoreButton=event.target.closest('.q-btn');if(scoreButton){if(event.key==='ArrowRight'||event.key==='ArrowLeft'){event.preventDefault();const buttons=[...scoreButton.closest('.question-rating').querySelectorAll('.q-btn')],index=buttons.indexOf(scoreButton),next=event.key==='ArrowRight'?(index+1)%buttons.length:(index-1+buttons.length)%buttons.length;buttons[next].focus();return}const shortcut=/^[1-5]$/.test(event.key)?event.key:(event.key.toLowerCase()==='n'?'na':null);if(shortcut){event.preventDefault();scoreButton.closest('.question-rating').querySelector(`[data-value="${shortcut}"]`)?.click()}}
 }
 
-function initialise(){document.addEventListener('click',handleActionClick);document.addEventListener('input',handleInput);document.addEventListener('change',handleChange);document.addEventListener('keydown',handleKeydown);document.getElementById('staffForm').addEventListener('submit',event=>{event.preventDefault();saveStaffFromModal()});document.getElementById('staffModal').addEventListener('mousedown',event=>{if(event.target.id==='staffModal')closeStaffModal()});window.addEventListener('beforeunload',event=>{saveDraftNow(false);if(!storageOK&&hasEvaluationWork(activeEval)){event.preventDefault();event.returnValue=''}});window.addEventListener('beforeprint',()=>{if(!document.body.classList.contains('print-paper')&&!document.body.classList.contains('print-evaluation')&&!document.body.classList.contains('print-improvement')){if(activeView==='paperView'){renderPaperPreview();document.body.classList.add('print-paper');activePrintMode='paper'}else if(activeView==='improvementView'){if(buildImprovementPrintArea('running')){document.body.classList.add('print-improvement');activePrintMode='improvement'}}else{document.body.classList.add('print-evaluation');activePrintMode='evaluation'}}if(!document.body.classList.contains('print-paper'))document.querySelectorAll('#evaluateView details:not(.feedback-more)').forEach(detail=>{detail.dataset.wasOpen=detail.open?'1':'0';detail.open=true})});window.addEventListener('afterprint',()=>{document.querySelectorAll('#evaluateView details').forEach(detail=>{if(detail.dataset.wasOpen!=null){detail.open=detail.dataset.wasOpen==='1';delete detail.dataset.wasOpen}});clearPrintClasses()});
+function initialise(){document.addEventListener('click',handleActionClick);document.addEventListener('input',handleInput);document.addEventListener('change',handleChange);document.addEventListener('keydown',handleKeydown);document.getElementById('staffForm').addEventListener('submit',event=>{event.preventDefault();saveStaffFromModal()});document.getElementById('staffModal').addEventListener('mousedown',event=>{if(event.target.id==='staffModal')closeStaffModal()});window.addEventListener('beforeunload',event=>{saveDraftNow(false);if(!storageOK&&hasEvaluationWork(activeEval)){event.preventDefault();event.returnValue=''}});window.addEventListener('beforeprint',()=>{if(!document.body.classList.contains('print-paper')&&!document.body.classList.contains('print-evaluation')&&!document.body.classList.contains('print-improvement')&&!document.body.classList.contains('print-quick-review')){if(activeView==='paperView'){renderPaperPreview();document.body.classList.add('print-paper');activePrintMode='paper'}else if(activeView==='improvementView'){if(buildImprovementPrintArea('running')){document.body.classList.add('print-improvement');activePrintMode='improvement'}}else if(activeView==='quickReviewView'){if(buildQuickReviewPrintArea()){document.body.classList.add('print-quick-review');activePrintMode='quick-review'}}else{document.body.classList.add('print-evaluation');activePrintMode='evaluation'}}if(!document.body.classList.contains('print-paper'))document.querySelectorAll('#evaluateView details:not(.feedback-more)').forEach(detail=>{detail.dataset.wasOpen=detail.open?'1':'0';detail.open=true})});window.addEventListener('afterprint',()=>{document.querySelectorAll('#evaluateView details').forEach(detail=>{if(detail.dataset.wasOpen!=null){detail.open=detail.dataset.wasOpen==='1';delete detail.dataset.wasOpen}});clearPrintClasses()});
   if(selectedStaffId){ensureActiveEvaluation();openSectionIndex=firstIncompleteSection(roleById(activeEval.roleId),activeEval);if(openSectionIndex<0)openSectionIndex=0}
   document.querySelectorAll('.view').forEach(panel=>panel.hidden=true);switchView(activeView);renderStaffList();updateStorageMeter();if(storageReadError)toast(storageReadError,6500)
 }
